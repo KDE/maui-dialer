@@ -34,6 +34,9 @@ linux:unix:!android {
 
 SOURCES += \
     $$PWD/src/main.cpp \
+    src/models/baselist.cpp \
+    src/models/basemodel.cpp \
+    src/models/contacts/contactsmodel.cpp
 
 RESOURCES += \
     $$PWD/src/qml.qrc \
@@ -42,4 +45,10 @@ RESOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    src/union.h \
+    src/models/baselist.h \
+    src/models/basemodel.h \
+    src/models/contacts/contactsmodel.h
 

@@ -16,6 +16,14 @@ Maui.Dialog
     property var contact : ({})
     acceptButton.text: qsTr("Edit")
     rejectButton.visible: false
+    onAccepted: _editContactDialog.open()
+
+
+    EditContactDialog
+    {
+        id: _editContactDialog
+        contact: control.contact
+    }
 
     ColumnLayout
     {

@@ -70,7 +70,11 @@ Maui.Page
             Connections
             {
                 target: _delegate
-                onClicked: _contactDialog.show(_listModel.get(index))
+                onClicked:
+                {
+                    _listView.currentIndex = index
+                    _contactDialog.show(_listModel.get(index))
+                }
             }
         }
     }

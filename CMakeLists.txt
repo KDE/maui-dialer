@@ -28,10 +28,16 @@ set(CMAKE_AUTORCC ON)
 
 set(union_SRCS
     src/main.cpp
+    src/models/baselist.cpp
+    src/models/basemodel.cpp
+    src/models/contacts/contactsmodel.cpp
     )
 
 set(union_HDRS
     src/union.h
+    src/models/baselist.h
+    src/models/basemodel.h
+    src/models/contacts/contactsmodel.h
     )
 
 set(union_ASSETS
