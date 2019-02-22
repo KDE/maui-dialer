@@ -27,14 +27,16 @@ set(CMAKE_AUTORCC ON)
 
 
 set(union_SRCS
-    main.cpp
+    src/main.cpp
     )
 
 set(union_HDRS
+    src/union.h
     )
 
 set(union_ASSETS
-    qml.qrc
+    src/qml.qrc
+    assets/union_assets.qrc
     )
 
 add_executable(union

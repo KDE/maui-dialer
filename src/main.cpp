@@ -13,6 +13,8 @@
 #include <QApplication>
 #endif
 
+#include "src/union.h"
+
 #ifdef STATIC_KIRIGAMI
 #include "./3rdparty/kirigami/src/kirigamiplugin.h"
 #endif
@@ -33,10 +35,10 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #endif
 
-//    app.setApplicationName(LIB::AppName);
-//    app.setApplicationVersion(LIB::AppVersion);
-//    app.setApplicationDisplayName(LIB::AppName);
-//    app.setWindowIcon(QIcon(":/assets/library.svg"));
+    app.setApplicationName(APPNAME);
+    app.setApplicationVersion(APPVERSION);
+    app.setApplicationDisplayName(APPNAME);
+    app.setWindowIcon(QIcon(":/smartphone.svg"));
 
 
     QQmlApplicationEngine engine;

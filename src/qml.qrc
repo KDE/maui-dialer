@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>views/contacts/ContactsView.qml</file>
+        <file>views/contacts/ContactDelegate.qml</file>
+        <file>views/contacts/ContactDialog.qml</file>
+        <file>views/contacts/EditContactDialog.qml</file>
     </qresource>
 </RCC>
