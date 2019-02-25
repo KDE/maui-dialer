@@ -1,8 +1,11 @@
 #include "contactsmodel.h"
+#include "./src/interfaces/syncing.h"
 
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 {
+    this->syncer = new Syncing(this);
     connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
+    this->setList();
 }
 
 FMH::MODEL_LIST ContactsModel::items() const
@@ -50,31 +53,21 @@ void ContactsModel::sortList()
         return;
 
     const auto key = static_cast<FMH::MODEL_KEY>(this->sort);
-    qDebug()<< "SORTING LIST BY"<< this->sort;
     qSort(this->list.begin(), this->list.end(), [key](const FMH::MODEL &e1, const FMH::MODEL &e2) -> bool
     {
         auto role = key;
 
         switch(role)
         {
-        case FMH::MODEL_KEY::RELEASEDATE:
-        case FMH::MODEL_KEY::RATE:
         case FMH::MODEL_KEY::FAV:
-        case FMH::MODEL_KEY::COUNT:
         {
             if(e1[role].toInt() > e2[role].toInt())
                 return true;
             break;
         }
 
-        case FMH::MODEL_KEY::TRACK:
-        {
-            if(e1[role].toInt() < e2[role].toInt())
-                return true;
-            break;
-        }
-
         case FMH::MODEL_KEY::ADDDATE:
+        case FMH::MODEL_KEY::DATE:
         {
             auto currentTime = QDateTime::currentDateTime();
 
@@ -88,9 +81,12 @@ void ContactsModel::sortList()
         }
 
         case FMH::MODEL_KEY::TITLE:
-        case FMH::MODEL_KEY::ARTIST:
-        case FMH::MODEL_KEY::ALBUM:
-        case FMH::MODEL_KEY::FORMAT:
+        case FMH::MODEL_KEY::N:
+        case FMH::MODEL_KEY::TEL:
+        case FMH::MODEL_KEY::ORG:
+        case FMH::MODEL_KEY::EMAIL:
+        case FMH::MODEL_KEY::GENDER:
+        case FMH::MODEL_KEY::ADR:
         {
             const auto str1 = QString(e1[role]).toLower();
             const auto str2 = QString(e2[role]).toLower();
@@ -113,7 +109,7 @@ void ContactsModel::setList()
 {
     emit this->preListChanged();
 
-    qDebug()<< "my LIST" ;
+    this->list = this->syncer->getContacts(this->query);
     this->sortList();
     emit this->postListChanged();
 }

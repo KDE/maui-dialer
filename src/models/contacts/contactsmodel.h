@@ -4,6 +4,7 @@
 #include <QObject>
 #include "../baselist.h"
 
+class Syncing;
 class ContactsModel : public BaseList
 {
     Q_OBJECT
@@ -14,16 +15,16 @@ public:
 
     enum SORTBY : uint_fast8_t
     {
-        ADDDATE = FMH::MODEL_KEY::ADDDATE,
-        RELEASEDATE = FMH::MODEL_KEY::RELEASEDATE,
-        FORMAT = FMH::MODEL_KEY::FORMAT,
-        ARTIST = FMH::MODEL_KEY::ARTIST,
-        TITLE = FMH::MODEL_KEY::TITLE,
-        ALBUM = FMH::MODEL_KEY::ALBUM,
-        RATE = FMH::MODEL_KEY::RATE,
-        FAV = FMH::MODEL_KEY::FAV,
-        TRACK = FMH::MODEL_KEY::TRACK,
-        COUNT = FMH::MODEL_KEY::COUNT,
+        ADDDATE = FMH::MODEL_KEY::ADDDATE, //when the contact was added
+        DATE = FMH::MODEL_KEY::DATE, //if the contacts was messaged or edited, last modifed
+        N = FMH::MODEL_KEY::N, //contact name
+        TEL = FMH::MODEL_KEY::TEL, //contact phone
+        ORG = FMH::MODEL_KEY::ORG, //contact organization
+        EMAIl = FMH::MODEL_KEY::EMAIL, //contact email address
+        GENDER = FMH::MODEL_KEY::GENDER, //contact gender
+        ADR = FMH::MODEL_KEY::ADR, //contact phisical address
+        TITLE = FMH::MODEL_KEY::TITLE, //contact title
+        FAV = FMH::MODEL_KEY::FAV, //if contact if marked as fav
         NONE
 
     }; Q_ENUM(SORTBY)
@@ -39,12 +40,13 @@ public:
     ContactsModel::SORTBY getSortBy() const;
 
 private:
+    Syncing *syncer;
     FMH::MODEL_LIST list;
     void sortList();
     void setList();
 
     QString query;
-    ContactsModel::SORTBY sort = ContactsModel::SORTBY::ADDDATE;
+    ContactsModel::SORTBY sort = ContactsModel::SORTBY::N;
 
 signals:
     void queryChanged();

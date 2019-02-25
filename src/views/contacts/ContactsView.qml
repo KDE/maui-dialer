@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
+import UnionModels 1.0
 
 Maui.Page
 {
@@ -34,31 +35,46 @@ Maui.Page
             }*/
     ]
 
+    BaseModel
+    {
+        id: _contactsModel
+        list: _contactsList
+    }
+
+    ContactsList
+    {
+        id: _contactsList
+    }
+
     content: ListView
     {
         id: _listView
         anchors.fill: parent
         spacing: space.big
 
-        model: ListModel
+        section.property: "n"
+        section.criteria: ViewSection.FirstCharacter
+        section.labelPositioning: ViewSection.InlineLabels
+        section.delegate: Maui.LabelDelegate
         {
-            id: _listModel
+            label: section
+            isSection: true
+            boldLabel: true
+//            colorScheme.backgroundColor: "#333"
+//            colorScheme.textColor: "#fafafa"
+//            width: iconSize
 
-            ListElement {n: "Camilo Higuita"; title: "MauiKit developer"; photo:"/home/camilo/Downloads/photo_2018-11-08_00-34-58.jpg" }
-            ListElement {n: "Uri Herrera"; title: "Nitrux Founder";  }
-            ListElement {n: "Anupam Basak"; title: "Nitrux developer"; photo:"/home/camilo/Downloads/photo_2018-11-08_05-57-10.jpg" }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
-            ListElement {n: "Example Contact"; title: "COntact title and description"; }
+//            background: Rectangle
+//            {
+//                color:  colorScheme.backgroundColor
+//                radius: radiusV
+
+//            }
+
 
         }
 
+        model: _contactsModel
         delegate: ContactDelegate
         {
             id: _delegate

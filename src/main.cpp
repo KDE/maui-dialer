@@ -15,6 +15,10 @@
 
 #include "src/union.h"
 
+#include "./src/models/basemodel.h"
+#include "./src/models/baselist.h"
+#include "./src/models/contacts/contactsmodel.h"
+
 #ifdef STATIC_KIRIGAMI
 #include "./3rdparty/kirigami/src/kirigamiplugin.h"
 #endif
@@ -50,6 +54,10 @@ int main(int argc, char *argv[])
 #ifdef STATIC_MAUIKIT
     MauiKit::getInstance().registerTypes();
 #endif
+
+    qmlRegisterUncreatableType<BaseList>("UnionModels", 1, 0, "BaseList", QStringLiteral("BaseList should not be created in QML"));
+    qmlRegisterType<BaseModel>("UnionModels", 1, 0, "BaseModel");
+    qmlRegisterType<ContactsModel>("UnionModels", 1, 0, "ContactsList");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
