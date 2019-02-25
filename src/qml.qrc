@@ -5,5 +5,7 @@
         <file>views/contacts/ContactDelegate.qml</file>
         <file>views/contacts/ContactDialog.qml</file>
         <file>views/contacts/EditContactDialog.qml</file>
+        <file>views/dialer/Dialer.qml</file>
+        <file>views/dialer/DialerView.qml</file>
     </qresource>
 </RCC>

@@ -9,31 +9,58 @@ Maui.Page
 
     colorScheme.accentColor: "#615f7d"
 
-//    floatingBar: true
-//    footBarMargins: space.huge
-//    footBarAligment: Qt.AlignRight
-//    footBar.middleContent: Maui.ToolButton
-//    {
-//        iconName: "list-add-user"
-//        iconColor: "white"
-//        onClicked: _contactDialog.open()
-//    }
+    //    floatingBar: true
+    //    footBarMargins: space.huge
+    //    footBarAligment: Qt.AlignRight
+    //    footBar.middleContent: Maui.ToolButton
+    //    {
+    //        iconName: "list-add-user"
+    //        iconColor: "white"
+    //        onClicked: _contactDialog.open()
+    //    }
 
-//    footBar.colorScheme.backgroundColor: control.colorScheme.accentColor
-//    footBar.colorScheme.borderColor: Qt.darker(control.colorScheme.accentColor, 1.4)
+    //    footBar.colorScheme.backgroundColor: control.colorScheme.accentColor
+    //    footBar.colorScheme.borderColor: Qt.darker(control.colorScheme.accentColor, 1.4)
+    headBar.visible: false
+    footBar.drawBorder: false
+    footBar.floating: false
 
-    headBarExit: false
-    headBar.drawBorder: false
-    headBar.leftContent: [
+    footBar.leftContent: [
         Maui.ToolButton
-            {
-                iconName: "view-list-icons"
-            }/*,
-        Maui.ToolButton
-            {
-                iconName: "view-sort"
-            }*/
+        {
+            iconName: "list-add-user"
+            onClicked: _newContactDialog.open()
+            //        height: _searchField.height
+            //        width: height
+            text: qsTr("New")
+            //        display: ToolButton.TextUnderIcon
+
+
+            //                background: Rectangle
+            //                {
+            //                    color: "#615f7d"
+            //                    radius: radiusV
+            //                    border.color: Qt.darker("#615f7d", 1.3)
+            //                }
+        }
     ]
+
+    footBar.rightContent: [
+
+        Maui.ToolButton
+        {
+            iconName: "view-sort"
+            text: qsTr("Sort")
+        }
+    ]
+
+    footBar.middleContent: Maui.TextField
+    {
+        id: _searchField
+        width: footBar.middleLayout.width * 0.7
+        //        height: rowHeight
+        placeholderText: qsTr("Search contacts... ")
+    }
 
     BaseModel
     {
@@ -60,16 +87,16 @@ Maui.Page
             label: section
             isSection: true
             boldLabel: true
-//            colorScheme.backgroundColor: "#333"
-//            colorScheme.textColor: "#fafafa"
-//            width: iconSize
+            //            colorScheme.backgroundColor: "#333"
+            //            colorScheme.textColor: "#fafafa"
+            //            width: iconSize
 
-//            background: Rectangle
-//            {
-//                color:  colorScheme.backgroundColor
-//                radius: radiusV
+            //            background: Rectangle
+            //            {
+            //                color:  colorScheme.backgroundColor
+            //                radius: radiusV
 
-//            }
+            //            }
 
 
         }

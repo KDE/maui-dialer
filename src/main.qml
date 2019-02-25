@@ -3,7 +3,7 @@ import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
 
 import "views/contacts"
-//import "views/dialer"
+import "views/dialer"
 //import "views/favs"
 
 Maui.ApplicationWindow
@@ -24,9 +24,8 @@ Maui.ApplicationWindow
 
 
     /** UI PROPS**/
-    //    altToolBars: true
-    floatingBar: false
-    footBarOverlap: false
+    //    altToolBars: true    
+
     bgColor: viewBackgroundColor
     highlightColor: "#8682c1"
 
@@ -47,7 +46,7 @@ Maui.ApplicationWindow
 
         Maui.ToolButton
         {
-            id: _dialerView
+            id: _dialerButton
             iconName: "view-list-icons"
             iconColor: currentView === views.dialer ? highlightColor : textColor
             text: qsTr("Dialer")
@@ -73,36 +72,7 @@ Maui.ApplicationWindow
         }
     ]
 
-    footBar.drawBorder: false
-//    footBar.implicitHeight: toolBarHeight * 1.5
-//    footBar.margins: space.big
 
-    footBar.middleContent: Maui.TextField
-    {
-        id: _searchField
-        width: footBar.middleLayout.width * 0.7
-//        height: rowHeight
-        placeholderText: qsTr("Search contacts... ")
-    }
-
-    footBar.leftContent:  Maui.ToolButton
-    {
-        iconName: "list-add-user"
-        iconColor: "white"
-        onClicked: _newContactDialog.open()
-//        height: _searchField.height
-//        width: height
-//        text: qsTr("Add new...")
-//        display: ToolButton.TextUnderIcon
-
-
-        background: Rectangle
-        {
-            color: "#615f7d"
-            radius: radiusV
-            border.color: Qt.darker("#615f7d", 1.3)
-        }
-    }
 
     SwipeView
     {
@@ -116,6 +86,11 @@ Maui.ApplicationWindow
         ContactsView
         {
             id: _contacsView
+        }
+
+        DialerView
+        {
+            id: _dialerView
         }
     }
 
