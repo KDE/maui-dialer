@@ -254,6 +254,32 @@ Maui.Dialog
                             Layout.fillHeight: true
                             Layout.fillWidth: true
                             width: parent.width
+                            text: contact.org
+                            font.pointSize: fontSizes.big
+                            font.weight: Font.Bold
+                            color: textColor
+                        }
+                    }
+
+                    ColumnLayout
+                    {
+                        Layout.fillWidth: true
+                        spacing: space.small
+                        Label
+                        {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            text: qsTr("Title")
+                            font.pointSize: fontSizes.default
+                            font.weight: Font.Light
+                            color: textColor
+                        }
+
+                        Label
+                        {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            width: parent.width
                             text: contact.title
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
@@ -283,6 +309,8 @@ Maui.Dialog
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
                             color: textColor
+                            text: contact.tel
+
                         }
                     }
 
@@ -307,6 +335,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
                             color: textColor
+                            text: contact.tel
                         }
                     }
 
@@ -332,6 +361,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
                             color: textColor
+                            text: contact.email
                         }
                     }
                 }

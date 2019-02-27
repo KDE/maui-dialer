@@ -1,5 +1,5 @@
-#ifndef SYNCING_H
-#define SYNCING_H
+#ifndef SYNCHRONISER_H
+#define SYNCHRONISER_H
 
 #include <QObject>
 #ifdef STATIC_MAUIKIT
@@ -8,11 +8,11 @@
 #include <MauiKit/fmh.h>
 #endif
 
-class Syncing : public QObject
+class Synchroniser : public QObject
 {
     Q_OBJECT
 public:
-    explicit Syncing(QObject *parent = nullptr);
+    explicit Synchroniser(QObject *parent = nullptr);
 
     FMH::MODEL_LIST getContacts(const QString &query);
 
@@ -21,4 +21,4 @@ signals:
 public slots:
 };
 
-#endif // SYNCING_H
+#endif // SYNCHRONISER_H

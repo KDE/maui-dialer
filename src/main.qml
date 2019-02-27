@@ -27,7 +27,7 @@ Maui.ApplicationWindow
     //    altToolBars: true    
 
     bgColor: viewBackgroundColor
-    highlightColor: "#8682c1"
+    highlightColor: "#ff6a83"
 
     leftIcon.iconColor: footBar.visible ? highlightColor : textColor
     onSearchButtonClicked: footBar.visible = !footBar.visible

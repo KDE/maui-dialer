@@ -33,18 +33,8 @@ Maui.Page
         {
             iconName: "list-add-user"
             onClicked: _newContactDialog.open()
-            //        height: _searchField.height
-            //        width: height
             text: qsTr("New")
-            //        display: ToolButton.TextUnderIcon
-
-
-            //                background: Rectangle
-            //                {
-            //                    color: "#615f7d"
-            //                    radius: radiusV
-            //                    border.color: Qt.darker("#615f7d", 1.3)
-            //                }
+            display: ToolButton.TextUnderIcon
         }
     ]
 
@@ -54,6 +44,7 @@ Maui.Page
         {
             iconName: "view-sort"
             text: qsTr("Sort")
+            display: ToolButton.TextUnderIcon
         }
     ]
 

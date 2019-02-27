@@ -11,12 +11,12 @@ ItemDelegate
 {
     id: control
     hoverEnabled: true
-
+    clip: true
     background: Rectangle
     {
         color: backgroundColor
         opacity: hovered ?  1  : 0.75
-//        border.color: borderColor
+        //        border.color: borderColor
         radius: radiusV * 2
     }
 
@@ -30,9 +30,11 @@ ItemDelegate
         Item
         {
             id: _contactPic
+            visible: control.width >  Kirigami.Units.gridUnit * 15
+
             Layout.fillHeight: true
             Layout.preferredWidth: iconSizes.huge
-
+            clip: true
             Rectangle
             {
                 height: parent.height
@@ -128,6 +130,7 @@ ItemDelegate
 
             Layout.fillHeight: true
             Layout.fillWidth: true
+            clip: true
 
             ColumnLayout
             {
@@ -141,6 +144,7 @@ ItemDelegate
                     font.pointSize: fontSizes.big
                     font.bold: true
                     font.weight: Font.Bold
+                    elide: Text.ElideMiddle
                 }
 
                 Label
@@ -150,15 +154,59 @@ ItemDelegate
                     text: model.title
                     font.pointSize: fontSizes.small
                     font.weight: Font.Light
+                    wrapMode: Text.WrapAnywhere
+                    elide: Text.ElideMiddle
                 }
             }
         }
 
         Item
         {
+            visible: control.width >  Kirigami.Units.gridUnit * 20
             Layout.fillHeight: true
-            Layout.preferredWidth: iconSizes.medium
+            Layout.fillWidth: true
+            clip: true
+
+            ColumnLayout
+            {
+                anchors.fill: parent
+
+                Label
+                {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignRight
+                    horizontalAlignment: Qt.AlignRight
+
+                    text: model.email
+                    font.pointSize: fontSizes.small
+                    font.weight: Font.Light
+                    wrapMode: Text.WrapAnywhere
+                    elide: Text.ElideMiddle
+                }
+
+                Label
+                {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignRight
+                    horizontalAlignment: Qt.AlignRight
+                    text: model.tel
+                    font.pointSize: fontSizes.small
+                    font.weight: Font.Light
+                    wrapMode: Text.WrapAnywhere
+                    elide: Text.ElideMiddle
+                }
+            }
+        }
+
+
+        Item
+        {
+            Layout.fillHeight: true
+            Layout.preferredWidth: iconSizes.big
             Layout.alignment: Qt.AlignRight
+            Layout.margins: space.big
 
             Maui.ToolButton
             {

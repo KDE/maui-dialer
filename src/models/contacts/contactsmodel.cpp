@@ -1,9 +1,9 @@
 #include "contactsmodel.h"
-#include "./src/interfaces/syncing.h"
+#include "./src/interfaces/synchroniser.h"
 
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 {
-    this->syncer = new Syncing(this);
+    this->syncer = new Synchroniser(this);
     connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
     this->setList();
 }

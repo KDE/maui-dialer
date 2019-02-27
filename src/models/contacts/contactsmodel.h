@@ -4,7 +4,8 @@
 #include <QObject>
 #include "../baselist.h"
 
-class Syncing;
+class Synchroniser;
+
 class ContactsModel : public BaseList
 {
     Q_OBJECT
@@ -40,7 +41,7 @@ public:
     ContactsModel::SORTBY getSortBy() const;
 
 private:
-    Syncing *syncer;
+    Synchroniser *syncer;
     FMH::MODEL_LIST list;
     void sortList();
     void setList();
