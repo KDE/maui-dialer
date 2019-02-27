@@ -14,9 +14,10 @@ ItemDelegate
 
     background: Rectangle
     {
-        color: hovered ? backgroundColor : viewBackgroundColor
-        border.color: borderColor
-        radius: radiusV
+        color: backgroundColor
+        opacity: hovered ?  1  : 0.75
+//        border.color: borderColor
+        radius: radiusV * 2
     }
 
     RowLayout

@@ -36,7 +36,8 @@ SOURCES += \
     $$PWD/src/main.cpp \
     src/models/baselist.cpp \
     src/models/basemodel.cpp \
-    src/models/contacts/contactsmodel.cpp
+    src/models/contacts/contactsmodel.cpp \
+    src/interfaces/syncing.cpp
 
 RESOURCES += \
     $$PWD/src/qml.qrc \
@@ -50,5 +51,6 @@ HEADERS += \
     src/union.h \
     src/models/baselist.h \
     src/models/basemodel.h \
-    src/models/contacts/contactsmodel.h
+    src/models/contacts/contactsmodel.h \
+    src/interfaces/syncing.h
 

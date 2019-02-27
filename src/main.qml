@@ -32,6 +32,7 @@ Maui.ApplicationWindow
     leftIcon.iconColor: footBar.visible ? highlightColor : textColor
     onSearchButtonClicked: footBar.visible = !footBar.visible
 
+    headBar.implicitHeight: toolBarHeight * 1.5
     headBar.drawBorder: false
     headBarBGColor: viewBackgroundColor
     headBar.middleContent: [

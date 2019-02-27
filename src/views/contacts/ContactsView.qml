@@ -9,6 +9,8 @@ Maui.Page
 
     colorScheme.accentColor: "#615f7d"
 
+    property alias list : _contactsList
+
     //    floatingBar: true
     //    footBarMargins: space.huge
     //    footBarAligment: Qt.AlignRight
@@ -24,6 +26,7 @@ Maui.Page
     headBar.visible: false
     footBar.drawBorder: false
     footBar.floating: false
+    footBar.implicitHeight: toolBarHeight * 1.5
 
     footBar.leftContent: [
         Maui.ToolButton
@@ -116,7 +119,7 @@ Maui.Page
                 onClicked:
                 {
                     _listView.currentIndex = index
-                    _contactDialog.show(_listModel.get(index))
+                    _contactDialog.show(list.get(index))
                 }
             }
         }
