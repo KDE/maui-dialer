@@ -78,9 +78,17 @@ bool DBActions::removeContact(const QString &id)
     return this->execQuery(queryTxt);
 }
 
+bool DBActions::updateContact(const FMH::MODEL &con)
+{
+    auto contact = con;
+    contact.insert(FMH::MODEL_KEY::MODIFIED, QDateTime::currentDateTime().toString(Qt::TextDate));
+    QVariantMap where =  {{FMH::MODEL_NAME[FMH::MODEL_KEY::ID], con[FMH::MODEL_KEY::ID]}};
+    return this->update(UNI::TABLEMAP[UNI::TABLE::CONTACTS], con, where);
+}
+
 bool DBActions::favContact(const QString &id, const bool &fav )
 {
-    if(!this->checkExistance("contacts", "id", id))
+    if(!this->checkExistance(UNI::TABLEMAP[UNI::TABLE::CONTACTS], FMH::MODEL_NAME[FMH::MODEL_KEY::ID], id))
         return false;
 
     const FMH::MODEL faved = {{FMH::MODEL_KEY::FAV, fav ? "1" : "0"}};

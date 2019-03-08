@@ -16,13 +16,23 @@ Maui.Dialog
     property var contact : ({})
     acceptButton.text: qsTr("Edit")
     rejectButton.visible: false
-    onAccepted: _editContactDialog.open()
+    onAccepted: _editContactDialog.show()
 
 
     EditContactDialog
     {
         id: _editContactDialog
         contact: control.contact
+        onNewContact:
+        {
+            var con = contact
+            var id = control.contact.id
+            con["id"] = id
+            console.log("trying to edit contact", id)
+            if(_contacsView.list.update(con, _contacsView.listView.currentIndex))
+                control.contact =  _contacsView.list.get(_contacsView.listView.currentIndex)
+
+        }
     }
 
     ColumnLayout
@@ -77,7 +87,7 @@ Maui.Dialog
                         smooth: true
                         asynchronous: true
 
-                        source: "file://"+ contact.photo
+                        source: contact.photo
 
                         layer.enabled: true
                         layer.effect: OpacityMask
@@ -174,6 +184,7 @@ Maui.Dialog
             {
                 anchors.fill: parent
                 contentHeight: _formLayout.implicitHeight
+                clip: true
                 ColumnLayout
                 {
                     id: _formLayout
@@ -201,7 +212,7 @@ Maui.Dialog
                             Layout.fillWidth: true
 
                             width: parent.width
-                            text: contact.n
+                            text: contact.n.split(" ")[0]
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
                             color: textColor
@@ -228,7 +239,7 @@ Maui.Dialog
                         {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
-                            text: contact.n.split(" ")[1]
+                            text: contact.n.split(" ")[1] ? contact.n.split(" ")[1] : ""
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
                             color: textColor

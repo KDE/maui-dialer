@@ -1,7 +1,6 @@
 #include "synchroniser.h"
 #include "./../db/dbactions.h"
 #include "vcardproperty.h"
-#include "vcard.h"
 
 Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 {
@@ -15,10 +14,20 @@ FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
 }
 
 bool Synchroniser::insertContact(const FMH::MODEL &contact)
+{   
+    return this->dba->insertContact(contact);
+}
+
+bool Synchroniser::updateContact(const FMH::MODEL &contact)
 {
+    return this->dba->updateContact(contact);
+}
+
+vCard Synchroniser::tovCard(const FMH::MODEL &contact)
+{
+    Q_UNUSED(contact);
     vCard vcard;
     vCardProperty name_prop = vCardProperty::createName("Emanuele", "Bertoldi");
-
     vcard.addProperty(name_prop);
-    return this->dba->insertContact(contact);
+    return vcard;
 }

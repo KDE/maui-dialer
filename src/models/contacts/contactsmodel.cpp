@@ -144,6 +144,31 @@ bool ContactsModel::insert(const QVariantMap &map)
     return true;
 }
 
+bool ContactsModel::update(const QVariantMap &map, const int &index)
+{
+    if(index >= this->list.size() || index < 0)
+        return false;
+
+    const auto newItem = FM::toModel(map);
+    const auto oldItem = this->list[index];
+
+    if(this->syncer->updateContact(newItem))
+    {
+        QVector<int> roles;
+
+        for(auto key : newItem.keys())
+            if(newItem[key] != oldItem[key])
+                roles << key;
+
+        this->list[index] = newItem;
+        emit this->updateModel(index, roles);
+
+        return true;
+    }
+
+    return false;
+}
+
 void ContactsModel::append(const QVariantMap &item)
 {
     if(item.isEmpty())

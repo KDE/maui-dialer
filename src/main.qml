@@ -105,7 +105,12 @@ Maui.ApplicationWindow
     EditContactDialog
     {
         id: _newContactDialog
-        onNewContact: _contacsView.list.insert(contact)
+        onNewContact:
+        {
+            var con = contact;
+            con["id"] = Math.random();
+            _contacsView.list.insert(con)
+        }
     }
 
     Maui.FileDialog

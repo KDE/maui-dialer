@@ -2,7 +2,7 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-// #include <QQuickStyle>
+ #include <QQuickStyle>
 #include <QIcon>
 #include <QCommandLineParser>
 #include <QFileInfo>
@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
 
 
     QQmlApplicationEngine engine;
+//    QQuickStyle::setStyle("Material");
 
 #ifdef STATIC_KIRIGAMI
     KirigamiPlugin::getInstance().registerTypes();
@@ -53,6 +54,7 @@ int main(int argc, char *argv[])
 
 #ifdef STATIC_MAUIKIT
     MauiKit::getInstance().registerTypes();
+
 #endif
 
     qmlRegisterUncreatableType<BaseList>("UnionModels", 1, 0, "BaseList", QStringLiteral("BaseList should not be created in QML"));

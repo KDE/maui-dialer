@@ -73,7 +73,7 @@ ItemDelegate
                         smooth: true
                         asynchronous: true
 
-                        source: "file://"+ model.photo
+                        source: /*"file://"+ */model.photo
 
                         layer.enabled: true
                         layer.effect: OpacityMask

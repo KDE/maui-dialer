@@ -8,6 +8,9 @@
 #include <MauiKit/fmh.h>
 #endif
 
+#include "vcard.h"
+
+
 class DBActions;
 class Synchroniser : public QObject
 {
@@ -17,9 +20,12 @@ public:
 
     FMH::MODEL_LIST getContacts(const QString &query);
     bool insertContact(const FMH::MODEL &contact);
+    bool updateContact(const FMH::MODEL &contact);
 
 private:
     DBActions *dba;
+    vCard tovCard(const FMH::MODEL &contact);
+
 signals:
 
 public slots:

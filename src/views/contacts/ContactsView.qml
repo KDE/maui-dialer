@@ -10,6 +10,7 @@ Maui.Page
     colorScheme.accentColor: "#615f7d"
 
     property alias list : _contactsList
+    property alias listView : _listView
 
     //    floatingBar: true
     //    footBarMargins: space.huge

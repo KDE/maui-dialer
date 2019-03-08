@@ -24,13 +24,12 @@ Maui.Dialog
     onAccepted:
     {
         var contact =({
-                          id: Math.random(),
                           n: _nameField.text +" "+ _lastNameField.text,
                           tel: _telField.text,
                           email: _emailField.text,
                           org: _orgField.text,
                           adr: _adrField.text,
-                          gender: _genreField.currentText,
+                          gender: _genderField.currentText,
                           photo: _img.source
                       })
         newContact(contact)
@@ -133,10 +132,13 @@ Maui.Dialog
             {
                 anchors.fill: parent
                 contentHeight: _formLayout.implicitHeight
+                clip: true
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
                 ColumnLayout
                 {
                     id: _formLayout
-                    width: parent.width
+                    width: _layout.width * 0.95
+                    //                    implicitHeight: control.height
                     spacing: space.large
 
                     Column
@@ -155,8 +157,7 @@ Maui.Dialog
                         {
                             id: _nameField
                             width: parent.width
-                            height: rowHeight
-                            text: contact.n
+                            text: contact.n.split(" ")[0]
                         }
                     }
 
@@ -177,7 +178,7 @@ Maui.Dialog
                         {
                             id: _lastNameField
                             width: parent.width
-                            text: contact.n.split(" ")[1]
+                            text: contact.n.split(" ")[1] ? contact.n.split(" ")[1] : ""
                         }
                     }
 
@@ -195,8 +196,11 @@ Maui.Dialog
 
                         ComboBox
                         {
-                            id: _genreField
+                            id: _genderField
+                            width: parent.width
                             model: ["Male", "Female", "Other"]
+                            popup.z: control.z+1
+                            //                            currentText: contact.gender
                         }
                     }
 
@@ -216,6 +220,7 @@ Maui.Dialog
                         {
                             id: _orgField
                             width: parent.width
+                            text: contact.org
                         }
                     }
 
@@ -236,6 +241,7 @@ Maui.Dialog
                         {
                             id: _telField
                             width: parent.width
+                            text: contact.tel
                         }
                     }
 
@@ -254,6 +260,7 @@ Maui.Dialog
                         Maui.TextField
                         {
                             width: parent.width
+                            text: contact.tel
                         }
                     }
 
@@ -273,6 +280,7 @@ Maui.Dialog
                         {
                             id: _emailField
                             width: parent.width
+                            text: contact.email
                         }
                     }
 
@@ -292,6 +300,7 @@ Maui.Dialog
                         {
                             id: _adrField
                             width: parent.width
+                            text: contact.adr
                         }
                     }
                 }
