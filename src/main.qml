@@ -105,6 +105,7 @@ Maui.ApplicationWindow
     EditContactDialog
     {
         id: _newContactDialog
+        onNewContact: _contacsView.list.insert(contact)
     }
 
     Maui.FileDialog

@@ -28,7 +28,9 @@ set(CMAKE_AUTORCC ON)
 
 set(union_SRCS
     src/main.cpp
-    src/interfaces/syncing.cpp
+    src/interfaces/synchroniser.cpp
+    src/db/db.cpp
+    src/db/dbactions.cpp
     src/models/baselist.cpp
     src/models/basemodel.cpp
     src/models/contacts/contactsmodel.cpp
@@ -36,7 +38,9 @@ set(union_SRCS
 
 set(union_HDRS
     src/union.h
-    src/interfaces/syncing.h
+    src/db/db.h
+    src/db/dbactions.h
+    src/interfaces/synchroniser.h
     src/models/baselist.h
     src/models/basemodel.h
     src/models/contacts/contactsmodel.h

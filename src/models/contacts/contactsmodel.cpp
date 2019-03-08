@@ -67,7 +67,7 @@ void ContactsModel::sortList()
         }
 
         case FMH::MODEL_KEY::ADDDATE:
-        case FMH::MODEL_KEY::DATE:
+        case FMH::MODEL_KEY::MODIFIED:
         {
             auto currentTime = QDateTime::currentDateTime();
 
@@ -126,6 +126,11 @@ QVariantMap ContactsModel::get(const int &index) const
         res.insert(FMH::MODEL_NAME[key], item[key]);
 
     return res;
+}
+
+bool ContactsModel::insert(const QVariantMap &map)
+{
+    return this->syncer->insertContact(FM::toModel(map));
 }
 
 void ContactsModel::append(const QVariantMap &item)

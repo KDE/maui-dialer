@@ -1,4 +1,11 @@
 #include "synchroniser.h"
+#include "./../db/dbactions.h"
+
+
+Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
+{
+    this->dba = DBActions::getInstance();
+}
 
 
 FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
@@ -24,7 +31,7 @@ FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
     };
 }
 
-Synchroniser::Synchroniser(QObject *parent)
+bool Synchroniser::insertContact(const FMH::MODEL &contact)
 {
-
+    return this->dba->insertContact(contact);
 }

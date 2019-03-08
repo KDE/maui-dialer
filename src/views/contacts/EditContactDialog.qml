@@ -19,7 +19,22 @@ Maui.Dialog
     acceptButton.text: qsTr("Save")
     rejectButton.visible: false
 
+    signal newContact(var contact)
 
+    onAccepted:
+    {
+        var contact =({
+                          id: Math.random(),
+                          n: _nameField.text +" "+ _lastNameField.text,
+                          tel: _telField.text,
+                          email: _emailField.text,
+                          org: _orgField.text,
+                          adr: _adrField.text,
+                          gender: _genreField.currentText,
+                          photo: _img.source
+                      })
+        newContact(contact)
+    }
 
     ColumnLayout
     {
@@ -54,14 +69,14 @@ Maui.Dialog
                         _fileDialog.show(function(paths)
                         {
                             console.log("selected image", paths)
-                           _img.source = "file://"+paths[0]
+                            _img.source = "file://"+paths[0]
                         })
                     }
                 }
 
 
                 Image
-               {
+                {
                     id: _img
                     width: parent.width
                     height: width
@@ -137,6 +152,7 @@ Maui.Dialog
 
                         Maui.TextField
                         {
+                            id: _nameField
                             width: parent.width
                             height: rowHeight
                             text: contact.n
@@ -158,8 +174,28 @@ Maui.Dialog
 
                         Maui.TextField
                         {
+                            id: _lastNameField
                             width: parent.width
                             text: contact.n.split(" ")[1]
+                        }
+                    }
+
+                    Column
+                    {
+                        Layout.fillWidth: true
+                        spacing: space.small
+                        Label
+                        {
+                            text: qsTr("Genre")
+                            font.pointSize: fontSizes.default
+                            font.bold: true
+                            font.weight: Font.Bold
+                        }
+
+                        ComboBox
+                        {
+                            id: _genreField
+                            model: ["Male", "Female", "Other"]
                         }
                     }
 
@@ -177,6 +213,7 @@ Maui.Dialog
 
                         Maui.TextField
                         {
+                            id: _orgField
                             width: parent.width
                         }
                     }
@@ -196,6 +233,7 @@ Maui.Dialog
 
                         Maui.TextField
                         {
+                            id: _telField
                             width: parent.width
                         }
                     }
@@ -232,6 +270,26 @@ Maui.Dialog
 
                         Maui.TextField
                         {
+                            id: _emailField
+                            width: parent.width
+                        }
+                    }
+
+                    Column
+                    {
+                        Layout.fillWidth: true
+                        spacing: space.small
+                        Label
+                        {
+                            text: qsTr("Address")
+                            font.pointSize: fontSizes.default
+                            font.bold: true
+                            font.weight: Font.Bold
+                        }
+
+                        Maui.TextField
+                        {
+                            id: _adrField
                             width: parent.width
                         }
                     }

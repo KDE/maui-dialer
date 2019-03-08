@@ -37,7 +37,9 @@ SOURCES += \
     src/models/baselist.cpp \
     src/models/basemodel.cpp \
     src/models/contacts/contactsmodel.cpp \
-    src/interfaces/synchroniser.cpp
+    src/interfaces/synchroniser.cpp \
+    src/db/db.cpp \
+    src/db/dbactions.cpp
 
 RESOURCES += \
     $$PWD/src/qml.qrc \
@@ -49,6 +51,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     src/union.h \
+    src/db/db.h \
+    src/db/dbactions.h \
     src/models/baselist.h \
     src/models/basemodel.h \
     src/models/contacts/contactsmodel.h \

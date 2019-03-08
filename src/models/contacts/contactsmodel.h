@@ -17,7 +17,7 @@ public:
     enum SORTBY : uint_fast8_t
     {
         ADDDATE = FMH::MODEL_KEY::ADDDATE, //when the contact was added
-        DATE = FMH::MODEL_KEY::DATE, //if the contacts was messaged or edited, last modifed
+        MODIFIED = FMH::MODEL_KEY::MODIFIED, // last modifed
         N = FMH::MODEL_KEY::N, //contact name
         TEL = FMH::MODEL_KEY::TEL, //contact phone
         ORG = FMH::MODEL_KEY::ORG, //contact organization
@@ -26,6 +26,8 @@ public:
         ADR = FMH::MODEL_KEY::ADR, //contact phisical address
         TITLE = FMH::MODEL_KEY::TITLE, //contact title
         FAV = FMH::MODEL_KEY::FAV, //if contact if marked as fav
+        COUNT = FMH::MODEL_KEY::COUNT, //how many times contacts has been messaged or called
+        PHOTO = FMH::MODEL_KEY::PHOTO, //contact photo
         NONE
 
     }; Q_ENUM(SORTBY)
@@ -55,8 +57,9 @@ signals:
 
 public slots:
     QVariantMap get(const int &index) const override;
-    void append(const QVariantMap &item);
+    bool insert(const QVariantMap &map) override;
     void append(const QVariantMap &item, const int &at);
+    void append(const QVariantMap &item);
     void appendQuery(const QString &query);
     void clear();
 

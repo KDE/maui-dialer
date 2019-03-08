@@ -7,5 +7,6 @@
         <file>views/contacts/EditContactDialog.qml</file>
         <file>views/dialer/Dialer.qml</file>
         <file>views/dialer/DialerView.qml</file>
+        <file>db/script.sql</file>
     </qresource>
 </RCC>
