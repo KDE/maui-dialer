@@ -23,6 +23,11 @@ bool Synchroniser::updateContact(const FMH::MODEL &contact)
     return this->dba->updateContact(contact);
 }
 
+bool Synchroniser::removeContact(const FMH::MODEL &contact)
+{
+    return this->dba->removeContact(contact[FMH::MODEL_KEY::ID]);
+}
+
 vCard Synchroniser::tovCard(const FMH::MODEL &contact)
 {
     Q_UNUSED(contact);

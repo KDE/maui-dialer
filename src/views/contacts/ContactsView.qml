@@ -68,7 +68,21 @@ Maui.Page
         id: _contactsList
     }
 
-    content: ListView
+    Maui.Holder
+    {
+        id: _holder
+        emoji: "qrc:/Circuit.svg"
+        isMask: false
+        title: qsTr("There's not contacts")
+        body: qsTr("Add new contacts")
+        emojiSize: iconSizes.huge
+        visible: !listView.count
+        onActionTriggered: _newContactDialog.open()
+
+    }
+
+
+    ListView
     {
         id: _listView
         anchors.fill: parent

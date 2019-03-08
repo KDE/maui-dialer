@@ -169,6 +169,22 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
     return false;
 }
 
+bool ContactsModel::remove(const int &index)
+{
+    if(index >= this->list.size() || index < 0)
+        return false;
+
+    if(this->syncer->removeContact(this->list[index]))
+    {
+        emit this->preItemRemoved(index);
+        this->list.removeAt(index);
+        emit this->postItemRemoved();
+        return true;
+    }
+
+    return false;
+}
+
 void ContactsModel::append(const QVariantMap &item)
 {
     if(item.isEmpty())

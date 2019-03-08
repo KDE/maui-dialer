@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>smartphone.svg</file>
+        <file>Circuit.svg</file>
     </qresource>
 </RCC>

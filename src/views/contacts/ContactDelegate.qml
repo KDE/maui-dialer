@@ -151,7 +151,7 @@ ItemDelegate
                 {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    text: model.title
+                    text: model.tel
                     font.pointSize: fontSizes.small
                     font.weight: Font.Light
                     wrapMode: Text.WrapAnywhere
@@ -191,7 +191,7 @@ ItemDelegate
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight
                     horizontalAlignment: Qt.AlignRight
-                    text: model.tel
+                    text: model.title
                     font.pointSize: fontSizes.small
                     font.weight: Font.Light
                     wrapMode: Text.WrapAnywhere

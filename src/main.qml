@@ -24,7 +24,7 @@ Maui.ApplicationWindow
 
 
     /** UI PROPS**/
-    //    altToolBars: true    
+    //    altToolBars: true
 
     bgColor: viewBackgroundColor
     highlightColor: "#ff6a83"
@@ -100,6 +100,27 @@ Maui.ApplicationWindow
     ContactDialog
     {
         id: _contactDialog
+        rejectButton.visible: true
+        rejectButton.text: "Remove"
+
+        Maui.Dialog
+        {
+            id: _removeDialog
+
+            title: qsTr("Remove contact...")
+            message: qsTr("Are you sure you want to remove this contact? This action can not be undone.")
+
+            onRejected: close()
+            onAccepted:
+            {
+                 close()
+                _contactDialog.close()
+                _contacsView.list.remove(_contacsView.listView.currentIndex)
+
+            }
+        }
+
+        onRejected: _removeDialog.open()
     }
 
     EditContactDialog

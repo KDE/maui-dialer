@@ -21,6 +21,7 @@ public:
     FMH::MODEL_LIST getContacts(const QString &query);
     bool insertContact(const FMH::MODEL &contact);
     bool updateContact(const FMH::MODEL &contact);
+    bool removeContact(const FMH::MODEL &contact);
 
 private:
     DBActions *dba;
