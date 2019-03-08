@@ -14,6 +14,8 @@ linux:unix:!android {
 
     message(Building for Linux KDE)
     QT += webengine
+    QT += KService KNotifications KNotifications KI18n
+    QT += KIOCore KIOFileWidgets KIOWidgets KNTLM
     LIBS += -lMauiKit
 
 } else:android {
@@ -31,6 +33,7 @@ linux:unix:!android {
     message("Unknown configuration")
 }
 
+include($$PWD/src/libs/libvcard.pri)
 
 SOURCES += \
     $$PWD/src/main.cpp \

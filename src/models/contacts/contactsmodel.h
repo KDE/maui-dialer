@@ -48,7 +48,7 @@ private:
     void sortList();
     void setList();
 
-    QString query;
+    QString query = "select * from contacts";
     ContactsModel::SORTBY sort = ContactsModel::SORTBY::N;
 
 signals:

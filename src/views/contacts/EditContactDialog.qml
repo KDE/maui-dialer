@@ -34,6 +34,7 @@ Maui.Dialog
                           photo: _img.source
                       })
         newContact(contact)
+        control.close()
     }
 
     ColumnLayout

@@ -130,7 +130,18 @@ QVariantMap ContactsModel::get(const int &index) const
 
 bool ContactsModel::insert(const QVariantMap &map)
 {
-    return this->syncer->insertContact(FM::toModel(map));
+    if(map.isEmpty())
+        return false;
+
+    auto model = FM::toModel(map);
+    if(!this->syncer->insertContact(model))
+        return false;
+
+    emit this->preListChanged();
+    this->setList();
+    emit this->postListChanged();
+
+    return true;
 }
 
 void ContactsModel::append(const QVariantMap &item)
