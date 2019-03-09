@@ -12,17 +12,24 @@ Maui.Dialog
 {
     id: control
 
-    maxWidth: unit * 500
-    maxHeight: parent.height
+    maxWidth: unit * 700
+    maxHeight: unit * 800
+    heightHint: 1
+    widthHint: 1
+    acceptButton.text: qsTr("Save")
+    rejectButton.visible: true
+    rejectButton.text: qsTr("Cancel")
+    closeButton.visible: false
 
     property var contact : ({})
-    acceptButton.text: qsTr("Save")
-    rejectButton.visible: false
-
     signal newContact(var contact)
+
+    onRejected: control.close()
 
     onAccepted:
     {
+
+
         var contact =({
                           n: _nameField.text +" "+ _lastNameField.text,
                           tel: _telField.text,
@@ -32,8 +39,10 @@ Maui.Dialog
                           gender: _genderField.currentText,
                           photo: _img.source
                       })
-        newContact(contact)
-        control.close()
+
+        if(contact.n.length && contact.tel.length)
+            newContact(contact)
+        control.clear()
     }
 
     ColumnLayout
@@ -134,6 +143,9 @@ Maui.Dialog
                 contentHeight: _formLayout.implicitHeight
                 clip: true
                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+//                boundsBehavior: Flickable.StopAtBounds
+//interactive: false
                 ColumnLayout
                 {
                     id: _formLayout
@@ -242,27 +254,29 @@ Maui.Dialog
                             id: _telField
                             width: parent.width
                             text: contact.tel
+                            inputMethodHints: Qt.ImhDigitsOnly
                         }
                     }
 
-                    Column
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        Label
-                        {
-                            text: qsTr("Phone")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                        }
+                    //                    Column
+                    //                    {
+                    //                        Layout.fillWidth: true
+                    //                        spacing: space.small
+                    //                        Label
+                    //                        {
+                    //                            text: qsTr("Phone")
+                    //                            font.pointSize: fontSizes.default
+                    //                            font.bold: true
+                    //                            font.weight: Font.Bold
+                    //                        }
 
-                        Maui.TextField
-                        {
-                            width: parent.width
-                            text: contact.tel
-                        }
-                    }
+                    //                        Maui.TextField
+                    //                        {
+                    //                            width: parent.width
+                    //                            text: contact.tel
+                    //                            inputMethodHints: Qt.ImhDigitsOnly
+                    //                        }
+                    //                    }
 
                     Column
                     {
@@ -309,10 +323,17 @@ Maui.Dialog
         }
     }
 
-
-    function show(data)
+    function clear()
     {
-        control.contact = data
-        control.open()
+        _nameField.clear()
+        _lastNameField.clear()
+        _telField.clear()
+        _emailField.clear()
+        _orgField.clear()
+        _adrField.clear()
+        //        _genderField.clear()
+        _img.source = ""
+        control.close()
+
     }
 }

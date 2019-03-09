@@ -16,8 +16,7 @@ Maui.Dialog
     property var contact : ({})
     acceptButton.text: qsTr("Edit")
     rejectButton.visible: false
-    onAccepted: _editContactDialog.show()
-
+    onAccepted: _editContactDialog.open()
 
     EditContactDialog
     {

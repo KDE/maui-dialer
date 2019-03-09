@@ -30,8 +30,8 @@ Maui.ApplicationWindow
     highlightColor: "#ff6a83"
 
     leftIcon.iconColor: footBar.visible ? highlightColor : textColor
-    onSearchButtonClicked: footBar.visible = !footBar.visible
-
+    //    onSearchButtonClicked: footBar.visible = !footBar.visible
+    leftIcon.visible: false
     headBar.implicitHeight: toolBarHeight * 1.5
     headBar.drawBorder: false
     headBarBGColor: viewBackgroundColor
@@ -113,7 +113,7 @@ Maui.ApplicationWindow
             onRejected: close()
             onAccepted:
             {
-                 close()
+                close()
                 _contactDialog.close()
                 _contacsView.list.remove(_contacsView.listView.currentIndex)
 

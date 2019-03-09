@@ -42,7 +42,8 @@ SOURCES += \
     src/models/contacts/contactsmodel.cpp \
     src/interfaces/synchroniser.cpp \
     src/db/db.cpp \
-    src/db/dbactions.cpp
+    src/db/dbactions.cpp \
+    src/interfaces/androidintents.cpp
 
 RESOURCES += \
     $$PWD/src/qml.qrc \
@@ -59,5 +60,6 @@ HEADERS += \
     src/models/baselist.h \
     src/models/basemodel.h \
     src/models/contacts/contactsmodel.h \
-    src/interfaces/synchroniser.h
+    src/interfaces/synchroniser.h \
+    src/interfaces/androidintents.h
 
