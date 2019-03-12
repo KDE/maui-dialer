@@ -18,6 +18,42 @@ Maui.Dialog
     rejectButton.visible: false
     onAccepted: _editContactDialog.open()
 
+    headBar.implicitHeight: toolBarHeight * 1.3
+    headBar.middleContent: [
+        Maui.ToolButton
+        {
+            iconName: "phone"
+            text: qsTr("Call...")
+            display: ToolButton.TextUnderIcon
+            onClicked:
+            {
+                if(isAndroid)
+                Maui.Android.call(contact.tel)
+            }
+        },
+
+        Maui.ToolButton
+        {
+            iconName: "draw-text"
+            text: qsTr("Message...")
+            display: ToolButton.TextUnderIcon
+        },
+
+        Maui.ToolButton
+        {
+            iconName: "draw-star"
+            text: qsTr("Fav...")
+            display: ToolButton.TextUnderIcon
+        },
+
+        Maui.ToolButton
+        {
+            iconName: "document-share"
+            text: qsTr("Share...")
+            display: ToolButton.TextUnderIcon
+        }
+    ]
+
     EditContactDialog
     {
         id: _editContactDialog
@@ -137,42 +173,6 @@ Maui.Dialog
             }
         }
 
-        Maui.ToolBar
-        {
-            Layout.fillWidth: true
-            Layout.margins: space.big
-            Layout.preferredHeight: toolBarHeight
-            colorScheme.backgroundColor: " transparent"
-            middleContent: [
-                Maui.ToolButton
-                {
-                    iconName: "phone"
-                    text: qsTr("Call...")
-                    display: ToolButton.TextUnderIcon
-                },
-
-                Maui.ToolButton
-                {
-                    iconName: "draw-text"
-                    text: qsTr("Message...")
-                    display: ToolButton.TextUnderIcon
-                },
-
-                Maui.ToolButton
-                {
-                    iconName: "draw-star"
-                    text: qsTr("Fav...")
-                    display: ToolButton.TextUnderIcon
-                },
-
-                Maui.ToolButton
-                {
-                    iconName: "document-share"
-                    text: qsTr("Share...")
-                    display: ToolButton.TextUnderIcon
-                }
-            ]
-        }
 
         Item
         {
@@ -183,6 +183,7 @@ Maui.Dialog
             {
                 anchors.fill: parent
                 contentHeight: _formLayout.implicitHeight
+                contentWidth: _formLayout.width
                 clip: true
                 ColumnLayout
                 {

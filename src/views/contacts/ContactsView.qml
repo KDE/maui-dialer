@@ -55,6 +55,8 @@ Maui.Page
         width: footBar.middleLayout.width * 0.7
         //        height: rowHeight
         placeholderText: qsTr("Search contacts... ")
+        onAccepted: list.filter(text)
+        onCleared: list.reset()
     }
 
     BaseModel

@@ -1,6 +1,10 @@
 #include "contactsmodel.h"
 #include "./src/interfaces/synchroniser.h"
 
+#ifdef Q_OS_ANDROID
+#include "./src/interfaces/androidintents.h"
+#endif
+
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 {
     this->syncer = new Synchroniser(this);
@@ -110,6 +114,12 @@ void ContactsModel::setList()
     emit this->preListChanged();
 
     this->list = this->syncer->getContacts(this->query);
+
+#ifdef Q_OS_ANDROID
+    AndroidIntents android;
+    this->list << android.getContacts();
+#endif
+
     this->sortList();
     emit this->postListChanged();
 }
@@ -185,6 +195,25 @@ bool ContactsModel::remove(const int &index)
     return false;
 }
 
+void ContactsModel::filter(const QString &query)
+{
+
+    FMH::MODEL_LIST res;
+    for(const auto item : this->list)
+    {
+        for(const auto data : item)
+        {
+            if(data.contains(query, Qt::CaseInsensitive))
+                res << item;
+        }
+    }
+    emit this->preListChanged();
+
+    this->list = res;
+    emit this->postListChanged();
+
+}
+
 void ContactsModel::append(const QVariantMap &item)
 {
     if(item.isEmpty())
@@ -245,4 +274,9 @@ void ContactsModel::clear()
     this->list.clear();
 
     emit this->postListChanged();
+}
+
+void ContactsModel::reset()
+{
+    this->setList();
 }

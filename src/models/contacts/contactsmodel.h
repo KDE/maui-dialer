@@ -60,11 +60,13 @@ public slots:
     bool insert(const QVariantMap &map) override;
     bool update(const QVariantMap &map, const int &index) override;
     bool remove(const int &index);
+    void filter(const QString &query);
 
     void append(const QVariantMap &item, const int &at);
     void append(const QVariantMap &item);
     void appendQuery(const QString &query);
     void clear();
+    void reset();
 
 };
 
