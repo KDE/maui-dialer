@@ -23,7 +23,7 @@ Maui.Dialog
         Maui.ToolButton
         {
             iconName: "phone"
-            text: qsTr("Call...")
+            text: qsTr("Call")
             display: ToolButton.TextUnderIcon
             onClicked:
             {
@@ -35,21 +35,21 @@ Maui.Dialog
         Maui.ToolButton
         {
             iconName: "draw-text"
-            text: qsTr("Message...")
+            text: qsTr("Message")
             display: ToolButton.TextUnderIcon
         },
 
         Maui.ToolButton
         {
             iconName: "draw-star"
-            text: qsTr("Fav...")
+            text: qsTr("Fav")
             display: ToolButton.TextUnderIcon
         },
 
         Maui.ToolButton
         {
             iconName: "document-share"
-            text: qsTr("Share...")
+            text: qsTr("Share")
             display: ToolButton.TextUnderIcon
         }
     ]

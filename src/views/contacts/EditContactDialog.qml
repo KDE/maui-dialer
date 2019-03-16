@@ -163,6 +163,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
+                            color: textColor
                         }
 
                         Maui.TextField
@@ -184,6 +185,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
+                            color: textColor
                         }
 
                         Maui.TextField
@@ -204,9 +206,10 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
+                            color: textColor
                         }
 
-                        ComboBox
+                        Maui.ComboBox
                         {
                             id: _genderField
                             width: parent.width
@@ -226,6 +229,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
+                            color: textColor
                         }
 
                         Maui.TextField
@@ -247,6 +251,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
+                            color: textColor
                         }
 
                         Maui.TextField
@@ -288,6 +293,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
+                            color: textColor
                         }
 
                         Maui.TextField
@@ -308,6 +314,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
+                            color: textColor
                         }
 
                         Maui.TextField

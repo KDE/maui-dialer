@@ -8,8 +8,8 @@
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 {
     this->syncer = new Synchroniser(this);
-    connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
-    this->setList();
+    //    connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
+    //    this->getList();
 }
 
 FMH::MODEL_LIST ContactsModel::items() const
@@ -19,11 +19,19 @@ FMH::MODEL_LIST ContactsModel::items() const
 
 void ContactsModel::setQuery(const QString &query)
 {
-    if(this->query == query)
-        return;
+    //    if(this->query == query)
+    //        return;
 
     this->query = query;
     qDebug()<< "setting query"<< this->query;
+
+    if(this->list.isEmpty())
+        this->getList();
+
+    if(this->query.isEmpty())
+        this->setList();
+    else
+        this->filter();
 
     emit this->queryChanged();
 }
@@ -112,16 +120,20 @@ void ContactsModel::sortList()
 void ContactsModel::setList()
 {
     emit this->preListChanged();
+    this->getList();
+    this->sortList();
+    emit this->postListChanged();
+}
 
-    this->list = this->syncer->getContacts(this->query);
+void ContactsModel::getList()
+{
+    qDebug()<< "TRYING TO SET FULL LIST";
+    this->list = this->syncer->getContacts(QString("select * from contacts"));
 
 #ifdef Q_OS_ANDROID
     AndroidIntents android;
     this->list << android.getContacts();
 #endif
-
-    this->sortList();
-    emit this->postListChanged();
 }
 
 QVariantMap ContactsModel::get(const int &index) const
@@ -195,15 +207,14 @@ bool ContactsModel::remove(const int &index)
     return false;
 }
 
-void ContactsModel::filter(const QString &query)
+void ContactsModel::filter()
 {
-
     FMH::MODEL_LIST res;
     for(const auto item : this->list)
     {
         for(const auto data : item)
         {
-            if(data.contains(query, Qt::CaseInsensitive))
+            if(data.contains(this->query, Qt::CaseInsensitive) && !res.contains(item))
                 res << item;
         }
     }

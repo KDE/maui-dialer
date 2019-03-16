@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
+import QtQuick.Layouts 1.3
 
 import "views/contacts"
 import "views/dialer"
@@ -24,56 +25,79 @@ Maui.ApplicationWindow
 
 
     /** UI PROPS**/
-    //    altToolBars: true
-
-    bgColor: viewBackgroundColor
+    bgColor: "#1f2532"
     highlightColor: "#ff6a83"
+    backgroundColor: bgColor
+    textColor: "#fafafa"
+    viewBackgroundColor: "#1e2431"
+    accentColor: "#3c4862"
+    altToolBars: false
 
     leftIcon.iconColor: footBar.visible ? highlightColor : textColor
     //    onSearchButtonClicked: footBar.visible = !footBar.visible
     leftIcon.visible: false
+    rightIcon.visible: false
     headBar.implicitHeight: toolBarHeight * 1.5
     headBar.drawBorder: false
-    headBarBGColor: viewBackgroundColor
-    headBar.middleContent: [
+    headBarBGColor: backgroundColor
+    headBarFGColor: textColor
 
+    page.headBarItem: RowLayout
+    {
+        width: headBar.width
+        height: headBar.height
+//          width: footBar.middleLayout.width * 0.9
+        spacing: space.large
+        Item {
+           Layout.fillWidth: !isMobile
+
+        }
         Maui.ToolButton
         {
             id: _contactsButton
+            Layout.fillWidth: isMobile
             iconName: "view-media-artist"
             iconColor: currentView === views.contacts ? highlightColor : textColor
-            text: qsTr("Contacts")
-        },
+//            text: qsTr("Contacts")
+        }
 
         Maui.ToolButton
         {
             id: _dialerButton
+            Layout.fillWidth: isMobile
+
             iconName: "view-list-icons"
             iconColor: currentView === views.dialer ? highlightColor : textColor
-            text: qsTr("Dialer")
+//            text: qsTr("Dialer")
             //            visible: isAndroid
-        },
+        }
 
 
         Maui.ToolButton
         {
             id: _recentButton
+            Layout.fillWidth: isMobile
+
             iconName: "view-media-recent"
             iconColor: currentView === views.favs ? highlightColor : textColor
-            text: qsTr("Recent")
+//            text: qsTr("Recent")
             //            visible: isAndroid
-        },
+        }
 
         Maui.ToolButton
         {
             id: _favsButton
+            Layout.fillWidth: isMobile
+
             iconName: "draw-star"
             iconColor: currentView === views.favs ? highlightColor : textColor
-            text: qsTr("Favorites")
+//            text: qsTr("Favorites")
         }
-    ]
+        Item {
+           Layout.fillWidth: !isMobile
 
-
+        }
+    }
 
     SwipeView
     {
@@ -100,8 +124,13 @@ Maui.ApplicationWindow
     ContactDialog
     {
         id: _contactDialog
-        rejectButton.visible: true
-        rejectButton.text: "Remove"
+
+        footBar.leftContent: Maui.Button
+        {
+            icon.name: "user-trash"
+            text: "Remove"
+            onClicked:  _removeDialog.open()
+        }
 
         Maui.Dialog
         {
@@ -120,7 +149,6 @@ Maui.ApplicationWindow
             }
         }
 
-        onRejected: _removeDialog.open()
     }
 
     EditContactDialog
@@ -137,5 +165,11 @@ Maui.ApplicationWindow
     Maui.FileDialog
     {
         id: _fileDialog
+    }
+
+    Component.onCompleted:
+    {
+        if(isAndroid)
+             Maui.Android.statusbarColor(backgroundColor, false)
     }
 }

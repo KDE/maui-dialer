@@ -8,6 +8,8 @@ Maui.Page
     id: control
 
     colorScheme.accentColor: "#615f7d"
+    colorScheme.backgroundColor: backgroundColor
+    colorScheme.textColor: textColor
 
     property alias list : _contactsList
     property alias listView : _listView
@@ -34,7 +36,7 @@ Maui.Page
         {
             iconName: "list-add-user"
             onClicked: _newContactDialog.open()
-            text: qsTr("New")
+//            text: qsTr("New")
             display: ToolButton.TextUnderIcon
         }
     ]
@@ -44,7 +46,7 @@ Maui.Page
         Maui.ToolButton
         {
             iconName: "view-sort"
-            text: qsTr("Sort")
+//            text: qsTr("Sort")
             display: ToolButton.TextUnderIcon
         }
     ]
@@ -55,7 +57,7 @@ Maui.Page
         width: footBar.middleLayout.width * 0.7
         //        height: rowHeight
         placeholderText: qsTr("Search contacts... ")
-        onAccepted: list.filter(text)
+        onAccepted: list.query = text
         onCleared: list.reset()
     }
 
@@ -68,6 +70,7 @@ Maui.Page
     ContactsList
     {
         id: _contactsList
+        query: ""
     }
 
     Maui.Holder

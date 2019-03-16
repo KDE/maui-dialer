@@ -14,7 +14,7 @@ ItemDelegate
     clip: true
     background: Rectangle
     {
-        color: backgroundColor
+        color:  "#4f5160"
         opacity: hovered ?  1  : 0.75
         //        border.color: borderColor
         radius: radiusV * 2
@@ -35,12 +35,13 @@ ItemDelegate
             Layout.fillHeight: true
             Layout.preferredWidth: iconSizes.huge
             clip: true
+
             Rectangle
             {
                 height: parent.height
                 width: height
                 anchors.centerIn: parent
-                radius: Math.min(width, height)
+                radius: radiusV * 2
                 color: Qt.rgba(Math.random(),Math.random(),Math.random(),1);
                 border.color: Qt.darker(color, 1.5)
 
@@ -88,7 +89,7 @@ ItemDelegate
                                     anchors.centerIn: parent
                                     width: _img.width
                                     height: _img.height
-                                    radius: Math.min(width, height)
+                                    radius: radiusV * 2
                                     border.color: borderColor
                                 }
                             }
@@ -145,6 +146,7 @@ ItemDelegate
                     font.bold: true
                     font.weight: Font.Bold
                     elide: Text.ElideMiddle
+                    color: textColor
                 }
 
                 Label
@@ -156,6 +158,7 @@ ItemDelegate
                     font.weight: Font.Light
                     wrapMode: Text.WrapAnywhere
                     elide: Text.ElideMiddle
+                    color: textColor
                 }
             }
         }
@@ -183,6 +186,7 @@ ItemDelegate
                     font.weight: Font.Light
                     wrapMode: Text.WrapAnywhere
                     elide: Text.ElideMiddle
+                    color: textColor
                 }
 
                 Label
@@ -196,6 +200,7 @@ ItemDelegate
                     font.weight: Font.Light
                     wrapMode: Text.WrapAnywhere
                     elide: Text.ElideMiddle
+                    color: textColor
                 }
             }
         }

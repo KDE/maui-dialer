@@ -29,6 +29,10 @@ linux:unix:!android {
 
     DEFINES += STATIC_KIRIGAMI
 
+    SOURCES +=  src/interfaces/androidintents.cpp
+
+    HEADERS += src/interfaces/androidintents.h
+
 } else {
     message("Unknown configuration")
 }
@@ -43,7 +47,6 @@ SOURCES += \
     src/interfaces/synchroniser.cpp \
     src/db/db.cpp \
     src/db/dbactions.cpp \
-    src/interfaces/androidintents.cpp
 
 RESOURCES += \
     $$PWD/src/qml.qrc \
@@ -61,5 +64,4 @@ HEADERS += \
     src/models/basemodel.h \
     src/models/contacts/contactsmodel.h \
     src/interfaces/synchroniser.h \
-    src/interfaces/androidintents.h
 
