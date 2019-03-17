@@ -8,7 +8,7 @@ import "../contacts"
 Maui.Page
 {
     id: control
-    property string dialString : _textField.text
+    property alias dialString : _textField.text
 
     onDialStringChanged: _suggestionList.query = dialString
     colorScheme.backgroundColor: backgroundColor
@@ -24,6 +24,7 @@ Maui.Page
     }
 
     floatingBar: true
+    footBarOverlap: true
     footBarAligment: Qt.AlignRight
 
     ColumnLayout
@@ -42,6 +43,7 @@ Maui.Page
             Layout.fillWidth: true
             inputMethodHints: Qt.ImhDigitsOnly
             placeholderText: qsTr("Number...")
+            enabled: false
         }
 
         ListView
@@ -88,6 +90,7 @@ Maui.Page
                     id: _dialerPad
                     Layout.fillHeight: true
                     Layout.fillWidth: true
+                    visible: false
 
                     GridLayout
                     {

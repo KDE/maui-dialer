@@ -8,5 +8,6 @@
         <file>views/dialer/Dialer.qml</file>
         <file>views/dialer/DialerView.qml</file>
         <file>db/script.sql</file>
+        <file>widgets/MessageComposer.qml</file>
     </qresource>
 </RCC>

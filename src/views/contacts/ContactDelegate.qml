@@ -7,7 +7,7 @@ import org.kde.mauikit 1.0 as Maui
 import org.kde.kirigami 2.2 as Kirigami
 
 
-ItemDelegate
+SwipeDelegate
 {
     id: control
     hoverEnabled: true
@@ -20,11 +20,60 @@ ItemDelegate
         radius: radiusV * 2
     }
 
-    RowLayout
+    swipe.behind: Row
+    {
+        padding: space.medium
+        height: control.height
+        anchors.right: parent.right
+        spacing: space.medium
+
+        Maui.ToolButton
+        {
+            iconName: "documentinfo"
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: swipe.close()
+        }
+
+        Maui.ToolButton
+        {
+            iconName: "love"
+            anchors.verticalCenter: parent.verticalCenter
+
+            iconColor: model.fav === "1" ? babeColor : textColor
+            onClicked:
+            {
+                swipe.close()
+            }
+        }
+
+        Maui.ToolButton
+        {
+            iconName: "view-media-recent"
+            anchors.verticalCenter: parent.verticalCenter
+
+            onClicked:
+            {
+                swipe.close()
+            }
+        }
+
+        Maui.ToolButton
+        {
+            iconName: "media-playback-start"
+            anchors.verticalCenter: parent.verticalCenter
+
+            onClicked:
+            {
+                swipe.close()
+            }
+        }
+    }
+
+    contentItem: RowLayout
     {
         id: _layout
 
-        anchors.fill: parent
+        anchors.fill: control
         anchors.margins: space.big
 
         Item

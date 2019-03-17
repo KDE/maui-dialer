@@ -54,7 +54,7 @@ Maui.Page
     footBar.middleContent: Maui.TextField
     {
         id: _searchField
-        width: footBar.middleLayout.width * 0.7
+        width: footBar.middleLayout.width * 0.90
         //        height: rowHeight
         placeholderText: qsTr("Search contacts... ")
         onAccepted: list.query = text
