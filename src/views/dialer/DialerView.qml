@@ -10,7 +10,10 @@ Maui.Page
     id: control
     property alias dialString : _textField.text
 
-    onDialStringChanged: _suggestionList.query = dialString
+    onDialStringChanged: {
+        Qt.inputMethod.hide();
+        _suggestionList.query = dialString
+    }
     colorScheme.backgroundColor: backgroundColor
     headBar.visible: false
 
@@ -36,15 +39,70 @@ Maui.Page
         spacing: space.big
 
 
-        Maui.TextField
+        Rectangle
         {
-            id: _textField
-            Layout.preferredHeight: toolBarHeightAlt
+            Layout.preferredHeight: toolBarHeight * 1.3
             Layout.fillWidth: true
-            inputMethodHints: Qt.ImhDigitsOnly
-            placeholderText: qsTr("Number...")
-            enabled: false
+            color: "#4f5160"
+            //        border.color: borderColor
+            radius: radiusV * 2
+            RowLayout
+            {
+                anchors.fill: parent
+                anchors.leftMargin: space.big * 2
+                anchors.rightMargin: space.big * 2
+
+                Maui.TextField
+                {
+                    id: _textField
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    inputMethodHints: Qt.ImhDialableCharactersOnly
+                    placeholderText: qsTr("Number...")
+                    readOnly: true
+                    font.bold: true
+                    font.weight: Font.Bold
+                    font.pointSize: fontSizes.huge
+
+                    colorScheme.backgroundColor: "transparent"
+                    colorScheme.borderColor: "transparent"
+                    colorScheme.textColor: "#fff"
+                    //            enabled: false
+                }
+
+                Item
+                {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
+                    Rectangle
+                    {
+                        height: iconSizes.big
+                        width: height
+                        anchors.centerIn: parent
+                        color: accentColor
+                        radius: radiusV * 2
+                        Maui.ToolButton
+                        {
+                            iconName: "phone"
+                            anchors.centerIn: parent
+                            onClicked:
+                            {
+                                if(isAndroid)
+                                    Maui.Android.call(dialString)
+                            }
+                        }
+                    }
+
+
+                }
+            }
+
+
+
         }
+
+
 
         ListView
         {
@@ -71,6 +129,16 @@ Maui.Page
                 height: unit * 80
                 width: _layout.width
                 anchors.horizontalCenter: parent.horizontalCenter
+                quickButtons: Maui.ToolButton
+                {
+                    iconName: "phone"
+
+                    onClicked:
+                    {
+                        if(isAndroid)
+                            Maui.Android.call(contact.tel)
+                    }
+                }
 
                 Connections
                 {
@@ -85,38 +153,20 @@ Maui.Page
             }
         }
 
-                Item
-                {
-                    id: _dialerPad
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    visible: false
+        Item
+        {
+            id: _dialerPad
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            visible: false
 
-                    GridLayout
-                    {
-                        height: parent.height
-                        width: parent.width
-                        anchors.centerIn: parent
-                        columns: 3
-                        rows: 3
-                        rowSpacing: space.big
-                        columnSpacing: space.big
-        //                spacing: space.medium
-
-                        Maui.Button { Layout.fillWidth: true; Layout.fillHeight: true; text: "1"; onClicked: { dialString += "1";} }
-                        Maui.Button  { Layout.fillWidth: true; Layout.fillHeight: true; text: "2"; onClicked: { dialString += "2";} }
-                        Maui.Button  { Layout.fillWidth: true; Layout.fillHeight: true; text: "3"; onClicked: { dialString += "3";} }
-                        Maui.Button  { Layout.fillWidth: true; Layout.fillHeight: true; text: "4"; onClicked: { dialString += "4";} }
-                        Maui.Button  {Layout.fillWidth: true; Layout.fillHeight: true; text: "5"; onClicked: { dialString += "5";} }
-                        Maui.Button  {Layout.fillWidth: true; Layout.fillHeight: true; text: "6"; onClicked: { dialString += "6";} }
-                        Maui.Button  {Layout.fillWidth: true; Layout.fillHeight: true; text: "7"; onClicked: { dialString += "7";} }
-                        Maui.Button  {Layout.fillWidth: true; Layout.fillHeight: true; text: "8"; onClicked: { dialString += "8";} }
-                        Maui.Button  {Layout.fillWidth: true; Layout.fillHeight: true; text: "9"; onClicked: { dialString += "9";} }
-                        Maui.Button  {Layout.fillWidth: true; Layout.fillHeight: true; text: "*"; onClicked: { dialString += "*";} }
-                        Maui.Button  {Layout.fillWidth: true; Layout.fillHeight: true; text: "0"; onClicked: { dialString += "0";} }
-                        Maui.Button  {Layout.fillWidth: true; Layout.fillHeight: true; text: "#"; onClicked: { dialString += "#";} }
-                    }
-                }
+            Dialer
+            {
+                height: parent.height
+                width: parent.width
+                anchors.centerIn: parent
+            }
+        }
 
     }
 
