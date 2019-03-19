@@ -12,53 +12,63 @@ Maui.Page
     colorScheme.textColor: textColor
 
     property alias list : _contactsList
+    property alias listModel : _contactsModel
     property alias listView : _listView
 
-    //    floatingBar: true
-    //    footBarMargins: space.huge
-    //    footBarAligment: Qt.AlignRight
-    //    footBar.middleContent: Maui.ToolButton
-    //    {
-    //        iconName: "list-add-user"
-    //        iconColor: "white"
-    //        onClicked: _contactDialog.open()
-    //    }
+    altToolBars: isMobile
+    floatingBar: true
+    footBarMargins: space.huge
+    footBarAligment: Qt.AlignRight
+    footBar.middleContent: Maui.ToolButton
+    {
+        iconName: "list-add-user"
+        iconColor: "white"
+        onClicked: _contactDialog.open()
+    }
 
-    //    footBar.colorScheme.backgroundColor: control.colorScheme.accentColor
-    //    footBar.colorScheme.borderColor: Qt.darker(control.colorScheme.accentColor, 1.4)
-    headBar.visible: false
+    footBar.colorScheme.borderColor: "transparent"
+    headBarExit: false
+    headBar.drawBorder: false
     footBar.drawBorder: false
     footBar.floating: false
-    footBar.implicitHeight: toolBarHeight * 1.5
+    footBar.colorScheme.backgroundColor: highlightColor
+    //    footBar.implicitHeight: toolBarHeight * 1.5
 
-    footBar.leftContent: [
-        Maui.ToolButton
-        {
-            iconName: "list-add-user"
-            onClicked: _newContactDialog.open()
-//            text: qsTr("New")
-            display: ToolButton.TextUnderIcon
-        }
-    ]
+    //    footBar.leftContent: [
+    //        Maui.ToolButton
+    //        {
+    //            iconName: "list-add-user"
+    //            onClicked: _newContactDialog.open()
+    ////            text: qsTr("New")
+    //            display: ToolButton.TextUnderIcon
+    //        }
+    //    ]
 
-    footBar.rightContent: [
+    //    footBar.rightContent: [
 
-        Maui.ToolButton
-        {
-            iconName: "view-sort"
-//            text: qsTr("Sort")
-            display: ToolButton.TextUnderIcon
-        }
-    ]
+    //        Maui.ToolButton
+    //        {
+    //            iconName: "view-sort"
+    ////            text: qsTr("Sort")
+    //            display: ToolButton.TextUnderIcon
+    //        }
+    //    ]
 
-    footBar.middleContent: Maui.TextField
+    headBar.implicitHeight: toolBarHeight * 1.4
+    headBar.plegable: false
+    headBarItem: Maui.TextField
     {
         id: _searchField
-        width: footBar.middleLayout.width * 0.90
+        height: toolBarHeightAlt
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: isWide ? control.width * 0.8 : control.width * 0.95
         //        height: rowHeight
         placeholderText: qsTr("Search contacts... ")
         onAccepted: list.query = text
         onCleared: list.reset()
+        colorScheme.backgroundColor: "#4f5160"
+        colorScheme.borderColor: "transparent"
+        colorScheme.textColor: "#fff"
     }
 
     BaseModel
@@ -70,7 +80,7 @@ Maui.Page
     ContactsList
     {
         id: _contactsList
-        query: ""
+
     }
 
     Maui.Holder
@@ -98,7 +108,7 @@ Maui.Page
         section.labelPositioning: ViewSection.InlineLabels
         section.delegate: Maui.LabelDelegate
         {
-            label: section
+            label: section.toUpperCase()
             isSection: true
             boldLabel: true
             //            colorScheme.backgroundColor: "#333"
@@ -123,6 +133,7 @@ Maui.Page
             height: unit * 80
             width: isWide ? control.width * 0.8 : control.width * 0.95
             anchors.horizontalCenter: parent.horizontalCenter
+            showMenuIcon: true
 
             Connections
             {
@@ -131,6 +142,12 @@ Maui.Page
                 {
                     _listView.currentIndex = index
                     _contactDialog.show(list.get(index))
+                }
+                onFavClicked:
+                {
+                    var item = _contactsList.get(index)
+                    item["fav"] = item.fav == "1" ? "0" : "1"
+                    _contactsList.update(item, index)
                 }
             }
         }

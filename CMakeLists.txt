@@ -26,6 +26,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTORCC ON)
 
 
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/libs/libvcard/include/vcard
+    ${CMAKE_CURRENT_BINARY_DIR}/src/libs/libvcard/include/vcard
+    )
+
 set(union_SRCS
     src/main.cpp
     src/interfaces/synchroniser.cpp
@@ -34,9 +39,19 @@ set(union_SRCS
     src/models/baselist.cpp
     src/models/basemodel.cpp
     src/models/contacts/contactsmodel.cpp
+    src/interfaces/kcontactsinterface.cpp
+
+    src/libs/libvcard/libvcard/vcard.cpp
+    src/libs/libvcard/libvcard/vcardparam.cpp
+    src/libs/libvcard/libvcard/vcardproperty.cpp
+
     )
 
 set(union_HDRS
+    src/libs/libvcard/include/vcard/vcardproperty.h
+    src/libs/libvcard/include/vcard/vcardparam.h
+    src/libs/libvcard/include/vcard/vcard.h
+
     src/union.h
     src/db/db.h
     src/db/dbactions.h
@@ -44,6 +59,7 @@ set(union_HDRS
     src/models/baselist.h
     src/models/basemodel.h
     src/models/contacts/contactsmodel.h
+    src/interfaces/kcontactsinterface.h
     )
 
 set(union_ASSETS
@@ -61,12 +77,12 @@ if (ANDROID)
     find_package(Qt5 REQUIRED COMPONENTS AndroidExtras)
 
     target_link_libraries(vvave Qt5::AndroidExtras)
-#    kde_source_files_enable_exceptions(union src/pix.cpp)
+    #    kde_source_files_enable_exceptions(union src/pix.cpp)
 else()
-    find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Notifications Config KIO Attica)
+    find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Notifications Config KIO Attica Contacts)
     find_package(Qt5 REQUIRED COMPONENTS WebEngine)
 
-    target_link_libraries(union KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica)
+    target_link_libraries(union KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica KF5::Contacts)
 endif()
 
 if (TARGET create-apk-union)

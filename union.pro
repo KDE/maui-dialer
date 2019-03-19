@@ -14,7 +14,7 @@ linux:unix:!android {
 
     message(Building for Linux KDE)
     QT += webengine
-    QT += KService KNotifications KNotifications KI18n
+    QT += KService KNotifications KNotifications KI18n KContacts
     QT += KIOCore KIOFileWidgets KIOWidgets KNTLM
     LIBS += -lMauiKit
 
@@ -47,6 +47,7 @@ SOURCES += \
     src/interfaces/synchroniser.cpp \
     src/db/db.cpp \
     src/db/dbactions.cpp \
+    src/interfaces/kcontactsinterface.cpp
 
 RESOURCES += \
     $$PWD/src/qml.qrc \
@@ -64,4 +65,5 @@ HEADERS += \
     src/models/basemodel.h \
     src/models/contacts/contactsmodel.h \
     src/interfaces/synchroniser.h \
+    src/interfaces/kcontactsinterface.h
 

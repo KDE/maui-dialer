@@ -1,10 +1,6 @@
 #include "contactsmodel.h"
 #include "./src/interfaces/synchroniser.h"
 
-#ifdef Q_OS_ANDROID
-#include "./src/interfaces/androidintents.h"
-#endif
-
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 {
     this->syncer = new Synchroniser(this);
@@ -19,8 +15,8 @@ FMH::MODEL_LIST ContactsModel::items() const
 
 void ContactsModel::setQuery(const QString &query)
 {
-    //    if(this->query == query)
-    //        return;
+    if(this->query == query)
+        return;
 
     this->query = query;
     qDebug()<< "setting query"<< this->query;
@@ -39,6 +35,27 @@ void ContactsModel::setQuery(const QString &query)
 QString ContactsModel::getQuery() const
 {
     return this->query;
+}
+
+void ContactsModel::setSQLQuery(const QString &query)
+{
+    if(this->SQLQuery == query)
+        return;
+
+    this->SQLQuery = query;
+    qDebug()<< "setting query"<< this->SQLQuery;
+
+    emit this->preListChanged();
+    this->getList(this->SQLQuery);
+    this->sortList();
+    emit this->postListChanged();
+
+    emit this->SQLQueryChanged();
+}
+
+QString ContactsModel::getSQLQuery() const
+{
+    return this->SQLQuery;
 }
 
 void ContactsModel::setSortBy(const SORTBY &sort)
@@ -125,15 +142,10 @@ void ContactsModel::setList()
     emit this->postListChanged();
 }
 
-void ContactsModel::getList()
+void ContactsModel::getList(const QString &query)
 {
     qDebug()<< "TRYING TO SET FULL LIST";
-    this->list = this->syncer->getContacts(QString("select * from contacts"));
-
-#ifdef Q_OS_ANDROID
-    AndroidIntents android;
-    this->list << android.getContacts();
-#endif
+    this->list = this->syncer->getContacts(query);
 }
 
 QVariantMap ContactsModel::get(const int &index) const

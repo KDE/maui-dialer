@@ -9,4 +9,16 @@ import org.kde.kirigami 2.2 as Kirigami
 Maui.Dialog
 {
 
+    id: control
+
+    maxWidth: unit * 500
+    maxHeight: maxWidth
+
+
+  Maui.Editor
+    {
+        id: _editor
+        anchors.fill: parent
+        headBar.drawBorder: false
+    }
 }

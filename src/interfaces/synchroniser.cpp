@@ -2,6 +2,10 @@
 #include "./../db/dbactions.h"
 #include "vcardproperty.h"
 
+#ifdef Q_OS_ANDROID
+#include "./src/interfaces/androidintents.h"
+#endif
+
 Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 {
     this->dba = DBActions::getInstance();
@@ -10,7 +14,14 @@ Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 
 FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
 {
-    return this->dba->getDBData(query);
+    FMH::MODEL_LIST data =this->dba->getDBData(query);
+
+#ifdef Q_OS_ANDROID
+    AndroidIntents android;
+    data << android.getContacts();
+#endif
+
+    return data;
 }
 
 bool Synchroniser::insertContact(const FMH::MODEL &contact)

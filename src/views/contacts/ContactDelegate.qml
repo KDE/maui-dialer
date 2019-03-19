@@ -13,6 +13,9 @@ SwipeDelegate
     hoverEnabled: true
     clip: true
     property alias quickButtons : _buttonsRow.data
+    property bool showMenuIcon: false
+
+    signal favClicked(int index)
 
     background: Rectangle
     {
@@ -221,7 +224,7 @@ SwipeDelegate
                     anchors.centerIn: parent
                     Maui.ToolButton
                     {
-
+                        visible: showMenuIcon
                         iconName: "overflow-menu"
                         onClicked: swipe.position < 0 ? swipe.close() : swipe.open(SwipeDelegate.Right)
 
@@ -244,7 +247,8 @@ SwipeDelegate
         {
             iconName: "draw-star"
             anchors.verticalCenter: parent.verticalCenter
-
+            onClicked: control.favClicked(index)
+            iconColor: model.fav == "1" ? "yellow" : textColor
         }
 
         Maui.ToolButton
@@ -258,6 +262,11 @@ SwipeDelegate
         {
             iconName: "draw-text"
             anchors.verticalCenter: parent.verticalCenter
+            onClicked:
+            {
+                _messageComposer.open()
+                swipe.close()
+            }
 
         }
 
@@ -269,7 +278,7 @@ SwipeDelegate
             onClicked:
             {
                 if(isAndroid)
-                    Maui.Android.call(contact.tel)
+                    Maui.Android.call(model.tel)
 
                 swipe.close()
             }

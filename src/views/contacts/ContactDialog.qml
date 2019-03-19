@@ -37,6 +37,7 @@ Maui.Dialog
             iconName: "draw-text"
             text: qsTr("Message")
             display: ToolButton.TextUnderIcon
+
         },
 
         Maui.ToolButton
@@ -44,6 +45,12 @@ Maui.Dialog
             iconName: "draw-star"
             text: qsTr("Fav")
             display: ToolButton.TextUnderIcon
+            iconColor: contact.fav == "1" ? "yellow" : textColor
+            onClicked:
+            {
+                contact["fav"] = contact.fav == "1" ? "0" : "1"
+                contacsView.list.update(contact, index)
+            }
         },
 
         Maui.ToolButton
@@ -89,7 +96,7 @@ Maui.Dialog
                 height: Math.min(parent.height, control.width)
                 width: height
                 anchors.centerIn: parent
-                radius: Math.min(width, height)
+                radius: radiusV* 2
                 color: Qt.rgba(Math.random(),Math.random(),Math.random(),1);
                 border.color: Qt.darker(color, 1.5)
 
@@ -137,7 +144,7 @@ Maui.Dialog
                                     anchors.centerIn: parent
                                     width: _img.width
                                     height: _img.height
-                                    radius: Math.min(width, height)
+                                    radius: radiusV* 2
                                     border.color: borderColor
                                 }
                             }
@@ -195,7 +202,7 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
-
+                        visible: contact.n
                         Label
                         {
                             Layout.fillHeight: true
@@ -224,6 +231,7 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
+                        visible: contact.n
 
                         Label
                         {
@@ -250,6 +258,8 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
+                        visible: contact.org
+
                         Label
                         {
                             Layout.fillHeight: true
@@ -276,6 +286,8 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
+                        visible: contact.title
+
                         Label
                         {
                             Layout.fillHeight: true
@@ -303,6 +315,8 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
+                        visible: contact.tel
+
                         Label
                         {
                             Layout.fillHeight: true
@@ -329,6 +343,8 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
+                        visible: contact.tel
+
                         Label
                         {
                             Layout.fillHeight: true
@@ -354,6 +370,8 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
+                        visible: contact.email
+
                         Label
                         {
                             Layout.fillHeight: true

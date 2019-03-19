@@ -9,7 +9,8 @@ class Synchroniser;
 class ContactsModel : public BaseList
 {
     Q_OBJECT
-    Q_PROPERTY(QString query READ getQuery WRITE setQuery NOTIFY queryChanged())
+    Q_PROPERTY(QString query READ getQuery WRITE setQuery NOTIFY queryChanged)
+    Q_PROPERTY(QString sqlquery READ getSQLQuery WRITE setSQLQuery NOTIFY SQLQueryChanged)
     Q_PROPERTY(ContactsModel::SORTBY sortBy READ getSortBy WRITE setSortBy NOTIFY sortByChanged)
 
 public:
@@ -39,6 +40,9 @@ public:
     void setQuery(const QString &query);
     QString getQuery() const;
 
+    void setSQLQuery(const QString &query);
+    QString getSQLQuery() const;
+
     void setSortBy(const ContactsModel::SORTBY &sort);
     ContactsModel::SORTBY getSortBy() const;
 
@@ -47,14 +51,16 @@ private:
     FMH::MODEL_LIST list;
     void sortList();
     void setList();
-    void getList();
+    void getList(const QString &query = "select * from contacts");
     void filter();
 
-    QString query;
+    QString query = "undefined";
+    QString SQLQuery = "";
     ContactsModel::SORTBY sort = ContactsModel::SORTBY::N;
 
 signals:
     void queryChanged();
+    void SQLQueryChanged();
     void sortByChanged();
 
 public slots:
