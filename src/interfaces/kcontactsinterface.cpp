@@ -34,28 +34,27 @@ using namespace KContacts;
 
 kcontactsinterface::kcontactsinterface(QObject *parent) : QObject(parent)
 {
-//    this->addContact("Daniel", "3298373843");
+    //    this->addContact("Daniel", "3298373843");
 }
 
 FMH::MODEL_LIST kcontactsinterface::getContacts(const QString &query)
 {
+    FMH::MODEL_LIST res;
     KPeople::PersonsModel model;
     qDebug()<< "KPEOPLE CONCTAS" << model.rowCount();
 
-    for(auto i = 0 ; i< model.rowCount(); i++)        
+    for(auto i = 0 ; i< model.rowCount(); i++)
     {
         auto uri = model.get(i, KPeople::PersonsModel::PersonUriRole).toString();
         KPeople::PersonData person(uri);
-        qDebug() << person.email()<< person.name();
+        res << FMH::MODEL  {
+        {FMH::MODEL_KEY::N, person.name()},
+        {FMH::MODEL_KEY::EMAIL, person.email()},
+        {FMH::MODEL_KEY::TEL, person.contactCustomProperty("phoneNumber").toString()},
+    {FMH::MODEL_KEY::PHOTO, person.pictureUrl().toString()}};
+}
 
-     }
-
-//   auto monitor = new KPeople::AllContactsMonitor();
-//    auto data = monitor->contacts();
-
-//    qDebug()<< "KPEOPLE CONCTAS" << data;
-
-    return FMH::MODEL_LIST();
+return res;
 }
 
 void kcontactsinterface::addContact(QString name, QString tel)

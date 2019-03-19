@@ -264,6 +264,7 @@ SwipeDelegate
             anchors.verticalCenter: parent.verticalCenter
             onClicked:
             {
+                _messageComposer.contact = model
                 _messageComposer.open()
                 swipe.close()
             }

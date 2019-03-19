@@ -16,12 +16,12 @@ Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 
 FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
 {
-    FMH::MODEL_LIST data =this->dba->getDBData(query);
+    FMH::MODEL_LIST data/* =this->dba->getDBData(query)*/;
 
 #ifdef Q_OS_ANDROID
     AndroidIntents android;
     data << android.getContacts();
-#else Q_OS_LINUX
+#else
     kcontactsinterface kcontacts;
     data << kcontacts.getContacts("");
 #endif
