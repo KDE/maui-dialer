@@ -79,10 +79,10 @@ if (ANDROID)
     target_link_libraries(vvave Qt5::AndroidExtras)
     #    kde_source_files_enable_exceptions(union src/pix.cpp)
 else()
-    find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Notifications Config KIO Attica Contacts People)
+    find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Notifications Config KIO Attica Contacts People )
     find_package(Qt5 REQUIRED COMPONENTS WebEngine)
 
-    target_link_libraries(union KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica KF5::Contacts KF5::People)
+    target_link_libraries(union KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica KF5::Contacts KF5::People  )
 endif()
 
 if (TARGET create-apk-union)

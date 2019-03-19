@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "kcontactsinterface.h"
 
 #include <QDebug>
 #include <QFile>
@@ -25,14 +26,15 @@
 #include <QCryptographicHash>
 #include <KContacts/Addressee>
 #include <KContacts/VCardConverter>
-#include "kcontactsinterface.h"
-#include <kpeople/personsmodel.h>
+#include <KPeople/KPeople/PersonsModel>
+#include <KPeople/PersonData>
+#include <KPeople/KPeopleBackend/AbstractContact>
 
 using namespace KContacts;
 
 kcontactsinterface::kcontactsinterface(QObject *parent) : QObject(parent)
 {
-
+//    this->addContact("Daniel", "3298373843");
 }
 
 FMH::MODEL_LIST kcontactsinterface::getContacts(const QString &query)
@@ -40,8 +42,18 @@ FMH::MODEL_LIST kcontactsinterface::getContacts(const QString &query)
     KPeople::PersonsModel model;
     qDebug()<< "KPEOPLE CONCTAS" << model.rowCount();
 
-    for(auto i = 0 ; i< model.rowCount(); i++)
-        qDebug()<< "KPEOPLE CONCTAS" << model.get(i, KPeople::PersonsModel::FormattedNameRole);
+    for(auto i = 0 ; i< model.rowCount(); i++)        
+    {
+        auto uri = model.get(i, KPeople::PersonsModel::PersonUriRole).toString();
+        KPeople::PersonData person(uri);
+        qDebug() << person.email()<< person.name();
+
+     }
+
+//   auto monitor = new KPeople::AllContactsMonitor();
+//    auto data = monitor->contacts();
+
+//    qDebug()<< "KPEOPLE CONCTAS" << data;
 
     return FMH::MODEL_LIST();
 }
@@ -65,7 +77,7 @@ void kcontactsinterface::addContact(QString name, QString tel)
 
     // save vcard
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
-                   + ("/kpeoplevcard");
+            + ("/kpeoplevcard");
     QCryptographicHash hash(QCryptographicHash::Sha1);
     hash.addData(name.toUtf8());
     QFile file(path + "/" + hash.result().toHex() + ".vcf");
