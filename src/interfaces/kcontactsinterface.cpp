@@ -26,13 +26,24 @@
 #include <KContacts/Addressee>
 #include <KContacts/VCardConverter>
 #include "kcontactsinterface.h"
-
+#include <kpeople/personsmodel.h>
 
 using namespace KContacts;
 
 kcontactsinterface::kcontactsinterface(QObject *parent) : QObject(parent)
 {
 
+}
+
+FMH::MODEL_LIST kcontactsinterface::getContacts(const QString &query)
+{
+    KPeople::PersonsModel model;
+    qDebug()<< "KPEOPLE CONCTAS" << model.rowCount();
+
+    for(auto i = 0 ; i< model.rowCount(); i++)
+        qDebug()<< "KPEOPLE CONCTAS" << model.get(i, KPeople::PersonsModel::FormattedNameRole);
+
+    return FMH::MODEL_LIST();
 }
 
 void kcontactsinterface::addContact(QString name, QString tel)

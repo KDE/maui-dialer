@@ -23,7 +23,7 @@ Maui.Page
     {
         iconName: "list-add-user"
         iconColor: "white"
-        onClicked: _contactDialog.open()
+        onClicked: _newContactDialog.open()
     }
 
     footBar.colorScheme.borderColor: "transparent"
@@ -60,7 +60,7 @@ Maui.Page
     {
         id: _searchField
         height: toolBarHeightAlt
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         width: isWide ? control.width * 0.8 : control.width * 0.95
         //        height: rowHeight
         placeholderText: qsTr("Search contacts... ")

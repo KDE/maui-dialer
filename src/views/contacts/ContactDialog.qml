@@ -258,7 +258,7 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
-                        visible: contact.org
+                        visible: contact.org && contact.org.length
 
                         Label
                         {

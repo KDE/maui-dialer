@@ -3,11 +3,6 @@ import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
 import QtQuick.Layouts 1.3
 
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.kirigami 2.6 as Kirigami
-import org.kde.people 1.0 as KPeople
-
-
 import "views/contacts"
 import "views/dialer"
 import "widgets"
@@ -43,7 +38,7 @@ Maui.ApplicationWindow
     //    onSearchButtonClicked: footBar.visible = !footBar.visible
     leftIcon.visible: false
     rightIcon.visible: false
-    headBar.implicitHeight: toolBarHeight * 1.5
+    headBar.implicitHeight: toolBarHeight * 1.2
     headBar.drawBorder: false
     headBarBGColor: backgroundColor
     headBarFGColor: textColor
@@ -64,10 +59,11 @@ Maui.ApplicationWindow
         {
             id: _contactsButton
             Layout.fillWidth: isMobile
+            Layout.fillHeight: true
             iconName: "view-media-artist"
             iconColor: currentView === views.contacts ? highlightColor : textColor
             //            text: qsTr("Contacts")
-            height: parent.height
+//            height: parent.height
             showIndicator: currentView === views.contacts
             onClicked: currentView = views.contacts
 
@@ -79,7 +75,7 @@ Maui.ApplicationWindow
             Layout.fillWidth: isMobile
 
             iconName: "view-list-icons"
-            height: parent.height
+            Layout.fillHeight: true
             iconColor: currentView === views.dialer ? highlightColor : textColor
             //            text: qsTr("Dialer")
             //            visible: isAndroid
@@ -95,7 +91,7 @@ Maui.ApplicationWindow
             Layout.fillWidth: isMobile
 
             iconName: "view-media-recent"
-            height: parent.height
+            Layout.fillHeight: true
             iconColor: currentView === views.recent ? highlightColor : textColor
             //            text: qsTr("Recent")
             //            visible: isAndroid
@@ -109,7 +105,7 @@ Maui.ApplicationWindow
             Layout.fillWidth: isMobile
 
             iconName: "draw-star"
-            height: parent.height
+            Layout.fillHeight: true
             iconColor: currentView === views.favs ? highlightColor : textColor
             //            text: qsTr("Favorites")
             showIndicator: currentView === views.favs
@@ -149,19 +145,18 @@ Maui.ApplicationWindow
         ContactsView
         {
             id: _favsView
-//            list.sqlquery : "select * from contacts where fav = 1"
+            list.sqlquery : "select * from contacts where fav = 1"
 
-            listView.model: PlasmaCore.SortFilterModel {
-                sourceModel: KPeople.PersonsSortFilterProxyModel {
-                    sourceModel: KPeople.PersonsModel {
-                        id: contactsModel
-                    }
-                }
-                sortRole: "display"
-                filterRole: "display"
-                filterRegExp: ".*" + searchField.text + ".*"
-                sortOrder: Qt.AscendingOrder
-            }
+//            listView.model: KPeople.PersonsModel {
+//                                id: contactsModel
+//                            }
+
+//            listView.delegate: Rectangle
+//            {
+//                color: "pink"
+//                height: 60
+//                width : 120
+//            }
 
         }
     }

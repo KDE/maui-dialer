@@ -4,6 +4,8 @@
 
 #ifdef Q_OS_ANDROID
 #include "./src/interfaces/androidintents.h"
+#else
+#include "./src/interfaces/kcontactsinterface.h"
 #endif
 
 Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
@@ -19,6 +21,9 @@ FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
 #ifdef Q_OS_ANDROID
     AndroidIntents android;
     data << android.getContacts();
+#else Q_OS_LINUX
+    kcontactsinterface kcontacts;
+    data << kcontacts.getContacts("");
 #endif
 
     return data;

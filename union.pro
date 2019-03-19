@@ -18,6 +18,11 @@ linux:unix:!android {
     QT += KIOCore KIOFileWidgets KIOWidgets KNTLM
     LIBS += -lMauiKit
 
+    SOURCES += src/interfaces/kcontactsinterface.cpp
+
+    HEADERS += src/interfaces/kcontactsinterface.h
+
+
 } else:android {
 
     message(Building helpers for Android)
@@ -47,7 +52,6 @@ SOURCES += \
     src/interfaces/synchroniser.cpp \
     src/db/db.cpp \
     src/db/dbactions.cpp \
-    src/interfaces/kcontactsinterface.cpp
 
 RESOURCES += \
     $$PWD/src/qml.qrc \
@@ -65,5 +69,4 @@ HEADERS += \
     src/models/basemodel.h \
     src/models/contacts/contactsmodel.h \
     src/interfaces/synchroniser.h \
-    src/interfaces/kcontactsinterface.h
 
