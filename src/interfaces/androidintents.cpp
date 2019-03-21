@@ -6,6 +6,7 @@
 AndroidIntents::AndroidIntents(QObject *parent) : QObject(parent)
 {
     this->mauia = new MAUIAndroid(this);
+    auto accounts = this->mauia->getAccounts();
 }
 
 void AndroidIntents::call(const QString &tel)
@@ -64,5 +65,11 @@ FMH::MODEL_LIST AndroidIntents::getContacts()
 
 void AndroidIntents::addContact(const FMH::MODEL &contact)
 {
-    this->mauia->addContact();
+    this->mauia->addContact(contact[FMH::MODEL_KEY::N],
+            contact[FMH::MODEL_KEY::TEL],
+            contact[FMH::MODEL_KEY::TEL_2],
+            contact[FMH::MODEL_KEY::TEL_3],
+            contact[FMH::MODEL_KEY::EMAIL],
+            contact[FMH::MODEL_KEY::TITLE],
+            contact[FMH::MODEL_KEY::ORG]);
 }
