@@ -2,6 +2,7 @@
 #include "./mauikit/src/android/mauiandroid.h"
 #include <QDomDocument>
 
+
 AndroidIntents::AndroidIntents(QObject *parent) : QObject(parent)
 {
     this->mauia = new MAUIAndroid(this);
@@ -16,7 +17,7 @@ FMH::MODEL_LIST AndroidIntents::getContacts()
 {
     FMH::MODEL_LIST data;
 
-    const auto array = mauia->getContacts();
+    const auto array = this->mauia->getContacts();
     QString xmlData(array);
     QDomDocument doc;
 
@@ -47,11 +48,11 @@ FMH::MODEL_LIST AndroidIntents::getContacts()
                     const auto tel = m.toElement().text();
                     model.insert(FMH::MODEL_KEY::TEL, tel);
 
-                }else if(m.nodeName() == "email")
+                }/*else if(m.nodeName() == "email")
                 {
                     const auto email = m.toElement().text();
                     model.insert(FMH::MODEL_KEY::EMAIL, email);
-                }
+                }*/
             }
 
             data << model;
@@ -59,4 +60,9 @@ FMH::MODEL_LIST AndroidIntents::getContacts()
     }
 
     return data;
+}
+
+void AndroidIntents::addContact(const FMH::MODEL &contact)
+{
+    this->mauia->addContact();
 }

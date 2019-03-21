@@ -21,13 +21,21 @@ Maui.Dialog
     {
         if(!isMobile && !isAndroid)
             Maui.KDE.email(contact.email, "", "", _subjectTextField.text, _editor.text)
-        else
+        else if(!isAndroid)
         {
             if(_combobox.currentText === contact.email)
                 Qt.openUrlExternally("mailto:" + contact.email)
             else if(_combobox.currentText === contact.tel)
-                Qt.openUrlExternally("sms://" + contact.tel)
+                Qt.openUrlExternally("sms:" + contact.tel +"&sms_body:" + _editor.text)
+        }else
+        {
+            if(_combobox.currentText === contact.email)
+                Qt.openUrlExternally("mailto:" + contact.email)
+            else if(_combobox.currentText === contact.tel)
+                Maui.Android.sendSMS(contact.tel, _subjectTextField.text, _editor.text)
         }
+
+        close();
     }
 
     acceptButton.text: qsTr("Send...")

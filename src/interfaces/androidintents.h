@@ -13,6 +13,7 @@ public:
     void call(const QString &tel);
 
     FMH::MODEL_LIST getContacts();
+    void addContact(const FMH::MODEL &contact);
 
 private:
     MAUIAndroid *mauia;

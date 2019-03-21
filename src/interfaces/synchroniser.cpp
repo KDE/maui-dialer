@@ -16,11 +16,11 @@ Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 
 FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
 {
-    FMH::MODEL_LIST data/* =this->dba->getDBData(query)*/;
+    FMH::MODEL_LIST data =this->dba->getDBData(query);
 
 #ifdef Q_OS_ANDROID
     AndroidIntents android;
-    data << android.getContacts();
+//    data << android.getContacts();
 #else
     kcontactsinterface kcontacts;
     data << kcontacts.getContacts("");
@@ -31,7 +31,15 @@ FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
 
 bool Synchroniser::insertContact(const FMH::MODEL &contact)
 {   
-    return this->dba->insertContact(contact);
+//    return this->dba->insertContact(contact);
+#ifdef Q_OS_ANDROID
+    qDebug()<< "trying to insert contact to android api";
+    AndroidIntents android;
+    android.addContact(contact);
+#else
+//    kcontactsinterface kcontacts;
+//    data << kcontacts.getContacts("");
+#endif
 }
 
 bool Synchroniser::updateContact(const FMH::MODEL &contact)
