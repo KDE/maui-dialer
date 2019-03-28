@@ -57,14 +57,26 @@ FMH::MODEL_LIST kcontactsinterface::getContacts(const QString &query)
 return res;
 }
 
-void kcontactsinterface::addContact(QString name, QString tel)
+void kcontactsinterface::addContact(const FMH::MODEL &contact)
 {
+    qDebug()<< "TRYIN TO INSERT VACRD CONTACT"<< contact;
     // addresses
     Addressee adr;
-    adr.setName(name);
+    adr.setName(contact[FMH::MODEL_KEY::N]);
+    Email::List emailList;
+    Email email;
+    email.setEmail(contact[FMH::MODEL_KEY::EMAIL]);
+    emailList << email;
+    adr.setEmailList(emailList);
+    Picture photo;
+    photo.setUrl(contact[FMH::MODEL_KEY::PHOTO]);
+    adr.setPhoto(photo);
+    adr.setTitle(contact[FMH::MODEL_KEY::TITLE]);
+    adr.setOrganization(contact[FMH::MODEL_KEY::ORG]);
+    adr.setGender(contact[FMH::MODEL_KEY::GENDER]);
     PhoneNumber::List phoneNums;
     PhoneNumber phoneNum;
-    phoneNum.setNumber(tel);
+    phoneNum.setNumber(contact[FMH::MODEL_KEY::TEL]);
     phoneNum.setType(PhoneNumber::Cell);
     phoneNums.append(phoneNum);
     adr.setPhoneNumbers(phoneNums);
@@ -78,7 +90,7 @@ void kcontactsinterface::addContact(QString name, QString tel)
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
             + ("/kpeoplevcard");
     QCryptographicHash hash(QCryptographicHash::Sha1);
-    hash.addData(name.toUtf8());
+    hash.addData(adr.name().toUtf8());
     QFile file(path + "/" + hash.result().toHex() + ".vcf");
     if (!file.open(QFile::WriteOnly)) {
         qWarning() << "Couldn't save vCard: Couldn't open file for writing.";

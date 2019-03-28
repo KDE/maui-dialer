@@ -30,7 +30,7 @@ SwipeDelegate
             id: _layout
 
             anchors.fill: parent
-            anchors.margins: space.big
+            anchors.margins: space.small
 
             Item
             {
@@ -43,11 +43,20 @@ SwipeDelegate
 
                 Rectangle
                 {
-                    height: parent.height
+                    height: parent.height * 0.7
                     width: height
                     anchors.centerIn: parent
                     radius: radiusV * 2
-                    color: Qt.rgba(Math.random(),Math.random(),Math.random(),1);
+                    color:
+                    {
+                        var c = Qt.rgba(Math.random(),Math.random(),Math.random(),1)
+                         return Qt.hsla(c.hslHue, 0.7, c.hslLightness, c.a);
+                    }
+
+//                    color: Qt.hsl(Math.random(),Math.random(),Math.random(),1);
+//                    color: "hsl(" + 360 * Math.random() + ',' +
+//                           (25 + 70 * Math.random()) + '%,' +
+//                           (85 + 10 * Math.random()) + '%)';
                     border.color: Qt.darker(color, 1.5)
 
 
@@ -230,8 +239,6 @@ SwipeDelegate
 
                     }
                 }
-
-
             }
         }
     }
@@ -255,7 +262,6 @@ SwipeDelegate
         {
             iconName: "document-share"
             anchors.verticalCenter: parent.verticalCenter
-
         }
 
         Maui.ToolButton
@@ -268,7 +274,6 @@ SwipeDelegate
                 _messageComposer.open()
                 swipe.close()
             }
-
         }
 
         Maui.ToolButton

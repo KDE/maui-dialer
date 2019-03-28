@@ -21,7 +21,6 @@ Maui.ApplicationWindow
                                        dialer: 1,
                                        recent: 2,
                                        favs: 3
-
                                    })
 
 
@@ -63,7 +62,7 @@ Maui.ApplicationWindow
             iconName: "view-media-artist"
             iconColor: currentView === views.contacts ? highlightColor : textColor
             //            text: qsTr("Contacts")
-//            height: parent.height
+            //            height: parent.height
             showIndicator: currentView === views.contacts
             onClicked: currentView = views.contacts
 
@@ -147,16 +146,16 @@ Maui.ApplicationWindow
             id: _favsView
             list.sqlquery : "select * from contacts where fav = 1"
 
-//            listView.model: KPeople.PersonsModel {
-//                                id: contactsModel
-//                            }
+            //            listView.model: KPeople.PersonsModel {
+            //                                id: contactsModel
+            //                            }
 
-//            listView.delegate: Rectangle
-//            {
-//                color: "pink"
-//                height: 60
-//                width : 120
-//            }
+            //            listView.delegate: Rectangle
+            //            {
+            //                color: "pink"
+            //                height: 60
+            //                width : 120
+            //            }
 
         }
     }
@@ -202,7 +201,11 @@ Maui.ApplicationWindow
         {
             var con = contact;
             con["id"] = Math.random();
-            _contacsView.list.insert(con)
+            if(contact.account)
+                _contacsView.list.insert(con, contact.account)
+            else
+                _contacsView.list.insert(con)
+
         }
     }
 

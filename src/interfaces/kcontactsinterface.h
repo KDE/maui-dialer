@@ -38,7 +38,7 @@ public:
 signals:
 
 public slots:
-    void addContact(QString name, QString tel);
+    void addContact(const FMH::MODEL &contact);
 };
 
 #endif // KCONTACTSINTERFACE_H

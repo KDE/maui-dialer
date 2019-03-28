@@ -130,7 +130,7 @@ Maui.Page
         {
             id: _delegate
 
-            height: unit * 80
+            height: unit * 65
             width: isWide ? control.width * 0.8 : control.width * 0.95
             anchors.horizontalCenter: parent.horizontalCenter
             showMenuIcon: true

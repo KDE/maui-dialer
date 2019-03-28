@@ -1,9 +1,20 @@
 #include "contactsmodel.h"
 #include "./src/interfaces/synchroniser.h"
 
+#ifdef Q_OS_ANDROID
+#include "./src/interfaces/androidintents.h"
+#endif
+
+#ifdef STATIC_MAUIKIT
+#include "fm.h"
+#else
+#include <MauiKit/fm.h>
+#endif
+
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 {
     this->syncer = new Synchroniser(this);
+    connect(syncer, &Synchroniser::contactsReady, this, &ContactsModel::setList);
     //    connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
     //    this->getList();
 }
@@ -178,6 +189,22 @@ bool ContactsModel::insert(const QVariantMap &map)
     return true;
 }
 
+bool ContactsModel::insert(const QVariantMap &map, const QVariantMap &account)
+{
+    if(map.isEmpty() || account.isEmpty())
+        return false;
+
+    auto model = FM::toModel(map);
+    if(!this->syncer->insertContact(model,  FM::toModel(account)))
+        return false;
+
+    emit this->preListChanged();
+    this->setList();
+    emit this->postListChanged();
+
+    return true;
+}
+
 bool ContactsModel::update(const QVariantMap &map, const int &index)
 {
     if(index >= this->list.size() || index < 0)
@@ -302,4 +329,12 @@ void ContactsModel::clear()
 void ContactsModel::reset()
 {
     this->setList();
+}
+
+QVariantList ContactsModel::getAccounts()
+{
+    QVariantList res;
+    for(auto account : syncer->getAccounts())
+        res << FM::toMap(account);
+    return res;
 }

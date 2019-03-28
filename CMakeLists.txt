@@ -14,7 +14,7 @@ find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
 find_package(MauiKit REQUIRED)
-find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Qml Quick Sql Svg QuickControls2 Widgets)
+find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Qml Quick Sql Svg QuickControls2 Widgets Concurrent)
 include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
@@ -89,7 +89,7 @@ if (TARGET create-apk-union)
     set_target_properties(create-apk-union PROPERTIES ANDROID_APK_DIR "${MAUIKIT_ANDROID_DIR}")
 endif()
 
-target_link_libraries(union MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg)
+target_link_libraries(union MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg Qt5::Concurrent)
 
 install(TARGETS union ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 #install(FILES org.kde.pix.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})

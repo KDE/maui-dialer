@@ -14,12 +14,12 @@ Maui.Dialog
 
     maxWidth: unit * 700
     maxHeight: unit * 800
-    heightHint: 1
-    widthHint: 1
+    //    heightHint: 1
+    //    widthHint: 1
     acceptButton.text: qsTr("Save")
-    rejectButton.visible: true
-    rejectButton.text: qsTr("Cancel")
-    closeButton.visible: false
+    rejectButton.visible: false
+    //    rejectButton.text: qsTr("Cancel")
+    //    closeButton.visible: true
 
     property var contact : ({})
     signal newContact(var contact)
@@ -28,8 +28,6 @@ Maui.Dialog
 
     onAccepted:
     {
-
-
         var contact =({
                           n: _nameField.text +" "+ _lastNameField.text,
                           tel: _telField.text,
@@ -37,7 +35,8 @@ Maui.Dialog
                           org: _orgField.text,
                           adr: _adrField.text,
                           gender: _genderField.currentText,
-                          photo: _img.source
+                          photo: _img.source,
+                          account: isAndroid ? _accountsCombobox.model[_accountsCombobox.currentIndex] :({})
                       })
 
         if(contact.n.length && contact.tel.length)
@@ -144,14 +143,37 @@ Maui.Dialog
                 clip: true
                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
-//                boundsBehavior: Flickable.StopAtBounds
-//interactive: false
+                //                boundsBehavior: Flickable.StopAtBounds
+                //interactive: false
                 ColumnLayout
                 {
                     id: _formLayout
                     width: _layout.width * 0.95
                     //                    implicitHeight: control.height
                     spacing: space.large
+
+                    Column
+                    {
+                        Layout.fillWidth: true
+                        spacing: space.small
+                        visible: isAndroid
+                        Label
+                        {
+                            text: qsTr("Account")
+                            font.pointSize: fontSizes.default
+                            font.bold: true
+                            font.weight: Font.Bold
+                            color: textColor
+                        }
+
+                        Maui.ComboBox
+                        {
+                            id: _accountsCombobox
+                            textRole: "account"
+                            popup.z: control.z +1
+                            width: parent.width
+                        }
+                    }
 
                     Column
                     {
@@ -342,5 +364,11 @@ Maui.Dialog
         _img.source = ""
         control.close()
 
+    }
+
+    Component.onCompleted:
+    {
+        var androidAccounts = _contacsView.list.getAccounts();
+        _accountsCombobox.model = androidAccounts;
     }
 }

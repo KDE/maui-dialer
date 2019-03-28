@@ -66,6 +66,8 @@ signals:
 public slots:
     QVariantMap get(const int &index) const override;
     bool insert(const QVariantMap &map) override;
+    bool insert(const QVariantMap &map, const QVariantMap &account);
+
     bool update(const QVariantMap &map, const int &index) override;
     bool remove(const int &index);
 
@@ -74,6 +76,8 @@ public slots:
     void appendQuery(const QString &query);
     void clear();
     void reset();
+
+    QVariantList getAccounts();
 
 };
 

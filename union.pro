@@ -3,6 +3,7 @@ QT += quick
 QT += sql
 QT += widgets
 QT += quickcontrols2
+QT += concurrent
 
 CONFIG += c++11
 CONFIG += ordered
