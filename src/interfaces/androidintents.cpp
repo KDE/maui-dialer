@@ -6,6 +6,7 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QFuture>
 #include <QFutureWatcher>
+#include "fm.h"
 
 AndroidIntents::AndroidIntents(QObject *parent) : QObject(parent)
 {
@@ -16,6 +17,8 @@ void AndroidIntents::init()
 {
     this->mauia = new MAUIAndroid(this);
     this->m_accounts = this->accounts();
+    this->contacts();
+
 }
 
 AndroidIntents *AndroidIntents::instance = nullptr;
@@ -26,7 +29,7 @@ AndroidIntents *AndroidIntents::getInstance()
     {
         instance = new AndroidIntents();
         qDebug() << "getInstance(): First AndroidIntents instance\n";
-        instance->m_contacts = instance->contacts();
+        instance->init();
 
         return instance;
     } else
@@ -41,64 +44,80 @@ void AndroidIntents::call(const QString &tel)
     this->mauia->call(tel);
 }
 
-FMH::MODEL_LIST AndroidIntents::contacts()
+void AndroidIntents::contacts()
+{
+    QFutureWatcher<FMH::MODEL_LIST> *watcher = new QFutureWatcher<FMH::MODEL_LIST>;
+    connect(watcher, &QFutureWatcher<FMH::MODEL_LIST>::finished, [this, watcher]()
+    {
+      auto contacts = watcher->future().result();
+      this->m_contacts = contacts;
+      emit this->contactsReady();
+    });
+
+    QFuture<FMH::MODEL_LIST> t1 = QtConcurrent::run(AndroidIntents::fetchContacts);
+    watcher->setFuture(t1);
+}
+
+
+FMH::MODEL_LIST AndroidIntents::fetchContacts()
 {
     FMH::MODEL_LIST data;
 
-    QFutureWatcher<QString> *watcher = new QFutureWatcher<QString>;
-    connect(watcher, &QFutureWatcher<QString>::finished, [this, watcher]()
-    {
-        qDebug()<< "CONTACTS READY: ";
-        FMH::MODEL_LIST data;
-        const auto array = watcher->future().result();
+    auto list = MAUIAndroid::getContacts();
 
-        QString xmlData(array);
-        QDomDocument doc;
+    for(auto item : list)
+        data << FM::toModel(item.toMap());
 
-        if (!doc.setContent(xmlData)) return data;
+//    qDebug()<< "CONTACTS READY: 1";
 
-        const QDomNodeList nodeList = doc.documentElement().childNodes();
+//    QString xmlData(MAUIAndroid::getContacts());
+//    QDomDocument doc;
 
-        for (int i = 0; i < nodeList.count(); i++)
-        {
-            QDomNode n = nodeList.item(i);
+//    if (!doc.setContent(xmlData)) return data;
 
-            if(n.nodeName() == "item")
-            {
-                FMH::MODEL model;
-                auto contact = n.toElement().childNodes();
+//    qDebug()<< "CONTACTS READY: 2" << xmlData;
 
-                for(int i=0; i < contact.count(); i++)
-                {
-                    const QDomNode m = contact.item(i);
+//    const QDomNodeList nodeList = doc.documentElement().childNodes();
 
-                    if(m.nodeName() == "n")
-                    {
-                        const auto name = m.toElement().text();
-                        model.insert(FMH::MODEL_KEY::N, name);
+//    for (int i = 0; i < nodeList.count(); i++)
+//    {
+//        qDebug()<< "CONTACTS READY: " << i;
 
-                    }else if(m.nodeName() == "tel")
-                    {
-                        const auto tel = m.toElement().text();
-                        model.insert(FMH::MODEL_KEY::TEL, tel);
+//        QDomNode n = nodeList.item(i);
 
-                    }else if(m.nodeName() == "email")
-                    {
-                        const auto email = m.toElement().text();
-                        model.insert(FMH::MODEL_KEY::EMAIL, email);
-                    }
-                }
+//        if(n.nodeName() == "item")
+//        {
+//            FMH::MODEL model;
+//            auto contact = n.toElement().childNodes();
 
-                data << model;
-            }
-        }
+//            for(int i=0; i < contact.count(); i++)
+//            {
+//                const QDomNode m = contact.item(i);
 
-        this->m_contacts = data;
-        emit this->contactsReady();
-    });
+//                if(m.nodeName() == "n")
+//                {
+//                    const auto name = m.toElement().text();
+//                    model.insert(FMH::MODEL_KEY::N, name);
 
-    QFuture<QString> t1 = QtConcurrent::run(MAUIAndroid::getContacts);
-    watcher->setFuture(t1);
+//                }else if(m.nodeName() == "tel")
+//                {
+//                    const auto tel = m.toElement().text();
+//                    model.insert(FMH::MODEL_KEY::TEL, tel);
+
+//                }else if(m.nodeName() == "email")
+//                {
+//                    const auto email = m.toElement().text();
+//                    model.insert(FMH::MODEL_KEY::EMAIL, email);
+//                }
+//            }
+
+//            data << model;
+//        }
+//    }
+
+//    qDebug()<< "CONTACTS READY: " << data;
+
+    return data;
 }
 
 void AndroidIntents::addContact(const FMH::MODEL &contact, const FMH::MODEL &account)

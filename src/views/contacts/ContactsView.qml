@@ -63,7 +63,7 @@ Maui.Page
         anchors.centerIn: parent
         width: isWide ? control.width * 0.8 : control.width * 0.95
         //        height: rowHeight
-        placeholderText: qsTr("Search contacts... ")
+        placeholderText: listView.count
         onAccepted: list.query = text
         onCleared: list.reset()
         colorScheme.backgroundColor: "#4f5160"

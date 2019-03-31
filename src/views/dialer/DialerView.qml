@@ -123,7 +123,7 @@ Maui.Page
             visible: dialString.length
             Layout.fillWidth: true
             Layout.minimumHeight: (unit * 80) * 1.5
-            Layout.maximumHeight: unit * 1000
+            Layout.fillHeight: true
 
             model: _contacsView.listModel
 
@@ -167,7 +167,10 @@ Maui.Page
             id: _dialerPad
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.maximumHeight: unit*500
+            Layout.minimumHeight: unit*300
+            Layout.maximumHeight: unit*300
+            Layout.maximumWidth: unit*300
+            Layout.alignment: Qt.AlignCenter
             //            visible: true
 
             Dialer

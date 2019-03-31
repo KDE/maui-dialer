@@ -12,9 +12,22 @@ public:
     static AndroidIntents *getInstance();
 //    explicit AndroidIntents(QObject *parent = nullptr);
 
+    /**
+     * @brief call
+     * @param tel
+     */
     void call(const QString &tel);
+
+    /*!
+     * \brief init
+     */
     void init();
 
+    //!
+    //! \brief addContact
+    //! \param contact
+    //! \param account
+    //!
     void addContact(const FMH::MODEL &contact, const FMH::MODEL &account);
     FMH::MODEL_LIST getAccounts() const;
     FMH::MODEL_LIST getContacts() const;
@@ -27,9 +40,18 @@ private:
     FMH::MODEL_LIST m_accounts;
     FMH::MODEL_LIST m_contacts;
 
-
+    ///
+    /// \brief accounts
+    /// \return
+    ///
     FMH::MODEL_LIST accounts();
-    FMH::MODEL_LIST contacts();
+    void contacts();
+
+    ///
+    /// \brief fetchContacts
+    /// \return
+    ///
+    static FMH::MODEL_LIST fetchContacts();
 
 signals:
     void contactsReady();
