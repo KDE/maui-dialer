@@ -68,6 +68,7 @@ Maui.Page
                         font.bold: true
                         font.weight: Font.Bold
                         font.pointSize: fontSizes.huge
+                        font.letterSpacing: space.tiny
 
                         colorScheme.backgroundColor: "transparent"
                         colorScheme.borderColor: "transparent"
@@ -124,6 +125,7 @@ Maui.Page
             Layout.fillWidth: true
             Layout.minimumHeight: (unit * 80) * 1.5
             Layout.fillHeight: true
+            Layout.preferredHeight: control.height * 0.3
 
             model: _contacsView.listModel
 

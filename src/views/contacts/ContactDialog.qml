@@ -207,6 +207,35 @@ Maui.Dialog
                         {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
+                            text: qsTr("Account")
+                            font.pointSize: fontSizes.default
+                            font.weight: Font.Light
+                            color: textColor
+                        }
+
+                        Label
+                        {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+
+                            width: parent.width
+                            text: contact.account
+                            font.pointSize: fontSizes.big
+                            font.weight: Font.Bold
+                            color: textColor
+                            wrapMode: Text.WrapAnywhere
+                        }
+                    }
+
+                    ColumnLayout
+                    {
+                        Layout.fillWidth: true
+                        spacing: space.small
+                        visible: contact.n
+                        Label
+                        {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
                             text: qsTr("Name")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
@@ -403,6 +432,7 @@ Maui.Dialog
     function show(data)
     {
         control.contact = data
+        console.log("curent itemn account", data.account)
         control.open()
     }
 }

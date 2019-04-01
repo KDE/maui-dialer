@@ -134,6 +134,40 @@ Maui.ApplicationWindow
         {
             id: _contacsView
             list.query: ""
+
+            altToolBars: isMobile
+            floatingBar: true
+            footBarMargins: space.huge
+            footBarAligment: Qt.AlignRight
+            footBar.middleContent: Maui.ToolButton
+            {
+                iconName: "list-add-user"
+                iconColor: "white"
+                onClicked: _newContactDialog.open()
+            }
+
+            footBar.colorScheme.borderColor: "transparent"
+            headBarExit: false
+            headBar.drawBorder: false
+            footBar.drawBorder: false
+            footBar.floating: false
+            footBar.colorScheme.backgroundColor: highlightColor
+            headBar.implicitHeight: toolBarHeight * 1.4
+            headBar.plegable: false
+            headBarItem: Maui.TextField
+            {
+                id: _searchField
+                height: toolBarHeightAlt
+                anchors.centerIn: parent
+                width: isWide ? _contacsView.width * 0.8 : _contacsView.width * 0.95
+                //        height: rowHeight
+                placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.listView.count))
+                onAccepted: _contacsView.list.query = text
+                onCleared: _contacsView.list.reset()
+                colorScheme.backgroundColor: "#4f5160"
+                colorScheme.borderColor: "transparent"
+                colorScheme.textColor: "#fff"
+            }
         }
 
         DialerView
@@ -145,17 +179,7 @@ Maui.ApplicationWindow
         {
             id: _favsView
             list.query : "fav=1"
-
-            //            listView.model: KPeople.PersonsModel {
-            //                                id: contactsModel
-            //                            }
-
-            //            listView.delegate: Rectangle
-            //            {
-            //                color: "pink"
-            //                height: 60
-            //                width : 120
-            //            }
+            headBar.visible: false
 
         }
     }

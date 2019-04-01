@@ -15,61 +15,6 @@ Maui.Page
     property alias listModel : _contactsModel
     property alias listView : _listView
 
-    altToolBars: isMobile
-    floatingBar: true
-    footBarMargins: space.huge
-    footBarAligment: Qt.AlignRight
-    footBar.middleContent: Maui.ToolButton
-    {
-        iconName: "list-add-user"
-        iconColor: "white"
-        onClicked: _newContactDialog.open()
-    }
-
-    footBar.colorScheme.borderColor: "transparent"
-    headBarExit: false
-    headBar.drawBorder: false
-    footBar.drawBorder: false
-    footBar.floating: false
-    footBar.colorScheme.backgroundColor: highlightColor
-    //    footBar.implicitHeight: toolBarHeight * 1.5
-
-    //    footBar.leftContent: [
-    //        Maui.ToolButton
-    //        {
-    //            iconName: "list-add-user"
-    //            onClicked: _newContactDialog.open()
-    ////            text: qsTr("New")
-    //            display: ToolButton.TextUnderIcon
-    //        }
-    //    ]
-
-    //    footBar.rightContent: [
-
-    //        Maui.ToolButton
-    //        {
-    //            iconName: "view-sort"
-    ////            text: qsTr("Sort")
-    //            display: ToolButton.TextUnderIcon
-    //        }
-    //    ]
-
-    headBar.implicitHeight: toolBarHeight * 1.4
-    headBar.plegable: false
-    headBarItem: Maui.TextField
-    {
-        id: _searchField
-        height: toolBarHeightAlt
-        anchors.centerIn: parent
-        width: isWide ? control.width * 0.8 : control.width * 0.95
-        //        height: rowHeight
-        placeholderText: qsTr("Search %1 contacts... ".arg(listView.count))
-        onAccepted: list.query = text
-        onCleared: list.reset()
-        colorScheme.backgroundColor: "#4f5160"
-        colorScheme.borderColor: "transparent"
-        colorScheme.textColor: "#fff"
-    }
 
     BaseModel
     {
