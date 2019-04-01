@@ -144,7 +144,7 @@ Maui.ApplicationWindow
         ContactsView
         {
             id: _favsView
-            list.sqlquery : "select * from contacts where fav = 1"
+            list.query : "fav=1"
 
             //            listView.model: KPeople.PersonsModel {
             //                                id: contactsModel

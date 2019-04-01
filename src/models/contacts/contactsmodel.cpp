@@ -14,7 +14,11 @@
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 {
     this->syncer = new Synchroniser(this);
-    connect(syncer, &Synchroniser::contactsReady, this, &ContactsModel::setList);
+    connect(syncer, &Synchroniser::contactsReady, [this]()
+    {
+        this->setList();
+        this->filter();
+    });
     //    connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
     //    this->getList();
 }
@@ -32,13 +36,7 @@ void ContactsModel::setQuery(const QString &query)
     this->query = query;
     qDebug()<< "setting query"<< this->query;
 
-    if(this->list.isEmpty())
-        this->getList();
-
-    if(this->query.isEmpty())
-        this->setList();
-    else
-        this->filter();
+    this->filter();
 
     emit this->queryChanged();
 }
@@ -48,26 +46,6 @@ QString ContactsModel::getQuery() const
     return this->query;
 }
 
-void ContactsModel::setSQLQuery(const QString &query)
-{
-    if(this->SQLQuery == query)
-        return;
-
-    this->SQLQuery = query;
-    qDebug()<< "setting query"<< this->SQLQuery;
-
-    emit this->preListChanged();
-    this->getList(this->SQLQuery);
-    this->sortList();
-    emit this->postListChanged();
-
-    emit this->SQLQueryChanged();
-}
-
-QString ContactsModel::getSQLQuery() const
-{
-    return this->SQLQuery;
-}
 
 void ContactsModel::setSortBy(const SORTBY &sort)
 {
@@ -248,17 +226,41 @@ bool ContactsModel::remove(const int &index)
 
 void ContactsModel::filter()
 {
-    FMH::MODEL_LIST res;
-    for(const auto item : this->list)
+    if(list.isEmpty())
+        return;
+
+    if(this->query.isEmpty())
     {
-        for(const auto data : item)
+        this->setList();
+        return;
+    }
+
+    FMH::MODEL_LIST res;
+
+    if(this->query.contains("="))
+    {
+        auto q = this->query.split("=", QString::SkipEmptyParts);
+        if(q.size() == 2)
         {
-            if(data.contains(this->query, Qt::CaseInsensitive) && !res.contains(item))
-                res << item;
+            for(const auto item : this->list)
+            {
+                if(item[FMH::MODEL_NAME_KEY[q.first().trimmed()]] == q.last().trimmed())
+                    res << item;
+            }
+        }
+    }else
+    {
+        for(const auto item : this->list)
+        {
+            for(const auto data : item)
+            {
+                if(data.contains(this->query, Qt::CaseInsensitive) && !res.contains(item))
+                    res << item;
+            }
         }
     }
-    emit this->preListChanged();
 
+    emit this->preListChanged();
     this->list = res;
     emit this->postListChanged();
 

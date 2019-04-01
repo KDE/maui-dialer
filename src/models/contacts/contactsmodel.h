@@ -10,7 +10,6 @@ class ContactsModel : public BaseList
 {
     Q_OBJECT
     Q_PROPERTY(QString query READ getQuery WRITE setQuery NOTIFY queryChanged)
-    Q_PROPERTY(QString sqlquery READ getSQLQuery WRITE setSQLQuery NOTIFY SQLQueryChanged)
     Q_PROPERTY(ContactsModel::SORTBY sortBy READ getSortBy WRITE setSortBy NOTIFY sortByChanged)
 
 public:
@@ -37,11 +36,8 @@ public:
 
     FMH::MODEL_LIST items() const override;
 
-    void setQuery(const QString &query);
     QString getQuery() const;
-
-    void setSQLQuery(const QString &query);
-    QString getSQLQuery() const;
+    void setQuery(const QString &query);
 
     void setSortBy(const ContactsModel::SORTBY &sort);
     ContactsModel::SORTBY getSortBy() const;
@@ -54,8 +50,7 @@ private:
     void getList(const QString &query = "select * from contacts");
     void filter();
 
-    QString query = "undefined";
-    QString SQLQuery = "";
+    QString query;
     ContactsModel::SORTBY sort = ContactsModel::SORTBY::N;
 
 signals:
