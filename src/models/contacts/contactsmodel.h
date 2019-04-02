@@ -50,7 +50,7 @@ private:
     void getList(const QString &query = "select * from contacts");
     void filter();
 
-    QString query;
+    QString query = "undefined";
     ContactsModel::SORTBY sort = ContactsModel::SORTBY::N;
 
 signals:

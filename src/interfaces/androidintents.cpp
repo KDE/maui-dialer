@@ -145,6 +145,11 @@ FMH::MODEL_LIST AndroidIntents::getContacts() const
     return this->m_contacts;
 }
 
+void AndroidIntents::updateContact(const QString &id, const QString &field, const QString &value)
+{
+    this->mauia->updateContact(id, field, value);
+}
+
 FMH::MODEL_LIST AndroidIntents::accounts()
 {
     FMH::MODEL_LIST data;

@@ -27,12 +27,14 @@ Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
     this->android = AndroidIntents::getInstance();
     connect(android, &AndroidIntents::contactsReady, [this]()
     {
+        auto contacts = this->android->getContacts();
+        for(auto contact : contacts)
+            this->dba->insertContact(contact);
+
         emit this->contactsReady();
     });
 
 #endif
-
-
 }
 
 
@@ -41,7 +43,7 @@ FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
     FMH::MODEL_LIST data /*=this->dba->getDBData(query)*/;
 
 #ifdef Q_OS_ANDROID
-    data << android->getContacts();
+    data << this->dba->getDBData(query);
 #else
     kcontactsinterface kcontacts;
     data << kcontacts.getContacts("");
@@ -52,7 +54,7 @@ FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
 
 FMH::MODEL_LIST Synchroniser::getAccounts()
 {
-   FMH::MODEL_LIST res;
+    FMH::MODEL_LIST res;
 #ifdef Q_OS_ANDROID
     res = this->android->getAccounts();
     return res;
@@ -96,8 +98,6 @@ bool Synchroniser::removeContact(const FMH::MODEL &contact)
 {
     return this->dba->removeContact(contact[FMH::MODEL_KEY::ID]);
 }
-
-
 
 vCard Synchroniser::tovCard(const FMH::MODEL &contact)
 {

@@ -36,6 +36,9 @@ void ContactsModel::setQuery(const QString &query)
     this->query = query;
     qDebug()<< "setting query"<< this->query;
 
+    if(list.isEmpty())
+        this->setList();
+
     this->filter();
 
     emit this->queryChanged();

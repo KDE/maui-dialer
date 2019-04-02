@@ -31,6 +31,7 @@ public:
     void addContact(const FMH::MODEL &contact, const FMH::MODEL &account);
     FMH::MODEL_LIST getAccounts() const;
     FMH::MODEL_LIST getContacts() const;
+    void updateContact(const QString &id, const QString &field, const QString &value);
 
 
 private:
