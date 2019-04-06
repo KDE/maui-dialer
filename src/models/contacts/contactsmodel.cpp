@@ -193,20 +193,24 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
 
     const auto newItem = FM::toModel(map);
     const auto oldItem = this->list[index];
+    auto updatedItem = FMH::MODEL();
+    updatedItem[FMH::MODEL_KEY::ID] = oldItem[FMH::MODEL_KEY::ID];
 
-    if(this->syncer->updateContact(newItem))
-    {
         QVector<int> roles;
 
         for(auto key : newItem.keys())
+        {
             if(newItem[key] != oldItem[key])
+            {
+                updatedItem.insert(key, newItem[key]);
                 roles << key;
+            }
+        }
 
+        this->syncer->updateContact(updatedItem);
         this->list[index] = newItem;
         emit this->updateModel(index, roles);
 
-        return true;
-    }
 
     return false;
 }

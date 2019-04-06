@@ -91,7 +91,15 @@ bool Synchroniser::insertContact(const FMH::MODEL &contact, const FMH::MODEL &ac
 
 bool Synchroniser::updateContact(const FMH::MODEL &contact)
 {
-    return this->dba->updateContact(contact);
+#ifdef Q_OS_ANDROID
+    for(auto key : contact.keys())
+        android->updateContact(contact[FMH::MODEL_KEY::ID], FMH::MODEL_NAME[key], contact[key]);
+#else
+    kcontactsinterface kcontacts;
+    kcontacts.addContact(contact);
+#endif
+
+    return true;
 }
 
 bool Synchroniser::removeContact(const FMH::MODEL &contact)
