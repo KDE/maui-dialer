@@ -28,6 +28,7 @@ Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
     connect(android, &AndroidIntents::contactsReady, [this]()
     {
         auto contacts = this->android->getContacts();
+        this->dba->removeAll();
         for(auto contact : contacts)
             this->dba->insertContact(contact);
 

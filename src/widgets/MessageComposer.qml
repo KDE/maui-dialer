@@ -26,7 +26,10 @@ Maui.Dialog
             if(_combobox.currentText === contact.email)
                 Qt.openUrlExternally("mailto:" + contact.email)
             else if(_combobox.currentText === contact.tel)
+            {
                 Qt.openUrlExternally("sms:" + contact.tel +"&sms_body:" + _editor.text)
+                notify("emblem-info", qsTr("Message sent"), contact.tel)
+            }
         }else
         {
             if(_combobox.currentText === contact.email)
@@ -34,6 +37,7 @@ Maui.Dialog
             else if(_combobox.currentText === contact.tel)
                 Maui.Android.sendSMS(contact.tel, _subjectTextField.text, _editor.text)
         }
+
 
         close();
     }

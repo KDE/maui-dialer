@@ -16,7 +16,11 @@ Maui.Dialog
     property var contact : ({})
     acceptButton.text: qsTr("Edit")
     rejectButton.visible: false
-    onAccepted: _editContactDialog.open()
+    onAccepted:
+    {
+        console.log("oepning id<<", contact.id)
+        _editContactDialog.open()
+    }
 
     headBar.implicitHeight: toolBarHeight * 1.3
     headBar.middleContent: [
@@ -37,6 +41,11 @@ Maui.Dialog
             iconName: "draw-text"
             text: qsTr("Message")
             display: ToolButton.TextUnderIcon
+            onClicked:
+            {
+                _messageComposer.contact = control.contact
+                _messageComposer.open()
+            }
 
         },
 
@@ -49,7 +58,8 @@ Maui.Dialog
             onClicked:
             {
                 contact["fav"] = contact.fav == "1" ? "0" : "1"
-                contacsView.list.update(contact, index)
+                _contacsView.list.update(contact,  _contacsView.listView.currentIndex)
+                control.contact =contact;
             }
         },
 
@@ -71,8 +81,10 @@ Maui.Dialog
             var id = control.contact.id
             con["id"] = id
             console.log("trying to edit contact", id)
-            if(_contacsView.list.update(con, _contacsView.listView.currentIndex))
-                control.contact =  _contacsView.list.get(_contacsView.listView.currentIndex)
+            _contacsView.list.update(con, _contacsView.listView.currentIndex)
+            control.contact =  _contacsView.list.get(_contacsView.listView.currentIndex)
+
+            _editContactDialog.close()
 
         }
     }
@@ -248,25 +260,24 @@ Maui.Dialog
                             Layout.fillWidth: true
 
                             width: parent.width
-                            text: contact.n.split(" ")[0]
+                            text: contact.n
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
                             color: textColor
                         }
                     }
 
-
                     ColumnLayout
                     {
                         Layout.fillWidth: true
                         spacing: space.small
-                        visible: contact.n
+                        visible: contact.tel
 
                         Label
                         {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
-                            text: qsTr("Last name")
+                            text: qsTr("Phone")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
                             color: textColor
@@ -276,12 +287,42 @@ Maui.Dialog
                         {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
-                            text: contact.n.split(" ")[1] ? contact.n.split(" ")[1] : ""
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
                             color: textColor
+                            text: contact.tel
+
                         }
                     }
+
+                    ColumnLayout
+                    {
+                        Layout.fillWidth: true
+                        spacing: space.small
+                        visible: contact.email
+
+                        Label
+                        {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            text: qsTr("Email")
+                            font.pointSize: fontSizes.default
+                            font.weight: Font.Light
+                            color: textColor
+
+                        }
+
+                        Label
+                        {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                            font.pointSize: fontSizes.big
+                            font.weight: Font.Bold
+                            color: textColor
+                            text: contact.email
+                        }
+                    }
+
 
                     ColumnLayout
                     {
@@ -340,88 +381,6 @@ Maui.Dialog
                     }
 
 
-                    ColumnLayout
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        visible: contact.tel
-
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            text: qsTr("Mobile phone")
-                            font.pointSize: fontSizes.default
-                            font.weight: Font.Light
-                            color: textColor
-                        }
-
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            font.pointSize: fontSizes.big
-                            font.weight: Font.Bold
-                            color: textColor
-                            text: contact.tel
-
-                        }
-                    }
-
-                    ColumnLayout
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        visible: contact.tel
-
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            text: qsTr("Phone")
-                            font.pointSize: fontSizes.default
-                            font.weight: Font.Light
-                            color: textColor
-                        }
-
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            font.pointSize: fontSizes.big
-                            font.weight: Font.Bold
-                            color: textColor
-                            text: contact.tel
-                        }
-                    }
-
-                    ColumnLayout
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        visible: contact.email
-
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            text: qsTr("Email")
-                            font.pointSize: fontSizes.default
-                            font.weight: Font.Light
-                            color: textColor
-
-                        }
-
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            font.pointSize: fontSizes.big
-                            font.weight: Font.Bold
-                            color: textColor
-                            text: contact.email
-                        }
-                    }
                 }
 
             }

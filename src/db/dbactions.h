@@ -42,6 +42,7 @@ public:
     bool insertContact(const FMH::MODEL &con);
     bool removeContact(const QString &id);
     bool updateContact(const FMH::MODEL &con);
+    void removeAll();
 
     /* utils */
     FMH::MODEL_LIST getDBData(const QString &queryTxt);

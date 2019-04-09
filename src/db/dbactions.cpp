@@ -86,6 +86,12 @@ bool DBActions::updateContact(const FMH::MODEL &con)
     return this->update(UNI::TABLEMAP[UNI::TABLE::CONTACTS], con, where);
 }
 
+void DBActions::removeAll()
+{
+    const auto queryTxt = QString("DELETE FROM contacts");
+    this->execQuery(queryTxt);
+}
+
 bool DBActions::favContact(const QString &id, const bool &fav )
 {
     if(!this->checkExistance(UNI::TABLEMAP[UNI::TABLE::CONTACTS], FMH::MODEL_NAME[FMH::MODEL_KEY::ID], id))

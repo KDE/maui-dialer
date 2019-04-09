@@ -133,7 +133,7 @@ Maui.Page
             {
                 id: _delegate
 
-                height: unit * 80
+                height: unit * 60
                 width: _layout.width
                 anchors.horizontalCenter: parent.horizontalCenter
 //                quickButtons: Maui.ToolButton
@@ -158,7 +158,7 @@ Maui.Page
                     {
                         _suggestionListView.currentIndex = index
                         if(isAndroid)
-                            Maui.Android.call(_suggestionList.get(_suggestionListView.currentIndex).tel)
+                            Maui.Android.call(_contacsView.list.get(_suggestionListView.currentIndex).tel)
                     }
                 }
             }
@@ -171,7 +171,7 @@ Maui.Page
             Layout.fillWidth: true
             Layout.minimumHeight: unit*300
             Layout.maximumHeight: unit*300
-            Layout.maximumWidth: unit*300
+
             Layout.alignment: Qt.AlignCenter
             //            visible: true
 

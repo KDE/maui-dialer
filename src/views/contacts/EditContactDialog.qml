@@ -29,12 +29,11 @@ Maui.Dialog
     onAccepted:
     {
         var contact =({
-                          n: _nameField.text +" "+ _lastNameField.text,
+                          n: _nameField.text,
                           tel: _telField.text,
                           email: _emailField.text,
                           org: _orgField.text,
-                          adr: _adrField.text,
-                          gender: _genderField.currentText,
+//                          adr: _adrField.text,
                           photo: _img.source,
                           account: isAndroid ? _accountsCombobox.model[_accountsCombobox.currentIndex] :({})
                       })
@@ -192,9 +191,10 @@ Maui.Dialog
                         {
                             id: _nameField
                             width: parent.width
-                            text: contact.n.split(" ")[0]
+                            text: contact.n
                         }
                     }
+
 
 
                     Column
@@ -203,73 +203,7 @@ Maui.Dialog
                         spacing: space.small
                         Label
                         {
-                            text: qsTr("Last name")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                            color: textColor
-                        }
-
-                        Maui.TextField
-                        {
-                            id: _lastNameField
-                            width: parent.width
-                            text: contact.n.split(" ")[1] ? contact.n.split(" ")[1] : ""
-                        }
-                    }
-
-                    Column
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        Label
-                        {
-                            text: qsTr("Genre")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                            color: textColor
-                        }
-
-                        Maui.ComboBox
-                        {
-                            id: _genderField
-                            width: parent.width
-                            model: ["Male", "Female", "Other"]
-                            popup.z: control.z+1
-                            //                            currentText: contact.gender
-                        }
-                    }
-
-                    Column
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        Label
-                        {
-                            text: qsTr("Organization")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                            color: textColor
-                        }
-
-                        Maui.TextField
-                        {
-                            id: _orgField
-                            width: parent.width
-                            text: contact.org
-                        }
-                    }
-
-
-                    Column
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        Label
-                        {
-                            text: qsTr("Mobile phone")
+                            text: qsTr("Phone")
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
@@ -284,26 +218,6 @@ Maui.Dialog
                             inputMethodHints: Qt.ImhDigitsOnly
                         }
                     }
-
-                    //                    Column
-                    //                    {
-                    //                        Layout.fillWidth: true
-                    //                        spacing: space.small
-                    //                        Label
-                    //                        {
-                    //                            text: qsTr("Phone")
-                    //                            font.pointSize: fontSizes.default
-                    //                            font.bold: true
-                    //                            font.weight: Font.Bold
-                    //                        }
-
-                    //                        Maui.TextField
-                    //                        {
-                    //                            width: parent.width
-                    //                            text: contact.tel
-                    //                            inputMethodHints: Qt.ImhDigitsOnly
-                    //                        }
-                    //                    }
 
                     Column
                     {
@@ -332,7 +246,7 @@ Maui.Dialog
                         spacing: space.small
                         Label
                         {
-                            text: qsTr("Address")
+                            text: qsTr("Organization")
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
@@ -341,11 +255,55 @@ Maui.Dialog
 
                         Maui.TextField
                         {
-                            id: _adrField
+                            id: _orgField
                             width: parent.width
-                            text: contact.adr
+                            text: contact.org
                         }
                     }
+
+
+                    //                    Column
+                    //                    {
+                    //                        Layout.fillWidth: true
+                    //                        spacing: space.small
+                    //                        Label
+                    //                        {
+                    //                            text: qsTr("Phone")
+                    //                            font.pointSize: fontSizes.default
+                    //                            font.bold: true
+                    //                            font.weight: Font.Bold
+                    //                        }
+
+                    //                        Maui.TextField
+                    //                        {
+                    //                            width: parent.width
+                    //                            text: contact.tel
+                    //                            inputMethodHints: Qt.ImhDigitsOnly
+                    //                        }
+                    //                    }
+
+
+
+//                    Column
+//                    {
+//                        Layout.fillWidth: true
+//                        spacing: space.small
+//                        Label
+//                        {
+//                            text: qsTr("Address")
+//                            font.pointSize: fontSizes.default
+//                            font.bold: true
+//                            font.weight: Font.Bold
+//                            color: textColor
+//                        }
+
+//                        Maui.TextField
+//                        {
+//                            id: _adrField
+//                            width: parent.width
+//                            text: contact.adr
+//                        }
+//                    }
                 }
 
             }
@@ -355,12 +313,10 @@ Maui.Dialog
     function clear()
     {
         _nameField.clear()
-        _lastNameField.clear()
         _telField.clear()
         _emailField.clear()
         _orgField.clear()
-        _adrField.clear()
-        //        _genderField.clear()
+//        _adrField.clear()
         _img.source = ""
         control.close()
 

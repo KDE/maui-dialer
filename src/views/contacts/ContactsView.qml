@@ -25,7 +25,6 @@ Maui.Page
     ContactsList
     {
         id: _contactsList
-
     }
 
     Maui.Holder
@@ -75,7 +74,7 @@ Maui.Page
         {
             id: _delegate
 
-            height: unit * 65
+            height: unit * 60
             width: isWide ? control.width * 0.8 : control.width * 0.95
             anchors.horizontalCenter: parent.horizontalCenter
             showMenuIcon: true
@@ -96,5 +95,7 @@ Maui.Page
                 }
             }
         }
+
+        ScrollBar.vertical: ScrollBar {}
     }
 }

@@ -17,7 +17,7 @@ ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
     connect(syncer, &Synchroniser::contactsReady, [this]()
     {
         this->setList();
-        this->filter();
+
     });
     //    connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
     //    this->getList();
@@ -130,6 +130,7 @@ void ContactsModel::setList()
 {
     emit this->preListChanged();
     this->getList();
+    this->filter();
     this->sortList();
     emit this->postListChanged();
 }
@@ -176,12 +177,17 @@ bool ContactsModel::insert(const QVariantMap &map, const QVariantMap &account)
         return false;
 
     auto model = FM::toModel(map);
+    model[FMH::MODEL_KEY::ACCOUNT] = account[FMH::MODEL_NAME[FMH::MODEL_KEY::ACCOUNT]].toString();
     if(!this->syncer->insertContact(model,  FM::toModel(account)))
         return false;
 
-    emit this->preListChanged();
-    this->setList();
-    emit this->postListChanged();
+    qDebug()<< "inserting new contact count" << this->list.count();
+    emit this->preItemAppended();
+    this->list.append(model);
+    this->sortList();
+
+    emit this->postItemAppended();
+    qDebug()<< "inserting new contact count" << this->list.count();
 
     return true;
 }
@@ -236,11 +242,8 @@ void ContactsModel::filter()
     if(list.isEmpty())
         return;
 
-    if(this->query.isEmpty())
-    {
-        this->setList();
+    if(this->query.isEmpty())    
         return;
-    }
 
     FMH::MODEL_LIST res;
 
@@ -270,7 +273,6 @@ void ContactsModel::filter()
     emit this->preListChanged();
     this->list = res;
     emit this->postListChanged();
-
 }
 
 void ContactsModel::append(const QVariantMap &item)

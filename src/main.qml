@@ -19,8 +19,8 @@ Maui.ApplicationWindow
     readonly property var views : ({
                                        contacts : 0,
                                        dialer: 1,
-                                       recent: 2,
-                                       favs: 3
+                                       favs: 2,
+                                       recent: 3,
                                    })
 
 
@@ -83,6 +83,19 @@ Maui.ApplicationWindow
 
         }
 
+        Maui.ToolButton
+        {
+            id: _favsButton
+            Layout.fillWidth: isMobile
+
+            iconName: "draw-star"
+            Layout.fillHeight: true
+            iconColor: currentView === views.favs ? highlightColor : textColor
+            //            text: qsTr("Favorites")
+            showIndicator: currentView === views.favs
+            onClicked: currentView = views.favs
+
+        }
 
         Maui.ToolButton
         {
@@ -95,19 +108,6 @@ Maui.ApplicationWindow
             //            text: qsTr("Recent")
             //            visible: isAndroid
             showIndicator: currentView === views.recent
-
-        }
-
-        Maui.ToolButton
-        {
-            id: _favsButton
-            Layout.fillWidth: isMobile
-
-            iconName: "draw-star"
-            Layout.fillHeight: true
-            iconColor: currentView === views.favs ? highlightColor : textColor
-            //            text: qsTr("Favorites")
-            showIndicator: currentView === views.favs
 
         }
 
@@ -167,7 +167,7 @@ Maui.ApplicationWindow
                 colorScheme.backgroundColor: "#4f5160"
                 colorScheme.borderColor: "transparent"
                 colorScheme.textColor: "#fff"
-            }
+            }            
         }
 
         DialerView
@@ -180,7 +180,6 @@ Maui.ApplicationWindow
             id: _favsView
             list.query : "fav=1"
             headBar.visible: false
-
         }
     }
 
@@ -229,6 +228,8 @@ Maui.ApplicationWindow
                 _contacsView.list.insert(con, contact.account)
             else
                 _contacsView.list.insert(con)
+
+            notify("list-add-user", qsTr("New contact added"), con.n)
 
         }
     }

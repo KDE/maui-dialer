@@ -14,7 +14,7 @@ GridLayout
     rowSpacing: space.big
     columnSpacing: space.big
     //                spacing: space.medium
-
+    readonly property int buttonFontSize: fontSizes.huge * 1.5
     Maui.Button
     {
         Layout.fillWidth: true;
@@ -22,7 +22,7 @@ GridLayout
         text: "1";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -35,7 +35,7 @@ GridLayout
         text: "2";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -48,7 +48,7 @@ GridLayout
         text: "3";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -61,7 +61,7 @@ GridLayout
         text: "4";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -74,7 +74,7 @@ GridLayout
         text: "5";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -87,7 +87,7 @@ GridLayout
         text: "6";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -100,7 +100,7 @@ GridLayout
         text: "7";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -113,7 +113,7 @@ GridLayout
         text: "8";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -126,7 +126,7 @@ GridLayout
         text: "9";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -139,7 +139,7 @@ GridLayout
         text: "*";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;
@@ -152,11 +152,11 @@ GridLayout
         text: "0 / +";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
-        onClicked:
-        {
-            dialString += text;
-        }
+        font.pointSize: buttonFontSize
+        onClicked: dialString += "0"
+        onPressAndHold: dialString += "+"
+
+
     }
     Maui.Button
     {
@@ -165,7 +165,7 @@ GridLayout
         text: "#";
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.big
+        font.pointSize: buttonFontSize
         onClicked:
         {
             dialString += text;

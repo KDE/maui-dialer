@@ -254,7 +254,12 @@ SwipeDelegate
         {
             iconName: "draw-star"
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: control.favClicked(index)
+            onClicked:
+            {
+                 control.favClicked(index)
+                swipe.close()
+            }
+
             iconColor: model.fav == "1" ? "yellow" : textColor
         }
 
@@ -262,6 +267,7 @@ SwipeDelegate
         {
             iconName: "document-share"
             anchors.verticalCenter: parent.verticalCenter
+            onClicked: if(isAndroid) Maui.Android.shareContact(model.id)
         }
 
         Maui.ToolButton

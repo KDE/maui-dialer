@@ -57,6 +57,7 @@ signals:
     void queryChanged();
     void SQLQueryChanged();
     void sortByChanged();
+    void contactCreated();
 
 public slots:
     QVariantMap get(const int &index) const override;
