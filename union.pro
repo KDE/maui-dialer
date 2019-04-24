@@ -43,8 +43,6 @@ linux:unix:!android {
     message("Unknown configuration")
 }
 
-include($$PWD/src/libs/libvcard.pri)
-
 SOURCES += \
     $$PWD/src/main.cpp \
     src/models/baselist.cpp \

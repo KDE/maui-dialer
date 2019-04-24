@@ -97,19 +97,20 @@ Maui.ApplicationWindow
 
         }
 
-        Maui.ToolButton
-        {
-            id: _recentButton
-            Layout.fillWidth: isMobile
+//        Maui.ToolButton
+//        {
+//            id: _recentButton
+//            Layout.fillWidth: isMobile && visible
+//            visible: (isAndroid && Maui.Handy.version() < 7)
 
-            iconName: "view-media-recent"
-            Layout.fillHeight: true
-            iconColor: currentView === views.recent ? highlightColor : textColor
-            //            text: qsTr("Recent")
-            //            visible: isAndroid
-            showIndicator: currentView === views.recent
+//            iconName: "view-media-recent"
+//            Layout.fillHeight: isMobile && visible
+//            iconColor: currentView === views.recent ? highlightColor : textColor
+//            //            text: qsTr("Recent")
+//            //            visible: isAndroid
+//            showIndicator: currentView === views.recent
 
-        }
+//        }
 
         Item
         {
@@ -161,7 +162,7 @@ Maui.ApplicationWindow
                 anchors.centerIn: parent
                 width: isWide ? _contacsView.width * 0.8 : _contacsView.width * 0.95
                 //        height: rowHeight
-                placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.listView.count))
+                placeholderText: qsTr("Search %1 contacts... ".arg(Maui.Handy.version()))
                 onAccepted: _contacsView.list.query = text
                 onCleared: _contacsView.list.reset()
                 colorScheme.backgroundColor: "#4f5160"
@@ -181,7 +182,26 @@ Maui.ApplicationWindow
             list.query : "fav=1"
             headBar.visible: false
         }
+
+//        Loader
+//        {
+//            id: _recentViewLoader
+//            sourceComponent: (isAndroid && Maui.Handy.version() < 7) ? _recentViewComponent : "undefined"
+//        }
+
     }
+
+//    Component
+//    {
+//        id: _recentViewComponent
+
+//        ContactsView
+//        {
+//            anchors.fill: parent
+//            list.query: "count = 1"
+//            headBar.visible: false
+//        }
+//    }
 
     /** DIALOGS **/
 

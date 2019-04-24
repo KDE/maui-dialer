@@ -107,12 +107,3 @@ bool Synchroniser::removeContact(const FMH::MODEL &contact)
 {
     return this->dba->removeContact(contact[FMH::MODEL_KEY::ID]);
 }
-
-vCard Synchroniser::tovCard(const FMH::MODEL &contact)
-{
-    Q_UNUSED(contact);
-    vCard vcard;
-    vCardProperty name_prop = vCardProperty::createName("Emanuele", "Bertoldi");
-    vcard.addProperty(name_prop);
-    return vcard;
-}

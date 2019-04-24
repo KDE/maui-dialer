@@ -8,8 +8,6 @@
 #include <MauiKit/fmh.h>
 #endif
 
-#include "vcard.h"
-
 #ifdef Q_OS_ANDROID
 class AndroidIntents;
 #endif
@@ -32,7 +30,6 @@ public:
 
 private:
     DBActions *dba;
-    vCard tovCard(const FMH::MODEL &contact);
 
 #ifdef Q_OS_ANDROID
     AndroidIntents *android;
