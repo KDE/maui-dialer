@@ -29,6 +29,7 @@
 #include <KPeople/KPeople/PersonsModel>
 #include <KPeople/PersonData>
 #include <KPeople/KPeopleBackend/AbstractContact>
+#include <QDirIterator>
 
 using namespace KContacts;
 
@@ -40,21 +41,53 @@ kcontactsinterface::kcontactsinterface(QObject *parent) : QObject(parent)
 FMH::MODEL_LIST kcontactsinterface::getContacts(const QString &query)
 {
     FMH::MODEL_LIST res;
-    KPeople::PersonsModel model;
-    qDebug()<< "KPEOPLE CONCTAS" << model.rowCount();
 
-    for(auto i = 0 ; i< model.rowCount(); i++)
-    {
-        auto uri = model.get(i, KPeople::PersonsModel::PersonUriRole).toString();
-        KPeople::PersonData person(uri);
-        res << FMH::MODEL  {
-        {FMH::MODEL_KEY::N, person.name()},
-        {FMH::MODEL_KEY::EMAIL, person.email()},
-        {FMH::MODEL_KEY::TEL, person.contactCustomProperty("phoneNumber").toString()},
-    {FMH::MODEL_KEY::PHOTO, person.pictureUrl().toString()}};
-}
 
-return res;
+//    VCardConverter converter;
+
+//    QDirIterator it(this->path, {"*.vcf"}, QDir::Files, QDirIterator::Subdirectories);
+
+//    while (it.hasNext())
+//    {
+//        const auto file = it.next();
+//        QFile card(file);
+//        qDebug()<< "Reading card << " << file;
+
+//        if(card.open(QIODevice::ReadOnly | QIODevice::Text))
+//        {
+//            auto contact = converter.parseVCard(card.readAll());
+
+//            res << FMH::MODEL  {
+//            {FMH::MODEL_KEY::N, contact.name()},
+//            {FMH::MODEL_KEY::EMAIL, contact.emails().join(",")},
+//            {FMH::MODEL_KEY::TEL, contact.phoneNumber(PhoneNumber::Cell  | PhoneNumber::Home).toString()}
+//        };
+//        }
+//    }
+
+
+
+        KPeople::PersonsModel model;
+        qDebug()<< "KPEOPLE CONTACTS" << model.rowCount();
+
+        for(auto i = 0 ; i< model.rowCount(); i++)
+        {
+
+            auto uri = model.get(i, KPeople::PersonsModel::PersonUriRole).toString();
+
+            KPeople::PersonData person(uri);
+
+            res << FMH::MODEL  {
+            {FMH::MODEL_KEY::N, person.name()},
+            {FMH::MODEL_KEY::EMAIL, person.email()},
+            {FMH::MODEL_KEY::TEL, person.contactCustomProperty("phoneNumber").toString()},
+            {FMH::MODEL_KEY::PHOTO, person.pictureUrl().toString()}};
+
+            qDebug()<< "KPEOPLE CONTACTS" << res;
+
+        }
+
+    return res;
 }
 
 void kcontactsinterface::addContact(const FMH::MODEL &contact)
@@ -87,11 +120,10 @@ void kcontactsinterface::addContact(const FMH::MODEL &contact)
     qDebug() << vcard;
 
     // save vcard
-    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
-            + ("/kpeoplevcard");
+
     QCryptographicHash hash(QCryptographicHash::Sha1);
     hash.addData(adr.name().toUtf8());
-    QFile file(path + "/" + hash.result().toHex() + ".vcf");
+    QFile file(this->path + "/" + hash.result().toHex() + ".vcf");
     if (!file.open(QFile::WriteOnly)) {
         qWarning() << "Couldn't save vCard: Couldn't open file for writing.";
         return;

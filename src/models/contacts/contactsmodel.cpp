@@ -22,14 +22,13 @@ ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
         this->list = contacts;
         qDebug() << "CONATCTS READY AT MODEL" << this->list;
 
-//        this->filter();
-//        this->sortList();
+        this->filter();
+        this->sortList();
         emit this->postListChanged();
 
     });
-    this->syncer->fetch();
     //    connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
-    //    this->getList();
+        this->getList();
 }
 
 FMH::MODEL_LIST ContactsModel::items() const

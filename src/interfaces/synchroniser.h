@@ -25,7 +25,6 @@ public:
     bool updateContact(const FMH::MODEL &contact);
     bool removeContact(const FMH::MODEL &contact);
 
-    void fetch();
 
 //    FMH::MODEL_LIST getAccounts() const;
 

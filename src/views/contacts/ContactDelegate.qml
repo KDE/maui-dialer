@@ -132,7 +132,7 @@ SwipeDelegate
                             font.pointSize: fontSizes.huge
                             font.bold: true
                             font.weight: Font.Bold
-                            text: model.n[0]
+                            text: model.n[0].toUpperCase()
                         }
                     }
 
@@ -153,8 +153,9 @@ SwipeDelegate
 
                     Label
                     {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
+                        visible: (model.n && model.n.length)
+                        Layout.fillHeight: visible
+                        Layout.fillWidth: visible
                         text: model.n
                         font.pointSize: fontSizes.big
                         font.bold: true
@@ -165,8 +166,9 @@ SwipeDelegate
 
                     Label
                     {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
+                        visible: (model.tel && model.tel.length)
+                        Layout.fillHeight: visible
+                        Layout.fillWidth: visible
                         text: model.tel
                         font.pointSize: fontSizes.small
                         font.weight: Font.Light
@@ -179,9 +181,9 @@ SwipeDelegate
 
             Item
             {
-                visible: control.width >  Kirigami.Units.gridUnit * 20
-                Layout.fillHeight: true
-                Layout.fillWidth: true
+                visible: control.width >  Kirigami.Units.gridUnit * 30
+                Layout.fillHeight: visible
+                Layout.fillWidth: visible
                 clip: true
 
                 ColumnLayout
@@ -190,8 +192,9 @@ SwipeDelegate
 
                     Label
                     {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
+                        visible: (model.email && model.email.length)
+                        Layout.fillHeight: visible
+                        Layout.fillWidth: visible
                         Layout.alignment: Qt.AlignRight
                         horizontalAlignment: Qt.AlignRight
 
@@ -205,8 +208,9 @@ SwipeDelegate
 
                     Label
                     {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
+                        visible: (model.title && model.tel.title)
+                        Layout.fillHeight: visible
+                        Layout.fillWidth: visible
                         Layout.alignment: Qt.AlignRight
                         horizontalAlignment: Qt.AlignRight
                         text: model.title

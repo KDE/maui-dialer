@@ -46,6 +46,7 @@ FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
 
 #ifdef Q_OS_ANDROID
 //    data << this->dba->getDBData(query);
+    this->android->fetch();
 #else
     kcontactsinterface kcontacts;
     data << kcontacts.getContacts("");
@@ -97,11 +98,3 @@ bool Synchroniser::removeContact(const FMH::MODEL &contact)
     return this->dba->removeContact(contact[FMH::MODEL_KEY::ID]);
 }
 
-void Synchroniser::fetch()
-{
-#ifdef Q_OS_ANDROID
-    this->android->fetch();
-#else
-
-#endif
-}

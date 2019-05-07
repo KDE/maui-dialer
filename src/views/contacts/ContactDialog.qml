@@ -26,6 +26,9 @@ Maui.Dialog
     headBar.middleContent: [
         Maui.ToolButton
         {
+            visible: isMobile
+            Layout.fillHeight: visible
+            Layout.fillWidth: visible
             iconName: "phone"
             text: qsTr("Call")
             display: ToolButton.TextUnderIcon
@@ -38,6 +41,8 @@ Maui.Dialog
 
         Maui.ToolButton
         {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
             iconName: "draw-text"
             text: qsTr("Message")
             display: ToolButton.TextUnderIcon
@@ -51,6 +56,8 @@ Maui.Dialog
 
         Maui.ToolButton
         {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
             iconName: "draw-star"
             text: qsTr("Fav")
             display: ToolButton.TextUnderIcon
@@ -65,6 +72,8 @@ Maui.Dialog
 
         Maui.ToolButton
         {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
             iconName: "document-share"
             text: qsTr("Share")
             display: ToolButton.TextUnderIcon

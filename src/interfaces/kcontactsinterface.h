@@ -34,7 +34,9 @@ class kcontactsinterface : public QObject
 public:
     explicit kcontactsinterface(QObject *parent = nullptr);
     FMH::MODEL_LIST getContacts(const QString &query);
-
+private:
+    const QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
+            + ("/kpeoplevcard");
 signals:
 
 public slots:
