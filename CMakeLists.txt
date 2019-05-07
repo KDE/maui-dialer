@@ -25,12 +25,6 @@ include(ECMAddAppIcon)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTORCC ON)
 
-
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/libs/libvcard/include/vcard
-    ${CMAKE_CURRENT_BINARY_DIR}/src/libs/libvcard/include/vcard
-    )
-
 set(union_SRCS
     src/main.cpp
     src/interfaces/synchroniser.cpp
@@ -40,18 +34,9 @@ set(union_SRCS
     src/models/basemodel.cpp
     src/models/contacts/contactsmodel.cpp
     src/interfaces/kcontactsinterface.cpp
-
-    src/libs/libvcard/libvcard/vcard.cpp
-    src/libs/libvcard/libvcard/vcardparam.cpp
-    src/libs/libvcard/libvcard/vcardproperty.cpp
-
     )
 
 set(union_HDRS
-    src/libs/libvcard/include/vcard/vcardproperty.h
-    src/libs/libvcard/include/vcard/vcardparam.h
-    src/libs/libvcard/include/vcard/vcard.h
-
     src/union.h
     src/db/db.h
     src/db/dbactions.h

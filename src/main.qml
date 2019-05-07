@@ -42,17 +42,7 @@ Maui.ApplicationWindow
     headBarBGColor: backgroundColor
     headBarFGColor: textColor
 
-    page.headBarItem: RowLayout
-    {
-        width: headBar.width
-        height: headBar.height
-        //          width: footBar.middleLayout.width * 0.9
-        spacing: space.large
-
-        Item
-        {
-            Layout.fillWidth: !isMobile
-        }
+    headBar.middleContent: [
 
         Maui.ToolButton
         {
@@ -66,7 +56,7 @@ Maui.ApplicationWindow
             showIndicator: currentView === views.contacts
             onClicked: currentView = views.contacts
 
-        }
+        },
 
         Maui.ToolButton
         {
@@ -81,7 +71,7 @@ Maui.ApplicationWindow
             showIndicator: currentView === views.dialer
             onClicked: currentView = views.dialer
 
-        }
+        },
 
         Maui.ToolButton
         {
@@ -112,11 +102,7 @@ Maui.ApplicationWindow
 
 //        }
 
-        Item
-        {
-            Layout.fillWidth: !isMobile
-        }
-    }
+       ]
 
     SwipeView
     {
@@ -168,7 +154,7 @@ Maui.ApplicationWindow
                 colorScheme.backgroundColor: "#4f5160"
                 colorScheme.borderColor: "transparent"
                 colorScheme.textColor: "#fff"
-            }            
+            }
         }
 
         DialerView
@@ -247,7 +233,7 @@ Maui.ApplicationWindow
             if(contact.account)
                 _contacsView.list.insert(con, contact.account)
             else
-                _contacsView.list.insert(con)
+                _contacsView.list.insert(con, ({}))
 
             notify("list-add-user", qsTr("New contact added"), con.n)
 

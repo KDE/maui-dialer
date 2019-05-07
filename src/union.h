@@ -7,7 +7,7 @@
 #include "fmh.h"
 #endif
 
-#define APPNAME "Union"
+#define APPNAME "Communicator"
 #define APPVERSION "1.0.0"
 
 namespace UNI

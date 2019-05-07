@@ -21,10 +21,11 @@ public:
 
     FMH::MODEL_LIST getContacts(const QString &query);
     FMH::MODEL_LIST getAccounts();
-    bool insertContact(const FMH::MODEL &contact);
-    bool insertContact(const FMH::MODEL &contact, const FMH::MODEL &account);
+    bool insertContact(const FMH::MODEL &contact, const FMH::MODEL &account = {{}});
     bool updateContact(const FMH::MODEL &contact);
     bool removeContact(const FMH::MODEL &contact);
+
+    void fetch();
 
 //    FMH::MODEL_LIST getAccounts() const;
 
@@ -37,7 +38,7 @@ private:
 
 
 signals:
-    void contactsReady();
+    void contactsReady(FMH::MODEL_LIST contacts);
 
 public slots:
 };

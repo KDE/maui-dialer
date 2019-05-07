@@ -14,11 +14,20 @@
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 {
     this->syncer = new Synchroniser(this);
-    connect(syncer, &Synchroniser::contactsReady, [this]()
+    connect(syncer, &Synchroniser::contactsReady, [this](FMH::MODEL_LIST contacts)
     {
-        this->setList();
+        qDebug() << "CONATCTS READY AT MODEL 1" << contacts;
+
+        emit this->preListChanged();
+        this->list = contacts;
+        qDebug() << "CONATCTS READY AT MODEL" << this->list;
+
+//        this->filter();
+//        this->sortList();
+        emit this->postListChanged();
 
     });
+    this->syncer->fetch();
     //    connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
     //    this->getList();
 }
@@ -154,30 +163,16 @@ QVariantMap ContactsModel::get(const int &index) const
 
     return res;
 }
-
-bool ContactsModel::insert(const QVariantMap &map)
+bool ContactsModel::insert(const QVariantMap &map, const QVariantMap &account)
 {
+    qDebug() << "INSERTING NEW CONTACT" << map;
+
     if(map.isEmpty())
         return false;
 
     auto model = FM::toModel(map);
-    if(!this->syncer->insertContact(model))
-        return false;
-
-    emit this->preListChanged();
-    this->setList();
-    emit this->postListChanged();
-
-    return true;
-}
-
-bool ContactsModel::insert(const QVariantMap &map, const QVariantMap &account)
-{
-    if(map.isEmpty() || account.isEmpty())
-        return false;
-
-    auto model = FM::toModel(map);
     model[FMH::MODEL_KEY::ACCOUNT] = account[FMH::MODEL_NAME[FMH::MODEL_KEY::ACCOUNT]].toString();
+
     if(!this->syncer->insertContact(model,  FM::toModel(account)))
         return false;
 

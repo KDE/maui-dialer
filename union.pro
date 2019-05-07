@@ -8,7 +8,7 @@ QT += concurrent
 CONFIG += c++11
 CONFIG += ordered
 
-TARGET = union
+TARGET = communicator
 TEMPLATE = app
 
 linux:unix:!android {
@@ -19,9 +19,8 @@ linux:unix:!android {
     QT += KIOCore KIOFileWidgets KIOWidgets KNTLM
     LIBS += -lMauiKit
 
-    SOURCES += src/interfaces/kcontactsinterface.cpp
-
-    HEADERS += src/interfaces/kcontactsinterface.h
+#    SOURCES += src/interfaces/kcontactsinterface.cpp
+#    HEADERS += src/interfaces/kcontactsinterface.h
 
 
 } else:android {
@@ -36,7 +35,6 @@ linux:unix:!android {
     DEFINES += STATIC_KIRIGAMI
 
     SOURCES +=  src/interfaces/androidintents.cpp
-
     HEADERS += src/interfaces/androidintents.h
 
 } else {

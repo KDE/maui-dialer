@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_ANDROID
     QGuiApplication app(argc, argv);
-    QGuiApplication::styleHints()->setMousePressAndHoldInterval(2000); // in [ms]
+//    QGuiApplication::styleHints()->setMousePressAndHoldInterval(2000); // in [ms]
 #else
     QApplication app(argc, argv);
 #endif

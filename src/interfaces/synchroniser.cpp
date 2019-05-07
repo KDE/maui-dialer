@@ -1,6 +1,5 @@
 #include "synchroniser.h"
 #include "./../db/dbactions.h"
-#include "vcardproperty.h"
 #include <QtConcurrent>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QFuture>
@@ -27,12 +26,14 @@ Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
     this->android = AndroidIntents::getInstance();
     connect(android, &AndroidIntents::contactsReady, [this]()
     {
-        auto contacts = this->android->getContacts();
-        this->dba->removeAll();
-        for(auto contact : contacts)
-            this->dba->insertContact(contact);
+        const auto contacts = this->android->getContacts();
 
-        emit this->contactsReady();
+        qDebug()<< "CONTACTS READY "<< contacts;
+//        this->dba->removeAll();
+//        for(auto contact : contacts)
+//            this->dba->insertContact(contact);
+
+        emit this->contactsReady(contacts);
     });
 
 #endif
@@ -44,7 +45,7 @@ FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
     FMH::MODEL_LIST data /*=this->dba->getDBData(query)*/;
 
 #ifdef Q_OS_ANDROID
-    data << this->dba->getDBData(query);
+//    data << this->dba->getDBData(query);
 #else
     kcontactsinterface kcontacts;
     data << kcontacts.getContacts("");
@@ -64,25 +65,13 @@ FMH::MODEL_LIST Synchroniser::getAccounts()
     return res;
 }
 
-bool Synchroniser::insertContact(const FMH::MODEL &contact)
-{   
-    //    return this->dba->insertContact(contact);
-#ifdef Q_OS_ANDROID    
-    android->addContact(contact, FMH::MODEL());
-#else
-    kcontactsinterface kcontacts;
-    kcontacts.addContact(contact);
-#endif
-
-    return true;
-}
-
 bool Synchroniser::insertContact(const FMH::MODEL &contact, const FMH::MODEL &account)
 {
     //    return this->dba->insertContact(contact);
 #ifdef Q_OS_ANDROID
     android->addContact(contact, account);
 #else
+    Q_UNUSED(account)
     kcontactsinterface kcontacts;
     kcontacts.addContact(contact);
 #endif
@@ -106,4 +95,13 @@ bool Synchroniser::updateContact(const FMH::MODEL &contact)
 bool Synchroniser::removeContact(const FMH::MODEL &contact)
 {
     return this->dba->removeContact(contact[FMH::MODEL_KEY::ID]);
+}
+
+void Synchroniser::fetch()
+{
+#ifdef Q_OS_ANDROID
+    this->android->fetch();
+#else
+
+#endif
 }
