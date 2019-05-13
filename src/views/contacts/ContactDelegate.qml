@@ -12,6 +12,7 @@ SwipeDelegate
     id: control
     hoverEnabled: true
     clip: true
+
     property alias quickButtons : _buttonsRow.data
     property bool showMenuIcon: false
 

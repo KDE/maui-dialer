@@ -131,6 +131,8 @@ Maui.ApplicationWindow
             id: _favsView
             list.query : "fav=1"
             headBar.visible: false
+            gridView: true
+
         }
 
         DialerView
