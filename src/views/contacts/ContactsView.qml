@@ -15,7 +15,7 @@ Maui.Page
     property alias listModel : _contactsModel
     property alias listView : _listView
 
-
+    property bool showAccountFilter: false
     BaseModel
     {
         id: _contactsModel
@@ -32,20 +32,62 @@ Maui.Page
         id: _holder
         emoji: "qrc:/Circuit.svg"
         isMask: false
-        title: qsTr("There's not contacts")
+        title: qsTr("There's no contacts")
         body: qsTr("Add new contacts")
         emojiSize: iconSizes.huge
         visible: !listView.count
         onActionTriggered: _newContactDialog.open()
-
     }
-
 
     ListView
     {
         id: _listView
         anchors.fill: parent
         spacing: space.big
+        clip: true
+        header: Item
+        {
+            visible: showAccountFilter
+            height: visible ? toolBarHeight * 1.5 : 0
+            width: visible ? parent.width : 0
+            Maui.ComboBox
+            {
+                id: _accountsCombobox
+                width: isWide ? control.width * 0.8 : control.width * 0.95
+                textRole: "account"
+                anchors.centerIn: parent
+
+                colorScheme.borderColor: "transparent"
+                colorScheme.viewBackgroundColor: cardColor
+
+                onActivated:
+                {
+
+                    console.log("filter by:"+currentText)
+                    if(currentText === "All")
+                        list.reset()
+                    else
+                        list.query = "account="+currentText
+
+                    _listView.positionViewAtBeginning()
+                }
+
+                Component.onCompleted:
+                {
+                    var androidAccounts = [{account: "All"}]
+                    var accounts = []
+                    accounts = list.getAccounts()
+
+                    for(var i in accounts)
+                        androidAccounts.push(accounts[i])
+                    //                   var androidAccounts = list.getAccounts()
+                    _accountsCombobox.model = androidAccounts;
+                }
+
+            }
+
+        }
+        //        headerPositioning: ListView.PullBackHeader
 
         section.property: "n"
         section.criteria: ViewSection.FirstCharacter

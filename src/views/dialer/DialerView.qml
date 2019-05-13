@@ -44,7 +44,7 @@ Maui.Page
         {
             Layout.preferredHeight: toolBarHeight * 1.3
             Layout.fillWidth: true
-            color: "#4f5160"
+            color: cardColor
             //        border.color: borderColor
             radius: radiusV * 2
 

@@ -14,68 +14,91 @@ Maui.Dialog
     maxHeight: unit * 800
 
     property var contact : ({})
-    acceptButton.text: qsTr("Edit")
     rejectButton.visible: false
-    onAccepted:
+    acceptButton.visible: false
+
+
+    footBar.implicitHeight: toolBarHeight * 1.3
+    footBar.rightContent:  Maui.Button
     {
-        console.log("oepning id<<", contact.id)
-        _editContactDialog.open()
+        visible: isMobile
+//                Layout.fillHeight: visible
+        //                    Layout.fillWidth: visible
+        icon.name: "phone"
+        text: qsTr("Call")
+        //        display: ToolButton.TextUnderIcon
+        colorScheme.backgroundColor: infoColor
+        colorScheme.textColor: "#fff"
+        onClicked:
+        {
+            if(isAndroid)
+                Maui.Android.call(contact.tel)
+        }
     }
 
-    headBar.implicitHeight: toolBarHeight * 1.3
+    footBar.leftContent:  Maui.Button
+    {
+        visible: isMobile
+//                Layout.fillHeight: visible
+        //                    Layout.fillWidth: visible
+        text: qsTr("Close")
+        //        display: ToolButton.TextUnderIcon
+        colorScheme.backgroundColor: warningColor
+        colorScheme.textColor: "#fff"
+        onClicked: control.close()
+    }
+
+
+    footBar.middleContent: Maui.ToolButton
+    {
+                    Layout.fillHeight: true
+        Layout.fillWidth: true
+        iconName: "draw-text"
+        //            text: qsTr("Message")
+        display: ToolButton.TextUnderIcon
+        onClicked:
+        {
+            _messageComposer.contact = control.contact
+            _messageComposer.open()
+        }
+
+    }
+
+
+
+    headBar.drawBorder: false
+    headBar.rightContent: Maui.Button
+    {
+        icon.name: "document-edit"
+        onClicked: _editContactDialog.open()
+        colorScheme.backgroundColor: suggestedColor
+        colorScheme.textColor: "#fff"
+    }
     headBar.middleContent: [
-        Maui.ToolButton
-        {
-            visible: isMobile
-            Layout.fillHeight: visible
-            Layout.fillWidth: visible
-            iconName: "phone"
-            text: qsTr("Call")
-            display: ToolButton.TextUnderIcon
-            onClicked:
-            {
-                if(isAndroid)
-                Maui.Android.call(contact.tel)
-            }
-        },
 
         Maui.ToolButton
         {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            iconName: "draw-text"
-            text: qsTr("Message")
-            display: ToolButton.TextUnderIcon
-            onClicked:
-            {
-                _messageComposer.contact = control.contact
-                _messageComposer.open()
-            }
-
-        },
-
-        Maui.ToolButton
-        {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+                        Layout.fillHeight: true
+//            Layout.fillWidth: true
             iconName: "draw-star"
-            text: qsTr("Fav")
+            //            text: qsTr("Fav")
             display: ToolButton.TextUnderIcon
             iconColor: contact.fav == "1" ? "yellow" : textColor
             onClicked:
             {
                 contact["fav"] = contact.fav == "1" ? "0" : "1"
                 _contacsView.list.update(contact,  _contacsView.listView.currentIndex)
-                control.contact =contact;
+                control.contact = contact;
+                _favsView.list.refresh()
             }
         },
 
         Maui.ToolButton
         {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+                        Layout.fillHeight: true
+//            Layout.fillWidth: true
             iconName: "document-share"
-            text: qsTr("Share")
+            //            text: qsTr("Share")
             display: ToolButton.TextUnderIcon
         }
     ]
@@ -96,12 +119,39 @@ Maui.Dialog
             _editContactDialog.close()
 
         }
+
+        headBar.drawBorder: false
+        headBar.rightContent:  Maui.Button
+        {
+            icon.name: "user-trash"
+            //            text: qsTr("Remove")
+            onClicked:  _removeDialog.open()
+            colorScheme.backgroundColor: dangerColor
+            colorScheme.textColor: "#fff"
+        }
+
+        Maui.Dialog
+        {
+            id: _removeDialog
+
+            title: qsTr("Remove contact...")
+            message: qsTr("Are you sure you want to remove this contact? This action can not be undone.")
+
+            onRejected: close()
+            onAccepted:
+            {
+                close()
+                _contactDialog.close()
+                _contacsView.list.remove(_contacsView.listView.currentIndex)
+
+            }
+        }
     }
 
     ColumnLayout
     {
         id: _layout
-        height: parent.height
+        height: parent.height * 0.7
         width: parent.width * 0.8
 
         anchors.centerIn: parent
@@ -201,6 +251,22 @@ Maui.Dialog
             }
         }
 
+        //        Item
+        //        {
+        //            Layout.fillWidth: true
+        //            Layout.preferredHeight: toolBarHeight
+
+        //           Maui.Button
+        //           {
+        //               anchors.centerIn: parent
+        //               icon.name: "document-edit"
+        //               text: qsTr("Edit")
+        //               onClicked: _editContactDialog.open()
+        //               colorScheme.backgroundColor: suggestedColor
+        //               colorScheme.textColor: "#fff"
+        //           }
+
+        //        }
 
         Item
         {
@@ -400,7 +466,7 @@ Maui.Dialog
     function show(data)
     {
         control.contact = data
-        console.log("curent itemn account", data.account)
+        console.log("curent itemn account", data.account, data.type)
         control.open()
     }
 }

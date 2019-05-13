@@ -16,8 +16,8 @@ Maui.Dialog
     maxHeight: unit * 800
     //    heightHint: 1
     //    widthHint: 1
-    acceptButton.text: qsTr("Save")
     rejectButton.visible: false
+    acceptButton.visible: false
     //    rejectButton.text: qsTr("Cancel")
     //    closeButton.visible: true
 
@@ -26,21 +26,37 @@ Maui.Dialog
 
     onRejected: control.close()
 
-    onAccepted:
+    footBar.leftContent: Maui.Button
     {
-        var contact =({
-                          n: _nameField.text,
-                          tel: _telField.text,
-                          email: _emailField.text,
-                          org: _orgField.text,
-//                          adr: _adrField.text,
-                          photo: _img.source,
-                          account: isAndroid ? _accountsCombobox.model[_accountsCombobox.currentIndex] :({})
-                      })
+        text: qsTr("Cancel")
+        colorScheme.backgroundColor: warningColor
+        colorScheme.textColor: "#fff"
 
-        if(contact.n.length && contact.tel.length)
-            newContact(contact)
-        control.clear()
+        onClicked: control.close()
+    }
+
+    footBar.rightContent: Maui.Button
+    {
+        text: qsTr("Save")
+        colorScheme.backgroundColor: infoColor
+        colorScheme.textColor: "#fff"
+
+        onClicked:
+        {
+            var contact =({
+                              n: _nameField.text,
+                              tel: _telField.text,
+                              email: _emailField.text,
+                              org: _orgField.text,
+                              //                          adr: _adrField.text,
+                              photo: _img.source,
+                              account: isAndroid ? _accountsCombobox.model[_accountsCombobox.currentIndex] :({})
+                          })
+
+            if(contact.n.length && contact.tel.length)
+                newContact(contact)
+            control.clear()
+        }
     }
 
     ColumnLayout
@@ -284,26 +300,26 @@ Maui.Dialog
 
 
 
-//                    Column
-//                    {
-//                        Layout.fillWidth: true
-//                        spacing: space.small
-//                        Label
-//                        {
-//                            text: qsTr("Address")
-//                            font.pointSize: fontSizes.default
-//                            font.bold: true
-//                            font.weight: Font.Bold
-//                            color: textColor
-//                        }
+                    //                    Column
+                    //                    {
+                    //                        Layout.fillWidth: true
+                    //                        spacing: space.small
+                    //                        Label
+                    //                        {
+                    //                            text: qsTr("Address")
+                    //                            font.pointSize: fontSizes.default
+                    //                            font.bold: true
+                    //                            font.weight: Font.Bold
+                    //                            color: textColor
+                    //                        }
 
-//                        Maui.TextField
-//                        {
-//                            id: _adrField
-//                            width: parent.width
-//                            text: contact.adr
-//                        }
-//                    }
+                    //                        Maui.TextField
+                    //                        {
+                    //                            id: _adrField
+                    //                            width: parent.width
+                    //                            text: contact.adr
+                    //                        }
+                    //                    }
                 }
 
             }
@@ -316,7 +332,7 @@ Maui.Dialog
         _telField.clear()
         _emailField.clear()
         _orgField.clear()
-//        _adrField.clear()
+        //        _adrField.clear()
         _img.source = ""
         control.close()
 

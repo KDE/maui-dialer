@@ -1,5 +1,4 @@
 #include "synchroniser.h"
-#include "./../db/dbactions.h"
 #include <QtConcurrent>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QFuture>
@@ -19,20 +18,11 @@ extern void test()
 
 Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 {
-    this->dba = DBActions::getInstance();
-
 #ifdef Q_OS_ANDROID
     qDebug()<< "trying to insert contact to android api";
     this->android = AndroidIntents::getInstance();
-    connect(android, &AndroidIntents::contactsReady, [this]()
+    connect(android, &AndroidIntents::contactsReady, [this](FMH::MODEL_LIST contacts)
     {
-        const auto contacts = this->android->getContacts();
-
-        qDebug()<< "CONTACTS READY "<< contacts;
-//        this->dba->removeAll();
-//        for(auto contact : contacts)
-//            this->dba->insertContact(contact);
-
         emit this->contactsReady(contacts);
     });
 
@@ -40,26 +30,32 @@ Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 }
 
 
-FMH::MODEL_LIST Synchroniser::getContacts(const QString &query)
+void Synchroniser::getContacts(const bool &cached)
 {
-    FMH::MODEL_LIST data /*=this->dba->getDBData(query)*/;
-
 #ifdef Q_OS_ANDROID
-//    data << this->dba->getDBData(query);
-    this->android->fetch();
+    this->android->getContacts(cached ? AndroidIntents::GET_TYPE::CACHED : AndroidIntents::GET_TYPE::FETCH);
 #else
     kcontactsinterface kcontacts;
-    data << kcontacts.getContacts("");
+    emit this->contactsReady(kcontacts.getContacts());
 #endif
-
-    return data;
 }
 
-FMH::MODEL_LIST Synchroniser::getAccounts()
+FMH::MODEL_LIST Synchroniser::getAccounts(const bool &cached)
 {
     FMH::MODEL_LIST res;
 #ifdef Q_OS_ANDROID
-    res = this->android->getAccounts();
+    res = this->android->getAccounts(cached ? AndroidIntents::GET_TYPE::CACHED : AndroidIntents::GET_TYPE::FETCH);
+    return res;
+#endif
+
+    return res;
+}
+
+QVariantMap Synchroniser::getContact(const QString &id)
+{
+    QVariantMap res;
+#ifdef Q_OS_ANDROID
+    res = this->android->getContact(id);
     return res;
 #endif
 
@@ -95,6 +91,7 @@ bool Synchroniser::updateContact(const FMH::MODEL &contact)
 
 bool Synchroniser::removeContact(const FMH::MODEL &contact)
 {
-    return this->dba->removeContact(contact[FMH::MODEL_KEY::ID]);
+//    return this->dba->removeContact(contact[FMH::MODEL_KEY::ID]);
+    return true;
 }
 

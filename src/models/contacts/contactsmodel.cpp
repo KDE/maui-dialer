@@ -20,6 +20,7 @@ ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
 
         emit this->preListChanged();
         this->list = contacts;
+        this->listbk = this->list;
         qDebug() << "CONATCTS READY AT MODEL" << this->list;
 
         this->filter();
@@ -27,8 +28,8 @@ ContactsModel::ContactsModel(QObject *parent) : BaseList(parent)
         emit this->postListChanged();
 
     });
-    //    connect(this, &ContactsModel::queryChanged, this, &ContactsModel::setList);
-        this->getList();
+
+    this->getList(true);
 }
 
 FMH::MODEL_LIST ContactsModel::items() const
@@ -42,11 +43,6 @@ void ContactsModel::setQuery(const QString &query)
         return;
 
     this->query = query;
-    qDebug()<< "setting query"<< this->query;
-
-    if(list.isEmpty())
-        this->setList();
-
     this->filter();
 
     emit this->queryChanged();
@@ -88,80 +84,76 @@ void ContactsModel::sortList()
 
         switch(role)
         {
-        case FMH::MODEL_KEY::FAV:
-        {
-            if(e1[role].toInt() > e2[role].toInt())
-                return true;
-            break;
-        }
+            case FMH::MODEL_KEY::FAV:
+            {
+                if(e1[role].toInt() > e2[role].toInt())
+                    return true;
+                break;
+            }
 
-        case FMH::MODEL_KEY::ADDDATE:
-        case FMH::MODEL_KEY::MODIFIED:
-        {
-            auto currentTime = QDateTime::currentDateTime();
+            case FMH::MODEL_KEY::ADDDATE:
+            case FMH::MODEL_KEY::MODIFIED:
+            {
+                auto currentTime = QDateTime::currentDateTime();
 
-            auto date1 = QDateTime::fromString(e1[role], Qt::TextDate);
-            auto date2 = QDateTime::fromString(e2[role], Qt::TextDate);
+                auto date1 = QDateTime::fromString(e1[role], Qt::TextDate);
+                auto date2 = QDateTime::fromString(e2[role], Qt::TextDate);
 
-            if(date1.secsTo(currentTime) <  date2.secsTo(currentTime))
-                return true;
+                if(date1.secsTo(currentTime) <  date2.secsTo(currentTime))
+                    return true;
 
-            break;
-        }
+                break;
+            }
 
-        case FMH::MODEL_KEY::TITLE:
-        case FMH::MODEL_KEY::N:
-        case FMH::MODEL_KEY::TEL:
-        case FMH::MODEL_KEY::ORG:
-        case FMH::MODEL_KEY::EMAIL:
-        case FMH::MODEL_KEY::GENDER:
-        case FMH::MODEL_KEY::ADR:
-        {
-            const auto str1 = QString(e1[role]).toLower();
-            const auto str2 = QString(e2[role]).toLower();
+            case FMH::MODEL_KEY::TITLE:
+            case FMH::MODEL_KEY::N:
+            case FMH::MODEL_KEY::TEL:
+            case FMH::MODEL_KEY::ORG:
+            case FMH::MODEL_KEY::EMAIL:
+            case FMH::MODEL_KEY::GENDER:
+            case FMH::MODEL_KEY::ADR:
+            {
+                const auto str1 = QString(e1[role]).toLower();
+                const auto str2 = QString(e2[role]).toLower();
 
-            if(str1 < str2)
-                return true;
-            break;
-        }
+                if(str1 < str2)
+                    return true;
+                break;
+            }
 
-        default:
-            if(e1[role] < e2[role])
-                return true;
+            default:
+                if(e1[role] < e2[role])
+                    return true;
         }
 
         return false;
     });
 }
 
-void ContactsModel::setList()
-{
-    emit this->preListChanged();
-    this->getList();
-    this->filter();
-    this->sortList();
-    emit this->postListChanged();
-}
-
-void ContactsModel::getList(const QString &query)
+void ContactsModel::getList(const bool &cached)
 {
     qDebug()<< "TRYING TO SET FULL LIST";
-    this->list = this->syncer->getContacts(query);
+    this->syncer->getContacts(cached);
 }
 
 QVariantMap ContactsModel::get(const int &index) const
 {
     if(index >= this->list.size() || index < 0)
         return QVariantMap();
-
     QVariantMap res;
+
     const auto item = this->list.at(index);
 
-    for(auto key : item.keys())
-        res.insert(FMH::MODEL_NAME[key], item[key]);
+    res = FM::toMap(item);
+
+#ifdef Q_OS_ANDROID
+    const auto id = this->list.at(index)[FMH::MODEL_KEY::ID];
+    res.unite(this->syncer->getContact(id));
+#endif
 
     return res;
 }
+
 bool ContactsModel::insert(const QVariantMap &map, const QVariantMap &account)
 {
     qDebug() << "INSERTING NEW CONTACT" << map;
@@ -196,20 +188,20 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
     auto updatedItem = FMH::MODEL();
     updatedItem[FMH::MODEL_KEY::ID] = oldItem[FMH::MODEL_KEY::ID];
 
-        QVector<int> roles;
+    QVector<int> roles;
 
-        for(auto key : newItem.keys())
+    for(auto key : newItem.keys())
+    {
+        if(newItem[key] != oldItem[key])
         {
-            if(newItem[key] != oldItem[key])
-            {
-                updatedItem.insert(key, newItem[key]);
-                roles << key;
-            }
+            updatedItem.insert(key, newItem[key]);
+            roles << key;
         }
+    }
 
-        this->syncer->updateContact(updatedItem);
-        this->list[index] = newItem;
-        emit this->updateModel(index, roles);
+    this->syncer->updateContact(updatedItem);
+    this->list[index] = newItem;
+    emit this->updateModel(index, roles);
 
 
     return false;
@@ -233,39 +225,41 @@ bool ContactsModel::remove(const int &index)
 
 void ContactsModel::filter()
 {
-    if(list.isEmpty())
-        return;
-
-    if(this->query.isEmpty())    
+    if(this->listbk.isEmpty())
         return;
 
     FMH::MODEL_LIST res;
-
-    if(this->query.contains("="))
+    if(this->query.isEmpty())
+        res = this->listbk;
+    else
     {
-        auto q = this->query.split("=", QString::SkipEmptyParts);
-        if(q.size() == 2)
+        if(this->query.contains("="))
         {
-            for(const auto item : this->list)
+            auto q = this->query.split("=", QString::SkipEmptyParts);
+            if(q.size() == 2)
             {
-                if(item[FMH::MODEL_NAME_KEY[q.first().trimmed()]] == q.last().trimmed())
-                    res << item;
+                for(auto item : this->listbk)
+                {
+                    if(item[FMH::MODEL_NAME_KEY[q.first().trimmed()]] == q.last().trimmed())
+                        res << item;
+                }
             }
-        }
-    }else
-    {
-        for(const auto item : this->list)
+        }else
         {
-            for(const auto data : item)
+            for(auto item : this->listbk)
             {
-                if(data.contains(this->query, Qt::CaseInsensitive) && !res.contains(item))
-                    res << item;
+                for(auto data : item)
+                {
+                    if(data.contains(this->query, Qt::CaseInsensitive) && !res.contains(item))
+                        res << item;
+                }
             }
         }
     }
 
     emit this->preListChanged();
     this->list = res;
+    this->sortList();
     emit this->postListChanged();
 }
 
@@ -333,13 +327,19 @@ void ContactsModel::clear()
 
 void ContactsModel::reset()
 {
-    this->setList();
+    this->query.clear();
+    this->getList(true);
+}
+
+void ContactsModel::refresh()
+{
+    this->getList(false);
 }
 
 QVariantList ContactsModel::getAccounts()
 {
     QVariantList res;
-    for(auto account : syncer->getAccounts())
+    for(const auto &account : syncer->getAccounts())
         res << FM::toMap(account);
     return res;
 }

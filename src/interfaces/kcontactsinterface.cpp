@@ -38,7 +38,7 @@ kcontactsinterface::kcontactsinterface(QObject *parent) : QObject(parent)
     //    this->addContact("Daniel", "3298373843");
 }
 
-FMH::MODEL_LIST kcontactsinterface::getContacts(const QString &query)
+FMH::MODEL_LIST kcontactsinterface::getContacts()
 {
     FMH::MODEL_LIST res;
 

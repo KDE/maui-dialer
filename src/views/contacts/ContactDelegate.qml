@@ -19,7 +19,7 @@ SwipeDelegate
 
     background: Rectangle
     {
-        color:  hovered ? Qt.lighter("#4f5160") : "#4f5160"
+        color:  hovered ? Qt.lighter(cardColor) : cardColor
         //        border.color: borderColor
         radius: radiusV * 2
 
@@ -280,7 +280,7 @@ SwipeDelegate
             anchors.verticalCenter: parent.verticalCenter
             onClicked:
             {
-                _messageComposer.contact = model
+                _messageComposer.contact = list.get(index)
                 _messageComposer.open()
                 swipe.close()
             }

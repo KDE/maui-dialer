@@ -9,53 +9,41 @@ class AndroidIntents : public QObject
 {
     Q_OBJECT
 public:
+    enum GET_TYPE : uint_fast8_t
+    {
+        CACHED,
+        FETCH
+    };
+
     static AndroidIntents *getInstance();
-//    explicit AndroidIntents(QObject *parent = nullptr);
+    void call(const QString &tel) const;
 
-    /**
-     * @brief call
-     * @param tel
-     */
-    void call(const QString &tel);
 
-    /*!
-     * \brief init
-     */
-    void init();
 
-    //!
-    //! \brief addContact
-    //! \param contact
-    //! \param account
-    //!
-    void addContact(const FMH::MODEL &contact, const FMH::MODEL &account);
-    FMH::MODEL_LIST getAccounts() const;
-    FMH::MODEL_LIST getContacts() const;
-    void updateContact(const QString &id, const QString &field, const QString &value);
-    void fetch();
+    void addContact(const FMH::MODEL &contact, const FMH::MODEL &account) const;
+
+    FMH::MODEL_LIST getAccounts(const GET_TYPE &type = GET_TYPE::CACHED);
+    void getContacts(const GET_TYPE &type = GET_TYPE::CACHED);
+
+    QVariantMap getContact(const QString &id) const;
+
+    void updateContact(const QString &id, const QString &field, const QString &value) const;
 
 private:
     explicit AndroidIntents(QObject *parent = nullptr);
+    void init();
+
     static AndroidIntents *instance;
     MAUIAndroid *mauia;
-    FMH::MODEL_LIST m_accounts;
+
     FMH::MODEL_LIST m_contacts;
+    FMH::MODEL_LIST m_accounts;
 
-    ///
-    /// \brief accounts
-    /// \return
-    ///
-    FMH::MODEL_LIST accounts();
-    void contacts();
-
-    ///
-    /// \brief fetchContacts
-    /// \return
-    ///
-    static FMH::MODEL_LIST fetchContacts();
+    void fetchContacts();
+    FMH::MODEL_LIST fetchAccounts();
 
 signals:
-    void contactsReady();
+    void contactsReady(FMH::MODEL_LIST contacts) const;
 
 public slots:
 };

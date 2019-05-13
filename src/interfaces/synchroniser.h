@@ -12,15 +12,16 @@
 class AndroidIntents;
 #endif
 
-class DBActions;
 class Synchroniser : public QObject
 {
     Q_OBJECT
 public:
     explicit Synchroniser(QObject *parent = nullptr);
 
-    FMH::MODEL_LIST getContacts(const QString &query);
-    FMH::MODEL_LIST getAccounts();
+    void getContacts(const bool &cached = false);
+    FMH::MODEL_LIST getAccounts(const bool &cached = false);
+
+    QVariantMap getContact(const QString &id);
     bool insertContact(const FMH::MODEL &contact, const FMH::MODEL &account = {{}});
     bool updateContact(const FMH::MODEL &contact);
     bool removeContact(const FMH::MODEL &contact);
@@ -29,8 +30,6 @@ public:
 //    FMH::MODEL_LIST getAccounts() const;
 
 private:
-    DBActions *dba;
-
 #ifdef Q_OS_ANDROID
     AndroidIntents *android;
 #endif

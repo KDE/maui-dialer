@@ -59,7 +59,7 @@ Maui.Dialog
             font.bold: true
             font.weight: Font.Bold
             font.pointSize: fontSizes.big
-            colorScheme.viewBackgroundColor: "#4f5160"
+            colorScheme.viewBackgroundColor: cardColor
             colorScheme.borderColor: "transparent"
             colorScheme.textColor: "#fff"
             model:
@@ -84,7 +84,7 @@ Maui.Dialog
             font.bold: true
             font.weight: Font.Bold
             font.pointSize: fontSizes.big
-            colorScheme.backgroundColor: "#4f5160"
+            colorScheme.backgroundColor: cardColor
             colorScheme.borderColor: "transparent"
             colorScheme.textColor: "#fff"
         }

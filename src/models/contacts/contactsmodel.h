@@ -45,13 +45,14 @@ public:
 private:
     Synchroniser *syncer;
     FMH::MODEL_LIST list;
+    FMH::MODEL_LIST listbk;
     void sortList();
-    void setList();
-    void getList(const QString &query = "select * from contacts");
+    void getList(const bool &cached = false);
     void filter();
 
     QString query = "undefined";
     ContactsModel::SORTBY sort = ContactsModel::SORTBY::N;
+
 
 signals:
     void queryChanged();
@@ -72,6 +73,7 @@ public slots:
     void appendQuery(const QString &query);
     void clear();
     void reset();
+    void refresh();
 
     QVariantList getAccounts();
 
