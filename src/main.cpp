@@ -2,7 +2,7 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
- #include <QQuickStyle>
+#include <QQuickStyle>
 #include <QIcon>
 #include <QCommandLineParser>
 #include <QFileInfo>
@@ -18,6 +18,7 @@
 #include "./src/models/basemodel.h"
 #include "./src/models/baselist.h"
 #include "./src/models/contacts/contactsmodel.h"
+#include "interfaces/contactimage.h"
 
 #ifdef STATIC_KIRIGAMI
 #include "./3rdparty/kirigami/src/kirigamiplugin.h"
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_ANDROID
     QGuiApplication app(argc, argv);
-//    QGuiApplication::styleHints()->setMousePressAndHoldInterval(2000); // in [ms]
+    //    QGuiApplication::styleHints()->setMousePressAndHoldInterval(2000); // in [ms]
 #else
     QApplication app(argc, argv);
 #endif
@@ -44,9 +45,9 @@ int main(int argc, char *argv[])
     app.setApplicationDisplayName(APPNAME);
     app.setWindowIcon(QIcon(":/smartphone.svg"));
 
-
+    QScopedPointer<ContactImage> contactImageProvider(new ContactImage());
     QQmlApplicationEngine engine;
-//    QQuickStyle::setStyle("Material");
+    //    QQuickStyle::setStyle("Material");
 
 #ifdef STATIC_KIRIGAMI
     KirigamiPlugin::getInstance().registerTypes();
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
 
 #endif
 
+    engine.addImageProvider("contact", contactImageProvider.data());
     qmlRegisterUncreatableType<BaseList>("UnionModels", 1, 0, "BaseList", QStringLiteral("BaseList should not be created in QML"));
     qmlRegisterType<BaseModel>("UnionModels", 1, 0, "BaseModel");
     qmlRegisterType<ContactsModel>("UnionModels", 1, 0, "ContactsList");

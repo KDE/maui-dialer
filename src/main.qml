@@ -181,7 +181,7 @@ Maui.ApplicationWindow
                 anchors.centerIn: parent
                 width: isWide ? _contacsView.width * 0.8 : _contacsView.width * 0.95
                 //        height: rowHeight
-                placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.listView.count))
+                placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.view.count))
                 onAccepted: _contacsView.list.query = text
                 onCleared: _contacsView.list.reset()
                 colorScheme.backgroundColor: cardColor

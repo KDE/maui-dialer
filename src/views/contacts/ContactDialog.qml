@@ -200,7 +200,7 @@ Maui.Dialog
                         smooth: true
                         asynchronous: true
 
-                        source: contact.photo
+                        source: "image://contact/"+ contact.id
 
                         layer.enabled: true
                         layer.effect: OpacityMask
