@@ -18,8 +18,9 @@ Maui.ApplicationWindow
     property int currentView : views.contacts
     readonly property var views : ({
                                        favs: 0,
-                                       dialer: 1,
-                                       contacts : 2
+                                       log:  1,
+                                       contacts : 2,
+                                       dialer: 3,
                                    })
 
 
@@ -62,14 +63,26 @@ Maui.ApplicationWindow
         }
     ]
 
+    headBar.rightContent:  Maui.ToolButton
+    {
+        id: _dialerButton
+        iconName: "dialer-pad"
+        Layout.fillHeight: true
+        iconColor: currentView === views.dialer ? highlightColor : textColor
+        //                        text: qsTr("Dialer")
+        //            visible: isAndroid
+        showIndicator: currentView === views.dialer
+        onClicked: currentView = views.dialer
+
+    }
+
+
 
     headBar.middleContent: [
 
         Maui.ToolButton
         {
             id: _favsButton
-            Layout.fillWidth: isMobile
-            Layout.alignment: Qt.AlignCenter
             iconName: "draw-star"
             Layout.fillHeight: true
             iconColor: currentView === views.favs ? highlightColor : textColor
@@ -81,17 +94,13 @@ Maui.ApplicationWindow
 
         Maui.ToolButton
         {
-            id: _dialerButton
-            Layout.fillWidth: isMobile
-            Layout.alignment: Qt.AlignCenter
-
-            iconName: "view-list-icons"
+            id: _logButton
+            iconName: "view-media-recent"
             Layout.fillHeight: true
-            iconColor: currentView === views.dialer ? highlightColor : textColor
-            //                        text: qsTr("Dialer")
-            //            visible: isAndroid
-            showIndicator: currentView === views.dialer
-            onClicked: currentView = views.dialer
+            iconColor: currentView === views.log ? highlightColor : textColor
+            //                        text: qsTr("Favorites")
+            showIndicator: currentView === views.log
+            onClicked: currentView = views.log
 
         },
 
@@ -99,11 +108,8 @@ Maui.ApplicationWindow
         Maui.ToolButton
         {
             id: _contactsButton
-            Layout.alignment: Qt.AlignCenter
-
-            Layout.fillWidth: isMobile
             Layout.fillHeight: true
-            iconName: "view-media-artist"
+            iconName: "view-contacts"
             iconColor: currentView === views.contacts ? highlightColor : textColor
             //                        text: qsTr("Contacts")
             //            height: parent.height
@@ -135,9 +141,9 @@ Maui.ApplicationWindow
 
         }
 
-        DialerView
+        Maui.Page
         {
-            id: _dialerView
+            id: _logView
         }
 
         ContactsView
@@ -157,7 +163,7 @@ Maui.ApplicationWindow
                 width: height
 
                 color: highlightColor
-                radius: radiusV
+                radius: Math.max(width, height)
 
                 Maui.ToolButton
                 {
@@ -191,15 +197,16 @@ Maui.ApplicationWindow
                 onTextChanged: _contacsView.list.query = text
             }
         }
+
+        DialerView
+        {
+            id: _dialerView
+        }
     }
 
 
     /** DIALOGS **/
 
-    ContactDialog
-    {
-        id: _contactDialog
-    }
 
     EditContactDialog
     {

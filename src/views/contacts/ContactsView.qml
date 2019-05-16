@@ -163,15 +163,15 @@ Maui.Page
             cellWidth: unit * 120
             cellHeight: unit * 120
             itemSize: Math.min(unit * 120, control.width * 0.4)
-//            spacing: space.big
+            spacing: space.medium
             centerContent: false
                 adaptContent: true
             delegate: GridContactDelegate
             {
                 id: _delegate
 
-                width: view.cellWidth * 0.99
-                height: view.cellHeight * 0.99
+                width: view.cellWidth * 0.95
+                height: view.cellHeight * 0.95
                 showMenuIcon: true
 
                 Connections
@@ -193,5 +193,8 @@ Maui.Page
         }
     }
 
-
+    ContactDialog
+    {
+        id: _contactDialog
+    }
 }

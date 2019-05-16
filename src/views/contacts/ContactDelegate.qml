@@ -12,7 +12,6 @@ SwipeDelegate
     id: control
     hoverEnabled: true
     clip: true
-
     property alias quickButtons : _buttonsRow.data
     property bool showMenuIcon: false
 
@@ -89,7 +88,7 @@ SwipeDelegate
                             smooth: true
                             asynchronous: true
 
-                            source: /*"file://"+ */model.photo
+                            source:  "image://contact/"+ model.id
 
                             layer.enabled: true
                             layer.effect: OpacityMask

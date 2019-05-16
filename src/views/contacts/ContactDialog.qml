@@ -22,9 +22,9 @@ Maui.Dialog
     footBar.rightContent:  Maui.Button
     {
         visible: isMobile
-//                Layout.fillHeight: visible
+        //                Layout.fillHeight: visible
         //                    Layout.fillWidth: visible
-        icon.name: "phone"
+        icon.name: "dialer-call"
         text: qsTr("Call")
         //        display: ToolButton.TextUnderIcon
         colorScheme.backgroundColor: infoColor
@@ -39,7 +39,7 @@ Maui.Dialog
     footBar.leftContent:  Maui.Button
     {
         visible: isMobile
-//                Layout.fillHeight: visible
+        //                Layout.fillHeight: visible
         //                    Layout.fillWidth: visible
         text: qsTr("Close")
         //        display: ToolButton.TextUnderIcon
@@ -49,45 +49,54 @@ Maui.Dialog
     }
 
 
-    footBar.middleContent: Maui.ToolButton
-    {
-                    Layout.fillHeight: true
-        Layout.fillWidth: true
-        iconName: "draw-text"
-        //            text: qsTr("Message")
-        display: ToolButton.TextUnderIcon
-        onClicked:
-        {
-            _messageComposer.contact = control.contact
-            _messageComposer.open()
-        }
+    footBar.middleContent: [
 
-    }
+        Maui.ToolButton
+        {
+            Layout.fillHeight: true
+            iconName: "send-email"
+            //            text: qsTr("Message")
+            display: ToolButton.TextUnderIcon
+            onClicked:
+            {
+                _messageComposer.contact = control.contact
+                _messageComposer.open()
+            }
+
+        },
+
+        Maui.ToolButton
+        {
+            Layout.fillHeight: true
+            iconName: "send-sms"
+            //            text: qsTr("Message")
+            display: ToolButton.TextUnderIcon
+            onClicked:
+            {
+                _messageComposer.contact = control.contact
+                _messageComposer.open()
+            }
+
+        }
+    ]
 
 
 
     headBar.drawBorder: false
-    headBar.rightContent: Maui.Button
-    {
-        icon.name: "document-edit"
-        onClicked: _editContactDialog.open()
-        colorScheme.backgroundColor: suggestedColor
-        colorScheme.textColor: "#fff"
-    }
-    headBar.middleContent: [
-
+    headBar.rightContent:[
         Maui.ToolButton
         {
-                        Layout.fillHeight: true
-//            Layout.fillWidth: true
+                        Layout.fillWidth: true
+            Layout.fillHeight: true
+
             iconName: "draw-star"
-            //            text: qsTr("Fav")
-            display: ToolButton.TextUnderIcon
-            iconColor: contact.fav == "1" ? "yellow" : textColor
+                        text: qsTr("Fav")
+            display: ToolButton.TextBesideIcon
+            iconColor: contact.fav == "1" ? "#FFD700" : textColor
             onClicked:
             {
                 contact["fav"] = contact.fav == "1" ? "0" : "1"
-                _contacsView.list.update(contact,  _contacsView.listView.currentIndex)
+                list.update(contact,  view.currentIndex)
                 control.contact = contact;
                 _favsView.list.refresh()
             }
@@ -95,11 +104,25 @@ Maui.Dialog
 
         Maui.ToolButton
         {
-                        Layout.fillHeight: true
-//            Layout.fillWidth: true
+                        Layout.fillWidth: true
+            Layout.fillHeight: true
             iconName: "document-share"
-            //            text: qsTr("Share")
-            display: ToolButton.TextUnderIcon
+                        text: qsTr("Share")
+            display: ToolButton.TextBesideIcon
+
+        },
+
+        Maui.ToolButton
+        {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            iconName: "document-edit"
+            text: qsTr("Edit")
+            onClicked: _editContactDialog.open()
+            iconColor: suggestedColor
+            display: ToolButton.TextBesideIcon
+
         }
     ]
 
@@ -151,7 +174,7 @@ Maui.Dialog
     ColumnLayout
     {
         id: _layout
-        height: parent.height * 0.7
+        height: parent.height
         width: parent.width * 0.8
 
         anchors.centerIn: parent
@@ -160,7 +183,7 @@ Maui.Dialog
         {
             id: _contactPic
             Layout.fillWidth: true
-            Layout.preferredHeight: iconSizes.huge
+            Layout.preferredHeight: iconSizes.huge * (contact.photo ? 1.5 : 1)
 
             Rectangle
             {
@@ -279,6 +302,7 @@ Maui.Dialog
                 contentHeight: _formLayout.implicitHeight
                 contentWidth: _formLayout.width
                 clip: true
+
                 ColumnLayout
                 {
                     id: _formLayout

@@ -6,6 +6,7 @@ import UnionModels 1.0
 
 GridLayout
 {
+    id: _grid
     height: parent.height
     width: parent.width
     anchors.centerIn: parent
@@ -15,160 +16,34 @@ GridLayout
     columnSpacing: space.big
     //                spacing: space.medium
     readonly property int buttonFontSize: fontSizes.huge * 1.5
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "1";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
+    property var model : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"]
+
+    Repeater {
+        model: _grid.model
+
+        Item
         {
-            dialString += text;
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            Maui.Button
+            {
+                height: Math.min(iconSizes.big * 3, parent.height)
+                width: height
+                anchors.centerIn: parent
+                bg.radius: Math.max(width, height)
+                text: modelData
+                font.bold: true
+                font.weight: Font.Bold
+                font.pointSize: buttonFontSize
+                onClicked:
+                {
+                    dialString += text;
+                }
+            }
         }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "2";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "3";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "4";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "5";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "6";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "7";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "8";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "9";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "*";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "0 / +";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked: dialString += "0"
-        onPressAndHold: dialString += "+"
 
 
     }
-    Maui.Button
-    {
-        Layout.fillWidth: true;
-        Layout.fillHeight: true;
-        text: "#";
-        font.bold: true
-        font.weight: Font.Bold
-        font.pointSize: buttonFontSize
-        onClicked:
-        {
-            dialString += text;
-        }
-    }
+
 }

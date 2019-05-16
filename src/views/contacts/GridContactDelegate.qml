@@ -12,13 +12,11 @@ ItemDelegate
     clip: true
 
     property bool showMenuIcon: false
-
     signal favClicked(int index)
-
 
     background: Rectangle
     {
-        //                radius: radiusV * 2
+        radius: radiusV
         color:
         {
             var c = Qt.rgba(Math.random(),Math.random(),Math.random(),1)
@@ -35,7 +33,8 @@ ItemDelegate
         {
             id: _contactPic
 
-            anchors.fill: parent
+            height: parent.height
+            width: parent.width
             clip: true
 
             Loader
@@ -81,7 +80,7 @@ ItemDelegate
                                 anchors.centerIn: parent
                                 width: _img.width
                                 height: _img.height
-                                radius: radiusV * 2
+                                radius: radiusV
                                 border.color: borderColor
                             }
                         }
@@ -143,6 +142,7 @@ ItemDelegate
         anchors.bottom: parent.bottom
         clip: true
         color: Qt.rgba(0,0,0, 0.3)
+        radius: radiusV
 
         ColumnLayout
         {

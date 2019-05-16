@@ -34,6 +34,7 @@ set(union_SRCS
     src/models/basemodel.cpp
     src/models/contacts/contactsmodel.cpp
     src/interfaces/kcontactsinterface.cpp
+    src/interfaces/contactimage.cpp
     )
 
 set(union_HDRS
@@ -45,6 +46,7 @@ set(union_HDRS
     src/models/basemodel.h
     src/models/contacts/contactsmodel.h
     src/interfaces/kcontactsinterface.h
+    src/interfaces/contactimage.h
     )
 
 set(union_ASSETS
