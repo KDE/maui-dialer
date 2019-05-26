@@ -17,6 +17,12 @@ SwipeDelegate
 
     signal favClicked(int index)
 
+    property alias label1 : _label1
+    property alias label2 : _label2
+    property alias label3 : _label3
+    property alias label4 : _label4
+
+
     background: Rectangle
     {
         color:  hovered ? Qt.lighter(cardColor) : cardColor
@@ -153,7 +159,8 @@ SwipeDelegate
 
                     Label
                     {
-                        visible: (model.n && model.n.length)
+                        id: _label1
+                        visible: text.length
                         Layout.fillHeight: visible
                         Layout.fillWidth: visible
                         text: model.n
@@ -166,7 +173,8 @@ SwipeDelegate
 
                     Label
                     {
-                        visible: (model.tel && model.tel.length)
+                        id: _label2
+                        visible: text.length
                         Layout.fillHeight: visible
                         Layout.fillWidth: visible
                         text: model.tel
@@ -192,7 +200,8 @@ SwipeDelegate
 
                     Label
                     {
-                        visible: (model.email && model.email.length)
+                        id: _label3
+                        visible: text.length
                         Layout.fillHeight: visible
                         Layout.fillWidth: visible
                         Layout.alignment: Qt.AlignRight
@@ -208,7 +217,8 @@ SwipeDelegate
 
                     Label
                     {
-                        visible: (model.title && model.tel.title)
+                        id: _label4
+                        visible: text.length
                         Layout.fillHeight: visible
                         Layout.fillWidth: visible
                         Layout.alignment: Qt.AlignRight

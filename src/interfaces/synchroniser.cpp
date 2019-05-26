@@ -29,7 +29,6 @@ Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 #endif
 }
 
-
 void Synchroniser::getContacts(const bool &cached)
 {
 #ifdef Q_OS_ANDROID

@@ -33,6 +33,7 @@ set(union_SRCS
     src/models/baselist.cpp
     src/models/basemodel.cpp
     src/models/contacts/contactsmodel.cpp
+    src/models/contacts/calllogs.cpp
     src/interfaces/kcontactsinterface.cpp
     src/interfaces/contactimage.cpp
     )
@@ -45,6 +46,7 @@ set(union_HDRS
     src/models/baselist.h
     src/models/basemodel.h
     src/models/contacts/contactsmodel.h
+    src/models/contacts/calllogs.h
     src/interfaces/kcontactsinterface.h
     src/interfaces/contactimage.h
     )

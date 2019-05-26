@@ -24,6 +24,7 @@ public:
 
     FMH::MODEL_LIST getAccounts(const GET_TYPE &type = GET_TYPE::CACHED);
     void getContacts(const GET_TYPE &type = GET_TYPE::CACHED);
+    void getCallLogs();
 
     QVariantMap getContact(const QString &id) const;
 

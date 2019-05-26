@@ -18,9 +18,6 @@ void AndroidIntents::init()
     this->mauia = new MAUIAndroid(this);
 }
 
-
-
-
 AndroidIntents *AndroidIntents::instance = nullptr;
 
 AndroidIntents *AndroidIntents::getInstance()
@@ -83,6 +80,11 @@ void AndroidIntents::getContacts(const GET_TYPE &type)
 
     }else if(type == GET_TYPE::FETCH)
         this->fetchContacts();
+}
+
+void AndroidIntents::getCallLogs()
+{
+    const auto logs = MAUIAndroid::getCallLogs();
 }
 
 QVariantMap AndroidIntents::getContact(const QString &id) const

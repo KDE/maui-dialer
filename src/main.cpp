@@ -18,6 +18,7 @@
 #include "./src/models/basemodel.h"
 #include "./src/models/baselist.h"
 #include "./src/models/contacts/contactsmodel.h"
+#include "./src/models/contacts/calllogs.h"
 #include "interfaces/contactimage.h"
 
 #ifdef STATIC_KIRIGAMI
@@ -62,6 +63,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<BaseList>("UnionModels", 1, 0, "BaseList", QStringLiteral("BaseList should not be created in QML"));
     qmlRegisterType<BaseModel>("UnionModels", 1, 0, "BaseModel");
     qmlRegisterType<ContactsModel>("UnionModels", 1, 0, "ContactsList");
+    qmlRegisterType<CallLogs>("UnionModels", 1, 0, "CallLogs");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

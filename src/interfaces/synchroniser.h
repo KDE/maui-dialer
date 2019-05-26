@@ -37,6 +37,7 @@ private:
 
 signals:
     void contactsReady(FMH::MODEL_LIST contacts);
+    void callLogsReady();
 
 public slots:
 };

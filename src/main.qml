@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 
 import "views/contacts"
 import "views/dialer"
+import "views/logs"
 import "widgets"
 //import "views/favs"
 
@@ -15,7 +16,7 @@ Maui.ApplicationWindow
     about.appDescription: qsTr("Union lists your contacts and keeps them synced across devices.")
     about.appIcon: "qrc:/smartphone.svg"
 
-    property int currentView : views.contacts
+    property int currentView : views.favs
     readonly property var views : ({
                                        favs: 0,
                                        log:  1,
@@ -141,9 +142,9 @@ Maui.ApplicationWindow
 
         }
 
-        Maui.Page
+        LogsView
         {
-            id: _logView
+            id: _logView           
         }
 
         ContactsView

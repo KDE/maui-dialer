@@ -18,6 +18,7 @@ Maui.Page
     property bool gridView : false
 
     property bool showAccountFilter: false
+
     BaseModel
     {
         id: _contactsModel

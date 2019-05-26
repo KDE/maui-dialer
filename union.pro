@@ -46,6 +46,7 @@ SOURCES += \
     src/interfaces/contactimage.cpp \
     src/models/baselist.cpp \
     src/models/basemodel.cpp \
+    src/models/contacts/calllogs.cpp \
     src/models/contacts/contactsmodel.cpp \
     src/interfaces/synchroniser.cpp \
     src/db/db.cpp \
@@ -61,6 +62,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     src/interfaces/contactimage.h \
+    src/models/contacts/calllogs.h \
     src/union.h \
     src/db/db.h \
     src/db/dbactions.h \
