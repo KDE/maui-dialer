@@ -32,12 +32,12 @@ Maui.Page
         spacing: space.big
         clip: true
 
-        section.property: "date"
+        section.property: "modified"
         section.criteria: ViewSection.FullString
         section.labelPositioning: ViewSection.InlineLabels
         section.delegate: Maui.LabelDelegate
         {
-            label: Maui.FM.formatDate(section, "MM/dd/yyyy", "dd-MM-yyyy HH:mm")
+            label: section
             isSection: true
             boldLabel: true
             //            colorScheme.backgroundColor: "#333"
@@ -59,8 +59,8 @@ Maui.Page
         {
             id: _delegate
 
-            label1.text: model.n + " / " + model.tel
-            label2.text: model.date
+            label1.text: model.n
+            label2.text: Maui.FM.formatDate(model.date, "HH:mm", "dd-MM-yyyy HH:mm") + " / " + new Date(model.duration * 1000).toISOString().substr(11, 8);
             label3.text: model.type
 
             height: unit * 60
@@ -77,6 +77,14 @@ Maui.Page
                           case "MISSED" : return "dialog-close";
 
                           }
+
+                iconColor: switch (model.type)
+                           {
+                           case "INCOMING" : return suggestedColor;
+                           case "OUTGOING" : return warningColor;
+                           case "MISSED" : return dangerColor;
+
+                           }
             }
 
             Connections

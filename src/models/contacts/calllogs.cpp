@@ -58,7 +58,12 @@ void CallLogs::getList(const bool &cached)
 
 #ifdef STATIC_MAUIKIT
     for(const auto &item : MAUIAndroid::getCallLogs())
-        this->list << FM::toModel(item.toMap());
+    {
+        auto map = item.toMap();
+        map.insert(FMH::MODEL_NAME[FMH::MODEL_KEY::MODIFIED],
+                QDate(QDateTime::fromString(map.value(FMH::MODEL_NAME[FMH::MODEL_KEY::DATE]).toString(), "dd-MM-yyyy HH:mm").date()).toString(Qt::TextDate));
+         this->list << FM::toModel(map);
+    }
 #endif
 
     this->sortList();
@@ -93,12 +98,11 @@ void CallLogs::sortList()
         {
             case FMH::MODEL_KEY::DATE:
             {
-                auto currentTime = QDateTime::currentDateTime();
 
-                auto date1 = QDateTime::fromString(e1[key], "dd-MM-yyyy HH:mm");
-                auto date2 = QDateTime::fromString(e2[key], "dd-MM-yyyy HH:mm");
+                auto date1 = QDateTime::fromString(e1[key], "dd-MM-yyyy HH:mm").date();
+                auto date2 = QDateTime::fromString(e2[key], "dd-MM-yyyy HH:mm").date();
 
-                if (OP(date1.secsTo(currentTime), date2.secsTo(currentTime), order))
+                if (OP(date1.daysTo(QDate::currentDate()), date2.daysTo(QDate::currentDate()), order))
                     return true;
 
                 break;
