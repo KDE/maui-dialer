@@ -55,6 +55,7 @@ Maui.Dialog
         {
             Layout.fillHeight: true
             iconName: "send-email"
+            visible: contact.email
             //            text: qsTr("Message")
             display: ToolButton.TextUnderIcon
             onClicked:
@@ -69,6 +70,8 @@ Maui.Dialog
         {
             Layout.fillHeight: true
             iconName: "send-sms"
+            visible: contact.tel
+
             //            text: qsTr("Message")
             display: ToolButton.TextUnderIcon
             onClicked:

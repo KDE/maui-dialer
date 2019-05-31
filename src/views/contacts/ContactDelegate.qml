@@ -22,7 +22,7 @@ SwipeDelegate
     property alias label3 : _label3
     property alias label4 : _label4
 
-
+    swipe.enabled: showMenuIcon
     background: Rectangle
     {
         color:  hovered ? Qt.lighter(cardColor) : cardColor
@@ -56,13 +56,13 @@ SwipeDelegate
                     color:
                     {
                         var c = Qt.rgba(Math.random(),Math.random(),Math.random(),1)
-                         return Qt.hsla(c.hslHue, 0.7, c.hslLightness, c.a);
+                        return Qt.hsla(c.hslHue, 0.7, c.hslLightness, c.a);
                     }
 
-//                    color: Qt.hsl(Math.random(),Math.random(),Math.random(),1);
-//                    color: "hsl(" + 360 * Math.random() + ',' +
-//                           (25 + 70 * Math.random()) + '%,' +
-//                           (85 + 10 * Math.random()) + '%)';
+                    //                    color: Qt.hsl(Math.random(),Math.random(),Math.random(),1);
+                    //                    color: "hsl(" + 360 * Math.random() + ',' +
+                    //                           (25 + 70 * Math.random()) + '%,' +
+                    //                           (85 + 10 * Math.random()) + '%)';
                     border.color: Qt.darker(color, 1.5)
 
 
@@ -270,7 +270,7 @@ SwipeDelegate
             anchors.verticalCenter: parent.verticalCenter
             onClicked:
             {
-                 control.favClicked(index)
+                control.favClicked(index)
                 swipe.close()
             }
 

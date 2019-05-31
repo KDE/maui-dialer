@@ -78,7 +78,7 @@ void ContactsModel::sortList()
         return;
 
     const auto key = static_cast<FMH::MODEL_KEY>(this->sort);
-    qSort(this->list.begin(), this->list.end(), [key](const FMH::MODEL &e1, const FMH::MODEL &e2) -> bool
+    std::sort(this->list.begin(), this->list.end(), [key](const FMH::MODEL &e1, const FMH::MODEL &e2) -> bool
     {
         auto role = key;
 
@@ -240,7 +240,7 @@ void ContactsModel::filter()
             {
                 for(auto item : this->listbk)
                 {
-                    if(item[FMH::MODEL_NAME_KEY[q.first().trimmed()]] == q.last().trimmed())
+                    if(item[FMH::MODEL_NAME_KEY[q.first().trimmed()]].replace(" ", "").contains(q.last().trimmed()))
                         res << item;
                 }
             }
@@ -250,10 +250,11 @@ void ContactsModel::filter()
             {
                 for(auto data : item)
                 {
-                    if(data.contains(this->query, Qt::CaseInsensitive) && !res.contains(item))
+                    if(data.replace(" ", "").contains(this->query, Qt::CaseInsensitive) && !res.contains(item))
                         res << item;
                 }
             }
+
         }
     }
 

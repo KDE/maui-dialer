@@ -78,6 +78,7 @@ Maui.Dialog
         Maui.TextField
         {
             id: _subjectTextField
+            visible: _combobox.currentText === contact.email
             Layout.fillWidth: true
             Layout.preferredHeight: toolBarHeightAlt
             placeholderText: qsTr("Subject")

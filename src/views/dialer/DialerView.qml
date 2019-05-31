@@ -10,10 +10,11 @@ Maui.Page
     id: control
     property alias dialString : _textField.text
 
+    property int buttonSize : Math.min( iconSizes.big * 2 , control.width * 0.25)
     onDialStringChanged:
     {
         //        Qt.inputMethod.hide();
-        _contacsView.list.query = dialString
+        _contacsView.list.query = "tel=" + dialString
     }
     colorScheme.backgroundColor: backgroundColor
     headBar.visible: false
@@ -31,6 +32,79 @@ Maui.Page
     //    footBarOverlap: true
     //    footBarAligment: Qt.AlignRight
 
+    footBar.drawBorder:false
+    footBar.implicitHeight:  iconSizes.big * 3
+    footBar.middleContent: [
+
+        Item
+        {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            Maui.Button
+            {
+                icon.name: "send-sms"
+                icon.color: textColor
+                height: buttonSize
+                width: height
+                anchors.centerIn: parent
+                bg.radius: Math.max(width, height)
+                //                colorScheme.backgroundColor: infoColor
+                onClicked:
+                {
+                    _messageComposer.contact = ({tel : dialString})
+                    _messageComposer.open()
+                }
+            }
+
+        },
+
+        Item
+        {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            Maui.Button
+            {
+                icon.name: "dialer-call"
+                icon.color: "white"
+                height: buttonSize
+                width: height
+                anchors.centerIn: parent
+                bg.radius: Math.max(width, height)
+                colorScheme.backgroundColor: suggestedColor
+
+                onClicked:
+                {
+                    if(isAndroid)
+                        Maui.Android.call(dialString)
+                }
+            }
+        },
+
+        Item
+        {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            Maui.Button
+            {
+                icon.name: "edit-clear"
+                icon.color: textColor
+                height: iconSizes.big * 2
+                width: height
+                anchors.centerIn: parent
+                bg.radius: Math.max(width, height)
+                //                colorScheme.backgroundColor: warningColor
+
+                onClicked:
+                {
+                    dialString = dialString.slice(0, -1);
+                }
+            }
+        }
+    ]
+
     ColumnLayout
     {
         id: _layout
@@ -44,75 +118,27 @@ Maui.Page
         {
             Layout.preferredHeight: toolBarHeight * 1.3
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
             color: cardColor
             //        border.color: borderColor
             radius: radiusV * 2
 
-            RowLayout
+            Maui.TextField
             {
-                anchors.fill : parent
-                spacing: 0
+                id: _textField
+                anchors.fill: parent
+                inputMethodHints: Qt.ImhDialableCharactersOnly
+                placeholderText: qsTr("Number...")
+                readOnly: true
+                font.bold: true
+                font.weight: Font.Bold
+                font.pointSize: fontSizes.huge
+                font.letterSpacing: space.tiny
 
-                Item
-                {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-//                    Layout.leftMargin: space.big * 2
-                    Maui.TextField
-                    {
-                        id: _textField
-                        anchors.fill: parent
-                        inputMethodHints: Qt.ImhDialableCharactersOnly
-                        placeholderText: qsTr("Number...")
-                        readOnly: true
-                        font.bold: true
-                        font.weight: Font.Bold
-                        font.pointSize: fontSizes.huge
-                        font.letterSpacing: space.tiny
-
-                        colorScheme.backgroundColor: "transparent"
-                        colorScheme.borderColor: "transparent"
-                        colorScheme.textColor: "#fff"
-                        //            enabled: false
-                    }
-
-                }
-
-
-                Item
-                {
-                    Layout.fillHeight: true
-                    Layout.preferredWidth: parent.height
-                    visible: dialString.length
-
-                    Rectangle
-                    {
-                        height: parent.height
-                        width: height
-                        anchors.centerIn: parent
-                        color: highlightColor
-                        radius: radiusV * 2
-
-                        Rectangle
-                        {
-                            height: parent.height
-                            width: parent.radius
-                            anchors.left: parent.left
-                            color: parent.color
-                        }
-
-                        Maui.ToolButton
-                        {
-                            iconName: "phone"
-                            anchors.centerIn: parent
-                            onClicked:
-                            {
-                                if(isAndroid)
-                                    Maui.Android.call(dialString)
-                            }
-                        }
-                    }
-                }
+                colorScheme.backgroundColor: "transparent"
+                colorScheme.borderColor: "transparent"
+                colorScheme.textColor: textColor
+                //            enabled: false
             }
         }
 
@@ -136,20 +162,16 @@ Maui.Page
                 height: unit * 60
                 width: _layout.width
                 anchors.horizontalCenter: parent.horizontalCenter
-//                quickButtons: Maui.ToolButton
-//                {
-//                    iconName: "phone"
-//                    backgroundRec.radius: radiusV
-//                    backgroundRec.color: highlightColor
-//                    backgroundRec.opacity: 0.5
-//                    iconColor: highlightColor
 
-//                    onClicked:
-//                    {
-//                        if(isAndroid)
-//                            Maui.Android.call(contact.tel)
-//                    }
-//                }
+                quickButtons: Maui.ToolButton
+                {
+                    iconName: "view-fullscreen"
+                    onClicked:
+                    {
+                        _suggestionListView.currentIndex = index
+                        control.dialString = _contacsView.list.get(_suggestionListView.currentIndex).tel
+                    }
+                }
 
                 Connections
                 {
@@ -172,7 +194,7 @@ Maui.Page
             Layout.minimumHeight: unit*300
             Layout.maximumHeight: unit*300
 
-            Layout.alignment: Qt.AlignCenter
+            Layout.alignment: Qt.AlignBottom
             //            visible: true
 
             Dialer

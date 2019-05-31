@@ -26,8 +26,36 @@ Maui.Page
         id: _callLogsModel
     }
 
-      ListView
+    Maui.Menu
     {
+        id: _menu
+        Maui.MenuItem
+        {
+            text: qsTr("Call")
+            icon.name: "dialer-call"
+            onTriggered:
+            {
+                if(isAndroid)
+                    Maui.Android.call(_callLogsModel.get(_listView.currentIndex).tel)
+            }
+        }
+
+        Maui.MenuItem
+        {
+            text: qsTr("Save as..")
+            icon.name: "list-add-user"
+            onTriggered:
+            {
+                _newContactDialog.contact = _callLogsModel.get(_listView.currentIndex)
+                _newContactDialog.open()
+            }
+        }
+    }
+
+    ListView
+    {
+
+        id: _listView
         anchors.fill: parent
         spacing: space.big
         clip: true
@@ -92,14 +120,8 @@ Maui.Page
                 target: _delegate
                 onClicked:
                 {
-                    view.currentIndex = index
-                    _contactDialog.show(list.get(index))
-                }
-                onFavClicked:
-                {
-                    var item = _contactsList.get(index)
-                    item["fav"] = item.fav == "1" ? "0" : "1"
-                    _contactsList.update(item, index)
+                    _listView.currentIndex = index
+                    _menu.popup()
                 }
             }
         }

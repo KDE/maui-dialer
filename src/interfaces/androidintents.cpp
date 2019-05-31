@@ -8,15 +8,7 @@
 #include <QFutureWatcher>
 #include "fm.h"
 
-AndroidIntents::AndroidIntents(QObject *parent) : QObject(parent)
-{
-
-}
-
-void AndroidIntents::init()
-{
-    this->mauia = new MAUIAndroid(this);
-}
+AndroidIntents::AndroidIntents(QObject *parent) : QObject(parent) {}
 
 AndroidIntents *AndroidIntents::instance = nullptr;
 
@@ -26,8 +18,6 @@ AndroidIntents *AndroidIntents::getInstance()
     {
         instance = new AndroidIntents();
         qDebug() << "getInstance(AndroidIntents): First AndroidIntents instance\n";
-        instance->init();
-
         return instance;
     } else
     {
@@ -38,13 +28,13 @@ AndroidIntents *AndroidIntents::getInstance()
 
 void AndroidIntents::call(const QString &tel) const
 {
-    this->mauia->call(tel);
+    MAUIAndroid::call(tel);
 }
 
 void AndroidIntents::addContact(const FMH::MODEL &contact, const FMH::MODEL &account) const
 {
     qDebug() << "ADDING CONTACT TO ACCOUNT" << contact << account;
-    this->mauia->addContact(contact[FMH::MODEL_KEY::N],
+    MAUIAndroid::addContact(contact[FMH::MODEL_KEY::N],
             contact[FMH::MODEL_KEY::TEL],
             contact[FMH::MODEL_KEY::TEL_2],
             contact[FMH::MODEL_KEY::TEL_3],
@@ -89,15 +79,13 @@ void AndroidIntents::getCallLogs()
 
 QVariantMap AndroidIntents::getContact(const QString &id) const
 {
-    return this->mauia->getContact(id);
+    return MAUIAndroid::getContact(id);
 }
 
 void AndroidIntents::updateContact(const QString &id, const QString &field, const QString &value) const
 {
-    this->mauia->updateContact(id, field, value);
+    MAUIAndroid::updateContact(id, field, value);
 }
-
-
 
 void AndroidIntents::fetchContacts()
 {
@@ -130,7 +118,7 @@ FMH::MODEL_LIST AndroidIntents::fetchAccounts()
 {
     FMH::MODEL_LIST data;
 
-    const auto array = this->mauia->getAccounts();
+    const auto array = MAUIAndroid::getAccounts();
     QString xmlData(array);
     QDomDocument doc;
 

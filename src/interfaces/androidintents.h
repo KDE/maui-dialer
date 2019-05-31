@@ -4,7 +4,6 @@
 #include <QObject>
 #include "fmh.h"
 
-class MAUIAndroid;
 class AndroidIntents : public QObject
 {
     Q_OBJECT
@@ -18,8 +17,6 @@ public:
     static AndroidIntents *getInstance();
     void call(const QString &tel) const;
 
-
-
     void addContact(const FMH::MODEL &contact, const FMH::MODEL &account) const;
 
     FMH::MODEL_LIST getAccounts(const GET_TYPE &type = GET_TYPE::CACHED);
@@ -32,11 +29,8 @@ public:
 
 private:
     explicit AndroidIntents(QObject *parent = nullptr);
-    void init();
 
     static AndroidIntents *instance;
-    MAUIAndroid *mauia;
-
     FMH::MODEL_LIST m_contacts;
     FMH::MODEL_LIST m_accounts;
 

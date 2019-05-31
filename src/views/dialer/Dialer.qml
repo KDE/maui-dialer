@@ -18,7 +18,8 @@ GridLayout
     readonly property int buttonFontSize: fontSizes.huge * 1.5
     property var model : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"]
 
-    Repeater {
+    Repeater
+    {
         model: _grid.model
 
         Item
@@ -28,7 +29,7 @@ GridLayout
 
             Maui.Button
             {
-                height: Math.min(iconSizes.big * 3, parent.height)
+                height: buttonSize
                 width: height
                 anchors.centerIn: parent
                 bg.radius: Math.max(width, height)
@@ -42,8 +43,5 @@ GridLayout
                 }
             }
         }
-
-
     }
-
 }

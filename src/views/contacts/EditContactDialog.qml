@@ -336,7 +336,7 @@ Maui.Dialog
         _img.source = ""
         control.close()
 
-    }
+    }    
 
     Component.onCompleted:
     {

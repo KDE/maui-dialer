@@ -1,5 +1,10 @@
 #include "calllogs.h"
 
+#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrentRun>
+#include <QFuture>
+#include <QFutureWatcher>
+
 #ifdef STATIC_MAUIKIT
 #include "mauiandroid.h"
 #endif
@@ -54,20 +59,34 @@ CallLogs::ORDER CallLogs::getOrder() const
 
 void CallLogs::getList(const bool &cached)
 {
-    emit this->preListChanged();
-
-#ifdef STATIC_MAUIKIT
-    for(const auto &item : MAUIAndroid::getCallLogs())
+    QFutureWatcher<FMH::MODEL_LIST> *watcher = new QFutureWatcher<FMH::MODEL_LIST>;
+    connect(watcher, &QFutureWatcher<FMH::MODEL_LIST>::finished, [=]()
     {
-        auto map = item.toMap();
-        map.insert(FMH::MODEL_NAME[FMH::MODEL_KEY::MODIFIED],
-                QDate(QDateTime::fromString(map.value(FMH::MODEL_NAME[FMH::MODEL_KEY::DATE]).toString(), "dd-MM-yyyy HH:mm").date()).toString(Qt::TextDate));
-         this->list << FM::toModel(map);
-    }
+        emit this->preListChanged();
+        this->list = watcher->future().result();
+        this->sortList();
+        emit this->postListChanged();
+        watcher->deleteLater();
+    });
+
+    const auto func = []() -> FMH::MODEL_LIST {
+            FMH::MODEL_LIST list;
+
+        #ifdef STATIC_MAUIKIT
+            for(const auto &item : MAUIAndroid::getCallLogs())
+    {
+            auto map = item.toMap();
+            map.insert(FMH::MODEL_NAME[FMH::MODEL_KEY::MODIFIED],
+            QDate(QDateTime::fromString(map.value(FMH::MODEL_NAME[FMH::MODEL_KEY::DATE]).toString(), "dd-MM-yyyy HH:mm").date()).toString(Qt::TextDate));
+    list << FM::toModel(map);
+}
 #endif
 
-    this->sortList();
-    emit this->postListChanged();
+return list;
+};
+
+QFuture<FMH::MODEL_LIST> t1 = QtConcurrent::run(func);
+watcher->setFuture(t1);
 }
 
 template<typename T>
