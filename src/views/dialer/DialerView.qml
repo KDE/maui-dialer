@@ -78,6 +78,8 @@ Maui.Page
                 {
                     if(isAndroid)
                         Maui.Android.call(dialString)
+                    else
+                        Qt.openUrlExternally("call://" + dialString)
                 }
             }
         },
