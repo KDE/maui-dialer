@@ -27,7 +27,6 @@ linux:unix:!android {
 
     message(Building helpers for Android)
     QT += androidextras webview
-    LIBS += -ljnigraphics
     include($$PWD/3rdparty/openssl/openssl.pri)
     include($$PWD/mauikit/mauikit.pri)
     include($$PWD/3rdparty/kirigami/kirigami.pri)
