@@ -1,3 +1,13 @@
+mauikit/
+3rdparty/kirigami
+3rdparty/breeze-icons
+3rdparty/openssl
+.directory
+
+*.*~
+#~*.*
+#~.*
+
 # C++ objects and libs
 *.slo
 *.lo
@@ -5,7 +15,7 @@
 *.a
 *.la
 *.lai
-*.so
+#*.so
 *.dll
 *.dylib
 
@@ -41,3 +51,7 @@ target_wrapper.*
 
 # QtCreator CMake
 CMakeLists.txt.user*
+
+# build folders and output
+build/
+vvave
