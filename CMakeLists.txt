@@ -56,7 +56,7 @@ set(union_ASSETS
     assets/union_assets.qrc
     )
 
-add_executable(union
+add_executable(${PROJECT_NAME}
     ${union_SRCS}
     ${union_HDRS}
     ${union_ASSETS}
@@ -65,22 +65,24 @@ add_executable(union
 if (ANDROID)
     find_package(Qt5 REQUIRED COMPONENTS AndroidExtras)
 
-    target_link_libraries(vvave Qt5::AndroidExtras)
+    target_link_libraries(${PROJECT_NAME} Qt5::AndroidExtras)
     #    kde_source_files_enable_exceptions(union src/pix.cpp)
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm")
+add_subdirectory(src/dialer/linux)
 else()
     find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Notifications Config KIO Attica Contacts People )
     find_package(Qt5 REQUIRED COMPONENTS WebEngine)
 
-    target_link_libraries(union KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica KF5::Contacts KF5::People  )
+    target_link_libraries(${PROJECT_NAME} KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica KF5::Contacts KF5::People  )
 endif()
 
 if (TARGET create-apk-union)
     set_target_properties(create-apk-union PROPERTIES ANDROID_APK_DIR "${MAUIKIT_ANDROID_DIR}")
 endif()
 
-target_link_libraries(union MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg Qt5::Concurrent)
+target_link_libraries(${PROJECT_NAME} MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg Qt5::Concurrent)
 
-install(TARGETS union ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS ${PROJECT_NAME} ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.communicator.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 
 #TODO: port to ecm_install_icons()
