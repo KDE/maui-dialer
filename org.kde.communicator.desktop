@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Communicator
+Comment=Contacts manager
+TryExec=union
+Exec=union %U
+Terminal=false
+Type=Application
+Categories=Qt;KDE;System;
+GenericName=Contacts
+StartupNotify=true
+Icon=smartphone
+MimeType=application/x-communicator;

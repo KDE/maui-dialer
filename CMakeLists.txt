@@ -81,10 +81,10 @@ endif()
 target_link_libraries(union MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg Qt5::Concurrent)
 
 install(TARGETS union ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-#install(FILES org.kde.pix.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES org.kde.communicator.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 
 #TODO: port to ecm_install_icons()
-#install(FILES assets/pix.svg DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
+install(FILES assets/communicator.svg DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
 #install(FILES org.kde.pix.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
