@@ -45,7 +45,7 @@ Maui.ApplicationWindow
     headBarBGColor: backgroundColor
     headBarFGColor: textColor
 
-    property bool darkTheme : Maui.FM.loadSettings("dark", "theme", true) == "true"
+    property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
 
     mainMenu: [
         Maui.MenuItem

@@ -48,7 +48,7 @@ Maui.Page
                 height: buttonSize
                 width: height
                 anchors.centerIn: parent
-                bg.radius: Math.max(width, height)
+//                bg.radius: Math.max(width, height)
                 //                colorScheme.backgroundColor: infoColor
                 onClicked:
                 {
@@ -71,7 +71,7 @@ Maui.Page
                 height: buttonSize
                 width: height
                 anchors.centerIn: parent
-                bg.radius: Math.max(width, height)
+//                bg.radius: Math.max(width, height)
                 colorScheme.backgroundColor: suggestedColor
 
                 onClicked:
@@ -96,7 +96,7 @@ Maui.Page
                 height: iconSizes.big * 2
                 width: height
                 anchors.centerIn: parent
-                bg.radius: Math.max(width, height)
+//                bg.radius: Math.max(width, height)
                 //                colorScheme.backgroundColor: warningColor
 
                 onClicked:

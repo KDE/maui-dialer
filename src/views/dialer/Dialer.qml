@@ -32,7 +32,7 @@ GridLayout
                 height: buttonSize
                 width: height
                 anchors.centerIn: parent
-                bg.radius: Math.max(width, height)
+//                bg.radius: Math.max(width, height)
                 text: modelData
                 font.bold: true
                 font.weight: Font.Bold
