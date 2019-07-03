@@ -46,6 +46,26 @@ int main(int argc, char *argv[])
     app.setApplicationDisplayName(APPNAME);
     app.setWindowIcon(QIcon(":/smartphone.svg"));
 
+    QCommandLineParser parser;
+    parser.addOptions({
+           // A boolean option with a single name (-p)
+           {"sync",
+               QCoreApplication::translate("main", "Show progress during copy")},
+           // A boolean option with multiple names (-f, --force)
+           {{"f", "force"},
+               QCoreApplication::translate("main", "Overwrite existing files.")},
+           // An option with a value
+           {{"t", "target-directory"},
+               QCoreApplication::translate("main", "Copy all source files into <directory>."),
+               QCoreApplication::translate("main", "directory")},
+       });
+parser.process(app);
+if(parser.isSet("sync"))
+{
+    qDebug()<< "TESTING P";
+    return 0;
+}
+
     QScopedPointer<ContactImage> contactImageProvider(new ContactImage());
     QQmlApplicationEngine engine;
     //    QQuickStyle::setStyle("Material");

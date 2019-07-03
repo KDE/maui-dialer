@@ -1,6 +1,8 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
+import org.kde.kirigami 2.6 as Kirigami
+import org.mauikit.accounts 1.0 as Accounts
 import QtQuick.Layouts 1.3
 
 import "views/contacts"
@@ -47,6 +49,23 @@ Maui.ApplicationWindow
 
     property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
 
+    Maui.Dialog
+    {
+        id: _accountsForm
+        defaultButtons: false
+
+        maxHeight: 300* unit
+        maxWidth: maxHeight
+        Accounts.AddAccountForm {
+            anchors.fill: parent
+            appId: "org.maui.dialer"
+            onAccountAdded: {
+                console.log("Account Secret :", secret);
+            }
+        }
+    }
+
+
     mainMenu: [
         Maui.MenuItem
         {
@@ -61,6 +80,13 @@ Maui.ApplicationWindow
                 if(isAndroid)
                 Maui.Android.statusbarColor(backgroundColor, !darkTheme)
             }
+        },
+
+        Maui.MenuItem
+        {
+            checkable: true
+            text: qsTr("Accounts");
+            onTriggered: _accountsForm.open()
         }
     ]
 
@@ -79,46 +105,50 @@ Maui.ApplicationWindow
 
 
 
-    headBar.middleContent: [
+    headBar.middleContent: Kirigami.ActionToolBar
+    {
 
-        Maui.ToolButton
-        {
-            id: _favsButton
-            iconName: "draw-star"
-            Layout.fillHeight: true
-            iconColor: currentView === views.favs ? highlightColor : textColor
-            //                        text: qsTr("Favorites")
-            showIndicator: currentView === views.favs
-            onClicked: currentView = views.favs
+        actions: [
 
-        },
+            Kirigami.Action
+            {
+                id: _favsButton
+                icon.name: "draw-star"
+                icon.color: currentView === views.favs ? highlightColor : textColor
+                text: qsTr("Favorites")
+                checked: currentView === views.favs
+                onTriggered: currentView = views.favs
+                checkable: false
 
-        Maui.ToolButton
-        {
-            id: _logButton
-            iconName: "view-media-recent"
-            Layout.fillHeight: true
-            iconColor: currentView === views.log ? highlightColor : textColor
-            //                        text: qsTr("Favorites")
-            showIndicator: currentView === views.log
-            onClicked: currentView = views.log
+            },
 
-        },
+            Kirigami.Action
+            {
+                id: _logButton
+                icon.name: "view-media-recent"
+                icon.color: currentView === views.log ? highlightColor : textColor
+                text: qsTr("Favorites")
+                checked: currentView === views.log
+                onTriggered: currentView = views.log
+                checkable: false
+
+            },
 
 
-        Maui.ToolButton
-        {
-            id: _contactsButton
-            Layout.fillHeight: true
-            iconName: "view-contacts"
-            iconColor: currentView === views.contacts ? highlightColor : textColor
-            //                        text: qsTr("Contacts")
-            //            height: parent.height
-            showIndicator: currentView === views.contacts
-            onClicked: currentView = views.contacts
+            Kirigami.Action
+            {
+                id: _contactsButton
+                icon.name: "view-contacts"
+                icon.color: currentView === views.contacts ? highlightColor : textColor
+                text: qsTr("Contacts")
+                //            height: parent.height
+                checked: currentView === views.contacts
+                onTriggered: currentView = views.contacts
+                checkable: false
 
-        }
-    ]
+            }
+        ]
+    }
 
     SwipeView
     {
@@ -144,7 +174,7 @@ Maui.ApplicationWindow
 
         LogsView
         {
-            id: _logView           
+            id: _logView
         }
 
         ContactsView

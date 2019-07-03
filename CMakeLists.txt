@@ -1,8 +1,6 @@
-project(union)
-
 cmake_minimum_required(VERSION 3.1)
 
-project(union LANGUAGES CXX)
+project(dialer LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -25,7 +23,7 @@ include(ECMAddAppIcon)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTORCC ON)
 
-set(union_SRCS
+set(dialer_SRCS
     src/main.cpp
     src/interfaces/synchroniser.cpp
     src/db/db.cpp
@@ -38,7 +36,7 @@ set(union_SRCS
     src/interfaces/contactimage.cpp
     )
 
-set(union_HDRS
+set(dialer_HDRS
     src/union.h
     src/db/db.h
     src/db/dbactions.h
@@ -51,15 +49,15 @@ set(union_HDRS
     src/interfaces/contactimage.h
     )
 
-set(union_ASSETS
+set(dialer_ASSETS
     src/qml.qrc
     assets/union_assets.qrc
     )
 
 add_executable(${PROJECT_NAME}
-    ${union_SRCS}
-    ${union_HDRS}
-    ${union_ASSETS}
+    ${dialer_SRCS}
+    ${dialer_HDRS}
+    ${dialer_ASSETS}
     )
 
 if (ANDROID)
@@ -76,8 +74,8 @@ else()
     target_link_libraries(${PROJECT_NAME} KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica KF5::Contacts KF5::People  )
 endif()
 
-if (TARGET create-apk-union)
-    set_target_properties(create-apk-union PROPERTIES ANDROID_APK_DIR "${MAUIKIT_ANDROID_DIR}")
+if (TARGET create-apk-dialer)
+    set_target_properties(create-apk-dialer PROPERTIES ANDROID_APK_DIR "${MAUIKIT_ANDROID_DIR}")
 endif()
 
 target_link_libraries(${PROJECT_NAME} MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg Qt5::Concurrent)
@@ -87,6 +85,7 @@ install(FILES org.kde.communicator.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 
 #TODO: port to ecm_install_icons()
 install(FILES assets/communicator.svg DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
+install(FILES org.maui.dialer.json DESTINATION /usr/share/maui-accounts/manifests)
 #install(FILES org.kde.pix.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
