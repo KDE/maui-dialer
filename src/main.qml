@@ -82,7 +82,7 @@ Maui.ApplicationWindow
             }
         },
 
-        Maui.MenuItem
+        MenuItem
         {
             checkable: true
             text: qsTr("Accounts");
