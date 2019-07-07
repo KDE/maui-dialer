@@ -2,10 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
 import org.kde.kirigami 2.6 as Kirigami
-<<<<<<< HEAD
-=======
 import org.mauikit.accounts 1.0 as Accounts
->>>>>>> 599a48b3f2e573c70cbd4b50f84ff218cf515c40
 import QtQuick.Layouts 1.3
 
 import "views/contacts"
