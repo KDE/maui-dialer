@@ -26,10 +26,10 @@ Maui.Page
         id: _callLogsModel
     }
 
-    Maui.Menu
+    Menu
     {
         id: _menu
-        Maui.MenuItem
+        MenuItem
         {
             text: qsTr("Call")
             icon.name: "dialer-call"
@@ -40,7 +40,7 @@ Maui.Page
             }
         }
 
-        Maui.MenuItem
+        MenuItem
         {
             text: qsTr("Save as..")
             icon.name: "list-add-user"

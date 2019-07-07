@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
+import org.kde.kirigami 2.6 as Kirigami
 import QtQuick.Layouts 1.3
 import UnionModels 1.0
 import "../contacts"
@@ -41,7 +42,7 @@ Maui.Page
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            Maui.Button
+            Button
             {
                 icon.name: "send-sms"
                 icon.color: textColor
@@ -64,7 +65,7 @@ Maui.Page
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            Maui.Button
+            Button
             {
                 icon.name: "dialer-call"
                 icon.color: "white"
@@ -72,7 +73,7 @@ Maui.Page
                 width: height
                 anchors.centerIn: parent
 //                bg.radius: Math.max(width, height)
-                colorScheme.backgroundColor: suggestedColor
+                Kirigami.Theme.backgroundColor: suggestedColor
 
                 onClicked:
                 {
@@ -89,7 +90,7 @@ Maui.Page
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            Maui.Button
+            Button
             {
                 icon.name: "edit-clear"
                 icon.color: textColor
@@ -206,9 +207,5 @@ Maui.Page
                 anchors.centerIn: parent
             }
         }
-
     }
-
-
-
 }

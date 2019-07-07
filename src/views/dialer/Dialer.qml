@@ -27,7 +27,7 @@ GridLayout
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            Maui.Button
+            Button
             {
                 height: buttonSize
                 width: height

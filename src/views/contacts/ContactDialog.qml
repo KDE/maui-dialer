@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 import org.kde.mauikit 1.0 as Maui
-import org.kde.kirigami 2.2 as Kirigami
+import org.kde.kirigami 2.6 as Kirigami
 
 Maui.Dialog
 {
@@ -19,7 +19,7 @@ Maui.Dialog
 
 
     footBar.implicitHeight: toolBarHeight * 1.3
-    footBar.rightContent:  Maui.Button
+    footBar.rightContent:  Button
     {
         visible: isMobile
         //                Layout.fillHeight: visible
@@ -27,8 +27,8 @@ Maui.Dialog
         icon.name: "dialer-call"
         text: qsTr("Call")
         //        display: ToolButton.TextUnderIcon
-        colorScheme.backgroundColor: infoColor
-        colorScheme.textColor: "#fff"
+        Kirigami.Theme.backgroundColor: infoColor
+        Kirigami.Theme.textColor: "#fff"
         onClicked:
         {
             if(isAndroid)
@@ -36,25 +36,25 @@ Maui.Dialog
         }
     }
 
-    footBar.leftContent:  Maui.Button
+    footBar.leftContent:  Button
     {
         visible: isMobile
         //                Layout.fillHeight: visible
         //                    Layout.fillWidth: visible
         text: qsTr("Close")
         //        display: ToolButton.TextUnderIcon
-        colorScheme.backgroundColor: warningColor
-        colorScheme.textColor: "#fff"
+        Kirigami.Theme.backgroundColor: warningColor
+        Kirigami.Theme.textColor: "#fff"
         onClicked: control.close()
     }
 
 
     footBar.middleContent: [
 
-        Maui.ToolButton
+        ToolButton
         {
             Layout.fillHeight: true
-            iconName: "send-email"
+            icon.name: "send-email"
             visible: contact.email
             //            text: qsTr("Message")
             display: ToolButton.TextUnderIcon
@@ -66,10 +66,10 @@ Maui.Dialog
 
         },
 
-        Maui.ToolButton
+        ToolButton
         {
             Layout.fillHeight: true
-            iconName: "send-sms"
+            icon.name: "send-sms"
             visible: contact.tel
 
             //            text: qsTr("Message")
@@ -87,15 +87,15 @@ Maui.Dialog
 
     headBar.drawBorder: false
     headBar.rightContent:[
-        Maui.ToolButton
+        ToolButton
         {
                         Layout.fillWidth: true
             Layout.fillHeight: true
 
-            iconName: "draw-star"
+            icon.name: "draw-star"
                         text: qsTr("Fav")
             display: ToolButton.TextBesideIcon
-            iconColor: contact.fav == "1" ? "#FFD700" : textColor
+            icon.color: contact.fav == "1" ? "#FFD700" : textColor
             onClicked:
             {
                 contact["fav"] = contact.fav == "1" ? "0" : "1"
@@ -105,25 +105,25 @@ Maui.Dialog
             }
         },
 
-        Maui.ToolButton
+        ToolButton
         {
                         Layout.fillWidth: true
             Layout.fillHeight: true
-            iconName: "document-share"
+            icon.name: "document-share"
                         text: qsTr("Share")
             display: ToolButton.TextBesideIcon
 
         },
 
-        Maui.ToolButton
+        ToolButton
         {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            iconName: "document-edit"
+            icon.name: "document-edit"
             text: qsTr("Edit")
             onClicked: _editContactDialog.open()
-            iconColor: suggestedColor
+            icon.color: suggestedColor
             display: ToolButton.TextBesideIcon
 
         }
@@ -147,13 +147,13 @@ Maui.Dialog
         }
 
         headBar.drawBorder: false
-        headBar.rightContent:  Maui.Button
+        headBar.rightContent:  Button
         {
             icon.name: "user-trash"
             //            text: qsTr("Remove")
             onClicked:  _removeDialog.open()
-            colorScheme.backgroundColor: dangerColor
-            colorScheme.textColor: "#fff"
+            Kirigami.Theme.backgroundColor: dangerColor
+            Kirigami.Theme.textColor: "#fff"
         }
 
         Maui.Dialog

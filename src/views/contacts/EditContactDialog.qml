@@ -4,9 +4,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 import org.kde.mauikit 1.0 as Maui
-import org.kde.kirigami 2.2 as Kirigami
-
-import FMList 1.0
+import org.kde.kirigami 2.6 as Kirigami
 
 Maui.Dialog
 {
@@ -26,20 +24,19 @@ Maui.Dialog
 
     onRejected: control.close()
 
-    footBar.leftContent: Maui.Button
+    footBar.leftContent: Button
     {
         text: qsTr("Cancel")
-        colorScheme.backgroundColor: warningColor
-        colorScheme.textColor: "#fff"
-
+        Kirigami.Theme.backgroundColor: warningColor
+        Kirigami.Theme.textColor: "#fff"
         onClicked: control.close()
     }
 
-    footBar.rightContent: Maui.Button
+    footBar.rightContent: Button
     {
         text: qsTr("Save")
-        colorScheme.backgroundColor: infoColor
-        colorScheme.textColor: "#fff"
+        Kirigami.Theme.backgroundColor: infoColor
+        Kirigami.Theme.textColor: "#fff"
 
         onClicked:
         {
@@ -88,7 +85,7 @@ Maui.Dialog
                     onClicked:{
 
                         _fileDialog.mode = _fileDialog.modes.OPEN
-                        _fileDialog.filterType= FMList.IMAGE
+                        _fileDialog.filterType= Maui.FMList.IMAGE
                         _fileDialog.show(function(paths)
                         {
                             console.log("selected image", paths)
@@ -135,12 +132,12 @@ Maui.Dialog
                     }
                 }
 
-                Maui.ToolButton
+                ToolButton
                 {
-                    iconName: "list-add"
-                    iconColor: "white"
+                    icon.name: "list-add"
+                    icon.color: "white"
                     enabled: false
-                    size: iconSizes.big
+                    icon.width: iconSizes.big
                     anchors.centerIn: parent
                 }
             }
