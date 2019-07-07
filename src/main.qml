@@ -2,6 +2,10 @@ import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
 import org.kde.kirigami 2.6 as Kirigami
+<<<<<<< HEAD
+=======
+import org.mauikit.accounts 1.0 as Accounts
+>>>>>>> 599a48b3f2e573c70cbd4b50f84ff218cf515c40
 import QtQuick.Layouts 1.3
 
 import "views/contacts"
@@ -48,6 +52,23 @@ Maui.ApplicationWindow
 
     property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
 
+    Maui.Dialog
+    {
+        id: _accountsForm
+        defaultButtons: false
+
+        maxHeight: 300* unit
+        maxWidth: maxHeight
+        Accounts.AddAccountForm {
+            anchors.fill: parent
+            appId: "org.maui.dialer"
+            onAccountAdded: {
+                console.log("Account Secret :", secret);
+            }
+        }
+    }
+
+
     mainMenu: [
         MenuItem
         {
@@ -62,6 +83,13 @@ Maui.ApplicationWindow
                 if(isAndroid)
                     Maui.Android.statusbarColor(backgroundColor, !darkTheme)
             }
+        },
+
+        Maui.MenuItem
+        {
+            checkable: true
+            text: qsTr("Accounts");
+            onTriggered: _accountsForm.open()
         }
     ]
 
@@ -88,10 +116,12 @@ Maui.ApplicationWindow
             {
                 id: _favsButton
                 icon.name: "draw-star"
-                text: qsTr("Favorites")
                 icon.color: currentView === views.favs ? highlightColor : textColor
+                text: qsTr("Favorites")
                 checked: currentView === views.favs
                 onTriggered: currentView = views.favs
+                checkable: false
+
             },
 
             Kirigami.Action
@@ -102,19 +132,21 @@ Maui.ApplicationWindow
                 text: qsTr("Favorites")
                 checked: currentView === views.log
                 onTriggered: currentView = views.log
+                checkable: false
             },
 
 
             Kirigami.Action
             {
-                id: _contactsButton
-                Layout.fillHeight: true
+
                 icon.name: "view-contacts"
                 icon.color: currentView === views.contacts ? highlightColor : textColor
                 text: qsTr("Contacts")
+                //            height: parent.height
                 checked: currentView === views.contacts
                 onTriggered: currentView = views.contacts
-            }
+                checkable: false
+           }
         ]
     }
 
