@@ -7,9 +7,9 @@ Maui.Page
 {
     id: control
 
-    colorScheme.accentColor: "#615f7d"
-    colorScheme.backgroundColor: backgroundColor
-    colorScheme.textColor: textColor
+//    colorScheme.accentColor: "#615f7d"
+//    colorScheme.backgroundColor: backgroundColor
+//    colorScheme.textColor: textColor
 
     property alias list : _contactsList
     property alias listModel : _contactsModel
@@ -62,15 +62,15 @@ Maui.Page
                 visible: showAccountFilter
                 height: visible ? toolBarHeight * 1.5 : 0
                 width: visible ? parent.width : 0
-                Maui.ComboBox
+                ComboBox
                 {
                     id: _accountsCombobox
                     width: isWide ? control.width * 0.8 : control.width * 0.95
                     textRole: "account"
                     anchors.centerIn: parent
 
-                    colorScheme.borderColor: "transparent"
-                    colorScheme.viewBackgroundColor: cardColor
+//                    colorScheme.borderColor: "transparent"
+//                    colorScheme.viewBackgroundColor: cardColor
 
                     onActivated:
                     {

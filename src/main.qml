@@ -2,7 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
 import org.kde.kirigami 2.6 as Kirigami
-import org.mauikit.accounts 1.0 as Accounts
+//import org.mauikit.accounts 1.0 as Accounts
 import QtQuick.Layouts 1.3
 
 import "views/contacts"
@@ -36,7 +36,6 @@ Maui.ApplicationWindow
     textColor: darkTheme ? "#fafafa" : Maui.Style.textColor
     viewBackgroundColor: darkTheme ? "#1e2431" : Maui.Style.viewBackgroundColor
     accentColor: darkTheme ? "#3c4862" : Maui.Style.highlightColor
-    altToolBars: false
 
     leftIcon.checked: footBar.visible
     //    onSearchButtonClicked: footBar.visible = !footBar.visible
@@ -49,21 +48,21 @@ Maui.ApplicationWindow
 
     property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
 
-    Maui.Dialog
-    {
-        id: _accountsForm
-        defaultButtons: false
+//    Maui.Dialog
+//    {
+//        id: _accountsForm
+//        defaultButtons: false
 
-        maxHeight: 300* unit
-        maxWidth: maxHeight
-        Accounts.AddAccountForm {
-            anchors.fill: parent
-            appId: "org.maui.dialer"
-            onAccountAdded: {
-                console.log("Account Secret :", secret);
-            }
-        }
-    }
+//        maxHeight: 300* unit
+//        maxWidth: maxHeight
+//        Accounts.AddAccountForm {
+//            anchors.fill: parent
+//            appId: "org.maui.dialer"
+//            onAccountAdded: {
+//                console.log("Account Secret :", secret);
+//            }
+//        }
+//    }
 
 
     mainMenu: [
@@ -179,7 +178,7 @@ Maui.ApplicationWindow
             id: _contacsView
             list.query: ""
 
-            altToolBars: isMobile
+//            altToolBars: isMobile
             showAccountFilter: isAndroid
 
             Rectangle
@@ -203,17 +202,17 @@ Maui.ApplicationWindow
                 }
             }
 
-            headBarExit: false
+//            headBarExit: false
             headBar.drawBorder: false
             headBar.implicitHeight: toolBarHeight * 1.4
             headBar.plegable: false
 
 
-            headBarItem: Maui.TextField
+            headBar.middleContent: Maui.TextField
             {
                 id: _searchField
-                height: toolBarHeightAlt
-                anchors.centerIn: parent
+//                height: toolBarHeightAlt
+//                anchors.centerIn: parent
                 focusReason : Qt.PopupFocusReason
                 width: isWide ? _contacsView.width * 0.8 : _contacsView.width * 0.95
                 //        height: rowHeight

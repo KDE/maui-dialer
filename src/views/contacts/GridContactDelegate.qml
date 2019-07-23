@@ -118,7 +118,7 @@ ItemDelegate
         }
     }
 
-    Maui.ToolButton
+    ToolButton
     {
         anchors
         {
@@ -127,9 +127,9 @@ ItemDelegate
             margins: space.medium
         }
 
-        iconColor: "#fff"
+        icon.color: "#fff"
         visible: showMenuIcon
-        iconName: "overflow-menu"
+        icon.name: "overflow-menu"
         onClicked: swipe.position < 0 ? swipe.close() : swipe.open(SwipeDelegate.Right)
 
     }

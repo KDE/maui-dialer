@@ -121,11 +121,11 @@ SwipeDelegate
                     {
                         id: _iconComponent
 
-                        //                    Maui.ToolButton
+                        //                    ToolButton
                         //                    {
-                        //                        iconName: "view-media-artist"
+                        //                        icon.name: "view-media-artist"
                         //                        size: iconSizes.big
-                        //                        iconColor: "white"
+                        //                        icon.color: "white"
                         //                    }
 
                         Label
@@ -245,10 +245,10 @@ SwipeDelegate
                 {
                     id: _buttonsRow
                     anchors.centerIn: parent
-                    Maui.ToolButton
+                    ToolButton
                     {
                         visible: showMenuIcon
-                        iconName: "overflow-menu"
+                        icon.name: "overflow-menu"
                         onClicked: swipe.position < 0 ? swipe.close() : swipe.open(SwipeDelegate.Right)
 
                     }
@@ -264,9 +264,9 @@ SwipeDelegate
         anchors.right: parent.right
         spacing: space.big
 
-        Maui.ToolButton
+        ToolButton
         {
-            iconName: "draw-star"
+            icon.name: "draw-star"
             anchors.verticalCenter: parent.verticalCenter
             onClicked:
             {
@@ -274,19 +274,19 @@ SwipeDelegate
                 swipe.close()
             }
 
-            iconColor: model.fav == "1" ? "yellow" : textColor
+            icon.color: model.fav == "1" ? "yellow" : textColor
         }
 
-        Maui.ToolButton
+        ToolButton
         {
-            iconName: "document-share"
+            icon.name: "document-share"
             anchors.verticalCenter: parent.verticalCenter
             onClicked: if(isAndroid) Maui.Android.shareContact(model.id)
         }
 
-        Maui.ToolButton
+        ToolButton
         {
-            iconName: "draw-text"
+            icon.name: "draw-text"
             anchors.verticalCenter: parent.verticalCenter
             onClicked:
             {
@@ -296,9 +296,9 @@ SwipeDelegate
             }
         }
 
-        Maui.ToolButton
+        ToolButton
         {
-            iconName: "phone"
+            icon.name: "phone"
             anchors.verticalCenter: parent.verticalCenter
 
             onClicked:

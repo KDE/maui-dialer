@@ -17,7 +17,7 @@ Maui.Page
         //        Qt.inputMethod.hide();
         _contacsView.list.query = "tel=" + dialString
     }
-    colorScheme.backgroundColor: backgroundColor
+//    colorScheme.backgroundColor: backgroundColor
     headBar.visible: false
 
     //    footBar.middleContent: Maui.ToolButton
@@ -166,9 +166,9 @@ Maui.Page
                 width: _layout.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                quickButtons: Maui.ToolButton
+                quickButtons: ToolButton
                 {
-                    iconName: "view-fullscreen"
+                    icon.name: "view-fullscreen"
                     onClicked:
                     {
                         _suggestionListView.currentIndex = index

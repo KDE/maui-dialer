@@ -8,12 +8,12 @@ import "../contacts"
 Maui.Page
 {
     id: control
-    headBarExit: false
+//    headBarExit: false
     headBar.visible: false
 
-    colorScheme.accentColor: "#615f7d"
-    colorScheme.backgroundColor: backgroundColor
-    colorScheme.textColor: textColor
+//    colorScheme.accentColor: "#615f7d"
+//    colorScheme.backgroundColor: backgroundColor
+//    colorScheme.textColor: textColor
 
     BaseModel
     {
@@ -96,9 +96,9 @@ Maui.Page
             anchors.horizontalCenter: parent.horizontalCenter
             showMenuIcon: false
 
-            quickButtons: Maui.ToolButton
+            quickButtons: ToolButton
             {
-                iconName: switch (model.type)
+                icon.name: switch (model.type)
                           {
                           case "INCOMING" : return "go-bottom";
                           case "OUTGOING" : return "go-top";
@@ -106,7 +106,7 @@ Maui.Page
 
                           }
 
-                iconColor: switch (model.type)
+                icon.color: switch (model.type)
                            {
                            case "INCOMING" : return suggestedColor;
                            case "OUTGOING" : return warningColor;

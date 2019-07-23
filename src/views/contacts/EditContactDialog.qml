@@ -178,7 +178,7 @@ Maui.Dialog
                             color: textColor
                         }
 
-                        Maui.ComboBox
+                        ComboBox
                         {
                             id: _accountsCombobox
                             textRole: "account"

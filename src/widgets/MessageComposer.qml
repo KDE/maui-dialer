@@ -49,7 +49,7 @@ Maui.Dialog
     {
         anchors.fill: parent
 
-        Maui.ComboBox
+        ComboBox
         {
             id: _combobox
             Layout.fillWidth: true
@@ -59,9 +59,9 @@ Maui.Dialog
             font.bold: true
             font.weight: Font.Bold
             font.pointSize: fontSizes.big
-            colorScheme.viewBackgroundColor: cardColor
-            colorScheme.borderColor: "transparent"
-            colorScheme.textColor: "#fff"
+//            colorScheme.viewBackgroundColor: cardColor
+//            colorScheme.borderColor: "transparent"
+//            colorScheme.textColor: "#fff"
             model:
             {
                 if(contact.email && contact.tel)
