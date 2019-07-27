@@ -18,6 +18,7 @@ Maui.Page
     property bool gridView : false
 
     property bool showAccountFilter: false
+    padding: space.big
 
     BaseModel
     {
@@ -55,6 +56,7 @@ Maui.Page
 
         ListView
         {
+            id: _listView
             spacing: space.big
             clip: true
             header: Item
@@ -129,7 +131,7 @@ Maui.Page
                 id: _delegate
 
                 height: unit * 60
-                width: isWide ? control.width * 0.8 : control.width * 0.95
+                width: isWide ? control.width * 0.8 : _listView.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 showMenuIcon: true
 
