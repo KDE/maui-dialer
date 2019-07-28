@@ -204,17 +204,16 @@ Maui.ApplicationWindow
 
 //            headBarExit: false
             headBar.drawBorder: false
-            headBar.implicitHeight: toolBarHeight * 1.4
+//            headBar.implicitHeight: toolBarHeight * 1.4
             headBar.plegable: false
-
 
             headBar.middleContent: Maui.TextField
             {
                 id: _searchField
 //                height: toolBarHeightAlt
 //                anchors.centerIn: parent
+                Layout.preferredWidth: isWide ? _contacsView.width * 0.8 : _contacsView.width * 0.95
                 focusReason : Qt.PopupFocusReason
-                width: isWide ? _contacsView.width * 0.8 : _contacsView.width * 0.95
                 //        height: rowHeight
                 placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.view.count))
                 onAccepted: _contacsView.list.query = text
