@@ -112,7 +112,7 @@ Maui.ApplicationWindow
             {
                 id: _favsButton
                 icon.name: "draw-star"
-                icon.color: currentView === views.favs ? highlightColor : textColor
+//                icon.color: currentView === views.favs ? highlightColor : textColor
                 text: qsTr("Favorites")
                 checked: currentView === views.favs
                 onTriggered: currentView = views.favs
@@ -124,8 +124,8 @@ Maui.ApplicationWindow
             {
                 id: _logButton
                 icon.name: "view-media-recent"
-                icon.color: currentView === views.log ? highlightColor : textColor
-                text: qsTr("Favorites")
+//                icon.color: currentView === views.log ? highlightColor : textColor
+                text: qsTr("Recent")
                 checked: currentView === views.log
                 onTriggered: currentView = views.log
                 checkable: false
@@ -136,7 +136,7 @@ Maui.ApplicationWindow
             {
 
                 icon.name: "view-contacts"
-                icon.color: currentView === views.contacts ? highlightColor : textColor
+//                icon.color: currentView === views.contacts ? highlightColor : textColor
                 text: qsTr("Contacts")
                 //            height: parent.height
                 checked: currentView === views.contacts
@@ -266,6 +266,8 @@ Maui.ApplicationWindow
 
     Component.onCompleted:
     {
+        if(_favsView.view.count < 1)
+            currentView = views.contacts
         if(isAndroid)
             Maui.Android.statusbarColor(backgroundColor, !darkTheme)
     }
