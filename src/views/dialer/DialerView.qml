@@ -45,7 +45,7 @@ Maui.Page
             Button
             {
                 icon.name: "send-sms"
-                icon.color: textColor
+                icon.color: Kirigami.Theme.textColor
                 height: buttonSize
                 width: height
                 anchors.centerIn: parent
@@ -93,7 +93,7 @@ Maui.Page
             Button
             {
                 icon.name: "edit-clear"
-                icon.color: textColor
+                icon.color: Kirigami.Theme.textColor
                 height: iconSizes.big * 2
                 width: height
                 anchors.centerIn: parent
@@ -138,9 +138,7 @@ Maui.Page
                 font.pointSize: fontSizes.huge
                 font.letterSpacing: space.tiny
 
-                colorScheme.backgroundColor: "transparent"
-                colorScheme.borderColor: "transparent"
-                colorScheme.textColor: textColor
+
                 //            enabled: false
             }
         }

@@ -43,6 +43,7 @@ Maui.Dialog
     }
 
     acceptButton.text: qsTr("Send...")
+    acceptButton.icon.name: ""
     rejectButton.visible: false
 
     ColumnLayout
@@ -85,9 +86,7 @@ Maui.Dialog
             font.bold: true
             font.weight: Font.Bold
             font.pointSize: fontSizes.big
-            colorScheme.backgroundColor: cardColor
-            colorScheme.borderColor: "transparent"
-            colorScheme.textColor: "#fff"
+
         }
 
 

@@ -22,12 +22,14 @@ SwipeDelegate
     property alias label3 : _label3
     property alias label4 : _label4
 
+    property int radius : radiusV * 2
+
     swipe.enabled: showMenuIcon
     background: Rectangle
     {
         color:  hovered ? Qt.lighter(cardColor) : cardColor
         //        border.color: borderColor
-        radius: radiusV * 2
+        radius: control.radius
 
         //        anchors.fill: control
 
@@ -52,7 +54,7 @@ SwipeDelegate
                     height: parent.height * 0.7
                     width: height
                     anchors.centerIn: parent
-                    radius: radiusV * 2
+                    radius: control.radius
                     color:
                     {
                         var c = Qt.rgba(Math.random(),Math.random(),Math.random(),1)
@@ -109,8 +111,8 @@ SwipeDelegate
                                         anchors.centerIn: parent
                                         width: _img.width
                                         height: _img.height
-                                        radius: radiusV * 2
-                                        border.color: borderColor
+                                        radius: control.radius
+                                        //                                        border.color: borderColor
                                     }
                                 }
                             }
@@ -168,7 +170,7 @@ SwipeDelegate
                         font.bold: true
                         font.weight: Font.Bold
                         elide: Text.ElideMiddle
-                        color: textColor
+                        color: Kirigami.Theme.textColor
                     }
 
                     Label
@@ -182,7 +184,7 @@ SwipeDelegate
                         font.weight: Font.Light
                         wrapMode: Text.WrapAnywhere
                         elide: Text.ElideMiddle
-                        color: textColor
+                        color: Kirigami.Theme.textColor
                     }
                 }
             }
@@ -212,7 +214,7 @@ SwipeDelegate
                         font.weight: Font.Light
                         wrapMode: Text.WrapAnywhere
                         elide: Text.ElideMiddle
-                        color: textColor
+                        color: Kirigami.Theme.textColor
                     }
 
                     Label
@@ -228,7 +230,7 @@ SwipeDelegate
                         font.weight: Font.Light
                         wrapMode: Text.WrapAnywhere
                         elide: Text.ElideMiddle
-                        color: textColor
+                        color: Kirigami.Theme.textColor
                     }
                 }
             }
@@ -257,57 +259,76 @@ SwipeDelegate
         }
     }
 
-    swipe.right: Row
+    swipe.right: Rectangle
     {
-        padding: space.medium
         height: control.height
+        width: _rowActions.implicitWidth
         anchors.right: parent.right
-        spacing: space.big
+        radius: control.radius
+        color: Qt.darker(cardColor, 1.5)
+        anchors.rightMargin: radius
 
-        ToolButton
+//        Rectangle
+//        {
+//            anchors.left: parent.left
+//            color: parent.color
+//            height: parent.height
+//            width: parent.radius
+//        }
+
+        Row
         {
-            icon.name: "draw-star"
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked:
+            id: _rowActions
+            padding: space.medium
+            anchors.fill: parent
+            spacing: space.big
+
+            ToolButton
             {
-                control.favClicked(index)
-                swipe.close()
+                icon.name: "draw-star"
+                anchors.verticalCenter: parent.verticalCenter
+                onClicked:
+                {
+                    control.favClicked(index)
+                    swipe.close()
+                }
+
+                icon.color: model.fav == "1" ? "yellow" : Kirigami.Theme.textColor
             }
 
-            icon.color: model.fav == "1" ? "yellow" : textColor
-        }
-
-        ToolButton
-        {
-            icon.name: "document-share"
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: if(isAndroid) Maui.Android.shareContact(model.id)
-        }
-
-        ToolButton
-        {
-            icon.name: "draw-text"
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked:
+            ToolButton
             {
-                _messageComposer.contact = list.get(index)
-                _messageComposer.open()
-                swipe.close()
+                icon.name: "document-share"
+                anchors.verticalCenter: parent.verticalCenter
+                onClicked: if(isAndroid) Maui.Android.shareContact(model.id)
+            }
+
+            ToolButton
+            {
+                icon.name: "draw-text"
+                anchors.verticalCenter: parent.verticalCenter
+                onClicked:
+                {
+                    _messageComposer.contact = list.get(index)
+                    _messageComposer.open()
+                    swipe.close()
+                }
+            }
+
+            ToolButton
+            {
+                icon.name: "phone"
+                anchors.verticalCenter: parent.verticalCenter
+
+                onClicked:
+                {
+                    if(isAndroid)
+                        Maui.Android.call(model.tel)
+
+                    swipe.close()
+                }
             }
         }
 
-        ToolButton
-        {
-            icon.name: "phone"
-            anchors.verticalCenter: parent.verticalCenter
-
-            onClicked:
-            {
-                if(isAndroid)
-                    Maui.Android.call(model.tel)
-
-                swipe.close()
-            }
-        }
     }
 }

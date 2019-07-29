@@ -30,21 +30,21 @@ Maui.ApplicationWindow
     /** UI PROPS**/
     property color cardColor: darkTheme ? "#4f5160" : Qt.darker(Maui.Style.buttonBackgroundColor, 1.05)
 
-    bgColor: darkTheme ? "#1f2532" : Maui.Style.backgroundColor
-    highlightColor: darkTheme ? "#ff6a83" : Maui.Style.highlightColor
-    backgroundColor: darkTheme ? bgColor : Maui.Style.backgroundColor
-    textColor: darkTheme ? "#fafafa" : Maui.Style.textColor
-    viewBackgroundColor: darkTheme ? "#1e2431" : Maui.Style.viewBackgroundColor
-    accentColor: darkTheme ? "#3c4862" : Maui.Style.highlightColor
+//    bgColor: darkTheme ? "#1f2532" : Maui.Style.backgroundColor
+//    highlightColor: darkTheme ? "#ff6a83" : Maui.Style.highlightColor
+//    backgroundColor: darkTheme ? bgColor : Maui.Style.backgroundColor
+//    textColor: darkTheme ? "#fafafa" : Maui.Style.textColor
+//    viewBackgroundColor: darkTheme ? "#1e2431" : Maui.Style.viewBackgroundColor
+//    accentColor: darkTheme ? "#3c4862" : Maui.Style.highlightColor
 
     leftIcon.checked: footBar.visible
     //    onSearchButtonClicked: footBar.visible = !footBar.visible
     leftIcon.visible: true
     rightIcon.visible: false
-    headBar.implicitHeight: toolBarHeight * 1.2
+//    headBar.implicitHeight: toolBarHeight * 1.2
     headBar.drawBorder: false
-    headBarBGColor: backgroundColor
-    headBarFGColor: textColor
+//    headBarBGColor: backgroundColor
+//    headBarFGColor: textColor
 
     property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
 
@@ -93,7 +93,7 @@ Maui.ApplicationWindow
     {
         id: _dialerButton
         icon.name: "dialer-pad"
-        icon.color: currentView === views.dialer ? highlightColor : textColor
+        icon.color: currentView === views.dialer ? highlightColor : Kirigami.Theme.textColor
         //                        text: qsTr("Dialer")
         //            visible: isAndroid
         checked: currentView === views.dialer
@@ -134,8 +134,7 @@ Maui.ApplicationWindow
 
             Kirigami.Action
             {
-
-                icon.name: "view-contacts"
+                icon.name: "view-pim-contacts"
 //                icon.color: currentView === views.contacts ? highlightColor : textColor
                 text: qsTr("Contacts")
                 //            height: parent.height
@@ -165,7 +164,6 @@ Maui.ApplicationWindow
             list.query : "fav=1"
             headBar.visible: false
             gridView: true
-
         }
 
         LogsView
@@ -189,7 +187,7 @@ Maui.ApplicationWindow
                 height: toolBarHeight
                 width: height
 
-                color: highlightColor
+                color: Kirigami.Theme.highlightColor
                 radius: Math.max(width, height)
 
                 ToolButton
@@ -218,9 +216,9 @@ Maui.ApplicationWindow
                 placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.view.count))
                 onAccepted: _contacsView.list.query = text
                 onCleared: _contacsView.list.reset()
-                colorScheme.backgroundColor: cardColor
-                colorScheme.borderColor: "transparent"
-                colorScheme.textColor: textColor
+//                colorScheme.backgroundColor: cardColor
+//                colorScheme.borderColor: "transparent"
+//                colorScheme.textColor: textColor
                 onTextEdited: _contacsView.list.query = text
                 onTextChanged: _contacsView.list.query = text
             }

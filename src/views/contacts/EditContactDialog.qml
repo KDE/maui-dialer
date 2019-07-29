@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 import org.kde.mauikit 1.0 as Maui
-import org.kde.kirigami 2.6 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 
 Maui.Dialog
 {
@@ -126,7 +126,7 @@ Maui.Dialog
                                 width: _img.width
                                 height: _img.height
                                 radius: Math.min(width, height)
-                                border.color: borderColor
+//                                border.color: borderColor
                             }
                         }
                     }
@@ -175,7 +175,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         ComboBox
@@ -197,7 +197,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Maui.TextField
@@ -207,8 +207,6 @@ Maui.Dialog
                             text: contact.n
                         }
                     }
-
-
 
                     Column
                     {
@@ -220,7 +218,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Maui.TextField
@@ -242,7 +240,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Maui.TextField
@@ -263,7 +261,7 @@ Maui.Dialog
                             font.pointSize: fontSizes.default
                             font.bold: true
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Maui.TextField

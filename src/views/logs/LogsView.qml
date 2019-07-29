@@ -15,6 +15,18 @@ Maui.Page
 //    colorScheme.backgroundColor: backgroundColor
 //    colorScheme.textColor: textColor
 
+    Maui.Holder
+    {
+        id: _holder
+        emoji: "qrc:/Bench.svg"
+        isMask: false
+        title: qsTr("There's no recent contacts")
+        body: qsTr("recently contacted contacts will appear here")
+        emojiSize: iconSizes.huge
+        visible: !_listView.count
+        onActionTriggered: _newContactDialog.open()
+    }
+
     BaseModel
     {
         id: _contactsModel

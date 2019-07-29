@@ -18,13 +18,13 @@ Maui.Dialog
     acceptButton.visible: false
 
 
-    footBar.implicitHeight: toolBarHeight * 1.3
+//    footBar.implicitHeight: toolBarHeight * 1.3
     footBar.rightContent:  Button
     {
         visible: isMobile
         //                Layout.fillHeight: visible
         //                    Layout.fillWidth: visible
-        icon.name: "dialer-call"
+        icon.name: "call-start"
         text: qsTr("Call")
         //        display: ToolButton.TextUnderIcon
         Kirigami.Theme.backgroundColor: infoColor
@@ -38,7 +38,7 @@ Maui.Dialog
 
     footBar.leftContent:  Button
     {
-        visible: isMobile
+//        visible: isMobile
         //                Layout.fillHeight: visible
         //                    Layout.fillWidth: visible
         text: qsTr("Close")
@@ -53,11 +53,10 @@ Maui.Dialog
 
         ToolButton
         {
-            Layout.fillHeight: true
-            icon.name: "send-email"
+            icon.name: "mail-message"
             visible: contact.email
             //            text: qsTr("Message")
-            display: ToolButton.TextUnderIcon
+//            display: ToolButton.TextUnderIcon
             onClicked:
             {
                 _messageComposer.contact = control.contact
@@ -68,34 +67,32 @@ Maui.Dialog
 
         ToolButton
         {
-            Layout.fillHeight: true
-            icon.name: "send-sms"
+            icon.name: "dialog-messages"
             visible: contact.tel
 
             //            text: qsTr("Message")
-            display: ToolButton.TextUnderIcon
+//            display: ToolButton.TextUnderIcon
             onClicked:
             {
                 _messageComposer.contact = control.contact
                 _messageComposer.open()
             }
-
         }
     ]
 
 
 
     headBar.drawBorder: false
-    headBar.rightContent:[
+    headBar.middleContent:[
         ToolButton
         {
-                        Layout.fillWidth: true
-            Layout.fillHeight: true
+//                        Layout.fillWidth: true
+//            Layout.fillHeight: true
 
             icon.name: "draw-star"
                         text: qsTr("Fav")
             display: ToolButton.TextBesideIcon
-            icon.color: contact.fav == "1" ? "#FFD700" : textColor
+            icon.color: contact.fav == "1" ? "#FFD700" : Kirigami.Theme.textColor
             onClicked:
             {
                 contact["fav"] = contact.fav == "1" ? "0" : "1"
@@ -107,8 +104,8 @@ Maui.Dialog
 
         ToolButton
         {
-                        Layout.fillWidth: true
-            Layout.fillHeight: true
+//                        Layout.fillWidth: true
+//            Layout.fillHeight: true
             icon.name: "document-share"
                         text: qsTr("Share")
             display: ToolButton.TextBesideIcon
@@ -117,8 +114,8 @@ Maui.Dialog
 
         ToolButton
         {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+//            Layout.fillWidth: true
+//            Layout.fillHeight: true
 
             icon.name: "document-edit"
             text: qsTr("Edit")
@@ -324,7 +321,7 @@ Maui.Dialog
                             text: qsTr("Account")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Label
@@ -336,7 +333,7 @@ Maui.Dialog
                             text: contact.account
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                             wrapMode: Text.WrapAnywhere
                         }
                     }
@@ -353,7 +350,7 @@ Maui.Dialog
                             text: qsTr("Name")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Label
@@ -365,7 +362,7 @@ Maui.Dialog
                             text: contact.n
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
                     }
 
@@ -382,7 +379,7 @@ Maui.Dialog
                             text: qsTr("Phone")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Label
@@ -391,7 +388,7 @@ Maui.Dialog
                             Layout.fillWidth: true
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                             text: contact.tel
 
                         }
@@ -410,7 +407,7 @@ Maui.Dialog
                             text: qsTr("Email")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
-                            color: textColor
+                            color: Kirigami.Theme.textColor
 
                         }
 
@@ -420,7 +417,7 @@ Maui.Dialog
                             Layout.fillWidth: true
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                             text: contact.email
                         }
                     }
@@ -439,7 +436,7 @@ Maui.Dialog
                             text: qsTr("Organization")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Label
@@ -450,7 +447,7 @@ Maui.Dialog
                             text: contact.org
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
                     }
 
@@ -467,7 +464,7 @@ Maui.Dialog
                             text: qsTr("Title")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
 
                         Label
@@ -478,7 +475,7 @@ Maui.Dialog
                             text: contact.title
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
-                            color: textColor
+                            color: Kirigami.Theme.textColor
                         }
                     }
 
