@@ -25,15 +25,12 @@ public:
     bool insertContact(const FMH::MODEL &contact, const FMH::MODEL &account = {{}});
     bool updateContact(const FMH::MODEL &contact);
     bool removeContact(const FMH::MODEL &contact);
-
-
 //    FMH::MODEL_LIST getAccounts() const;
 
 private:
 #ifdef Q_OS_ANDROID
     AndroidIntents *android;
 #endif
-
 
 signals:
     void contactsReady(FMH::MODEL_LIST contacts);

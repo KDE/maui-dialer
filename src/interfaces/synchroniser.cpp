@@ -11,10 +11,6 @@
 #include "./src/interfaces/kcontactsinterface.h"
 #endif
 
-extern void test()
-{
-    qDebug()<< "from anotehr thread";
-}
 
 Synchroniser::Synchroniser(QObject *parent) : QObject (parent)
 {

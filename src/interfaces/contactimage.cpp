@@ -4,10 +4,10 @@
 #endif
 #include <QDebug>
 
-ContactImage::ContactImage() : QQuickImageProvider(QQuickImageProvider::Image)
+ContactImage::ContactImage(ImageType type, Flags flags)
+    : QQuickImageProvider(type, flags), no_image(QImage(":/portrait.jpg"))
 {
-    this->no_image = QImage(":/portrait.jpg");
-    this->blockSignals(false);
+//    this->blockSignals(false);
 }
 
 QImage ContactImage::requestImage(const QString &id, QSize *size, const QSize &requestedSize)

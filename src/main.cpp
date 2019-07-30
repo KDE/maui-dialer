@@ -13,6 +13,7 @@
 #include <QApplication>
 #endif
 
+#include <memory>
 #include "src/union.h"
 
 #include "./src/models/basemodel.h"
@@ -66,8 +67,11 @@ if(parser.isSet("sync"))
     return 0;
 }
 
-    QScopedPointer<ContactImage> contactImageProvider(new ContactImage());
+{
+//    std::unique_ptr<ContactImage> contactImageProvider( new ContactImage);
     QQmlApplicationEngine engine;
+
+//       engine->addImageProvider(QLatin1String("colors"), new ColorImageProvider);
     //    QQuickStyle::setStyle("Material");
 
 #ifdef STATIC_KIRIGAMI
@@ -79,7 +83,7 @@ if(parser.isSet("sync"))
 
 #endif
 
-    engine.addImageProvider("contact", contactImageProvider.data());
+    engine.addImageProvider("contact", new ContactImage(QQuickImageProvider::ImageType::Image));
     qmlRegisterUncreatableType<BaseList>("UnionModels", 1, 0, "BaseList", QStringLiteral("BaseList should not be created in QML"));
     qmlRegisterType<BaseModel>("UnionModels", 1, 0, "BaseModel");
     qmlRegisterType<ContactsModel>("UnionModels", 1, 0, "ContactsList");
@@ -90,4 +94,5 @@ if(parser.isSet("sync"))
         return -1;
 
     return app.exec();
+}
 }
