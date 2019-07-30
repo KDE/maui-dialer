@@ -13,20 +13,20 @@
 
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent), syncer(new Synchroniser(this))
 {
-//    connect(syncer, &Synchroniser::contactsReady, [this](FMH::MODEL_LIST contacts)
-//    {
-//        qDebug() << "CONATCTS READY AT MODEL 1" << contacts;
-//        emit this->preListChanged();
-//        this->list = contacts;
-//        this->listbk = this->list;
-//        qDebug() << "CONATCTS READY AT MODEL" << this->list;
+    connect(syncer, &Synchroniser::contactsReady, [this](FMH::MODEL_LIST contacts)
+    {
+        qDebug() << "CONATCTS READY AT MODEL 1" << contacts;
+        emit this->preListChanged();
+        this->list = contacts;
+        this->listbk = this->list;
+        qDebug() << "CONATCTS READY AT MODEL" << this->list;
 
-//        this->filter();
-//        this->sortList();
-//        emit this->postListChanged();
-//    });
+        this->filter();
+        this->sortList();
+        emit this->postListChanged();
+    });
 
-//    this->getList(true);
+    this->getList(true);
 }
 
 FMH::MODEL_LIST ContactsModel::items() const

@@ -49,50 +49,47 @@ int main(int argc, char *argv[])
 
     QCommandLineParser parser;
     parser.addOptions({
-           // A boolean option with a single name (-p)
-           {"sync",
-               QCoreApplication::translate("main", "Show progress during copy")},
-           // A boolean option with multiple names (-f, --force)
-           {{"f", "force"},
-               QCoreApplication::translate("main", "Overwrite existing files.")},
-           // An option with a value
-           {{"t", "target-directory"},
-               QCoreApplication::translate("main", "Copy all source files into <directory>."),
-               QCoreApplication::translate("main", "directory")},
-       });
-parser.process(app);
-if(parser.isSet("sync"))
-{
-    qDebug()<< "TESTING P";
-    return 0;
-}
+                          // A boolean option with a single name (-p)
+                          {"sync",
+                           QCoreApplication::translate("main", "Show progress during copy")},
+                          // A boolean option with multiple names (-f, --force)
+                          {{"f", "force"},
+                           QCoreApplication::translate("main", "Overwrite existing files.")},
+                          // An option with a value
+                          {{"t", "target-directory"},
+                           QCoreApplication::translate("main", "Copy all source files into <directory>."),
+                           QCoreApplication::translate("main", "directory")},
+                      });
+    parser.process(app);
+    if(parser.isSet("sync"))
+    {
+        qDebug()<< "TESTING P";
+        return 0;
+    }
 
-{
-//    std::unique_ptr<ContactImage> contactImageProvider( new ContactImage);
-    QQmlApplicationEngine engine;
-
-//       engine->addImageProvider(QLatin1String("colors"), new ColorImageProvider);
-    //    QQuickStyle::setStyle("Material");
+    {
+        QQmlApplicationEngine engine;
+        //    QQuickStyle::setStyle("Material");
 
 #ifdef STATIC_KIRIGAMI
-    KirigamiPlugin::getInstance().registerTypes();
+        KirigamiPlugin::getInstance().registerTypes();
 #endif
 
 #ifdef STATIC_MAUIKIT
-    MauiKit::getInstance().registerTypes();
+        MauiKit::getInstance().registerTypes();
 
 #endif
 
-    engine.addImageProvider("contact", new ContactImage(QQuickImageProvider::ImageType::Image));
-    qmlRegisterUncreatableType<BaseList>("UnionModels", 1, 0, "BaseList", QStringLiteral("BaseList should not be created in QML"));
-    qmlRegisterType<BaseModel>("UnionModels", 1, 0, "BaseModel");
-    qmlRegisterType<ContactsModel>("UnionModels", 1, 0, "ContactsList");
-    qmlRegisterType<CallLogs>("UnionModels", 1, 0, "CallLogs");
+        engine.addImageProvider("contact", new ContactImage(QQuickImageProvider::ImageType::Image));
+        qmlRegisterUncreatableType<BaseList>("UnionModels", 1, 0, "BaseList", QStringLiteral("BaseList should not be created in QML"));
+        qmlRegisterType<BaseModel>("UnionModels", 1, 0, "BaseModel");
+        qmlRegisterType<ContactsModel>("UnionModels", 1, 0, "ContactsList");
+        qmlRegisterType<CallLogs>("UnionModels", 1, 0, "CallLogs");
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty())
-        return -1;
+        engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+        if (engine.rootObjects().isEmpty())
+            return -1;
 
-    return app.exec();
-}
+        return app.exec();
+    }
 }
