@@ -19,7 +19,7 @@ Maui.Dialog
 
 
 //    footBar.implicitHeight: toolBarHeight * 1.3
-    footBar.rightContent:  Button
+    footBar.rightContent: Button
     {
         visible: isMobile
         //                Layout.fillHeight: visible
@@ -36,7 +36,7 @@ Maui.Dialog
         }
     }
 
-    footBar.leftContent:  Button
+    footBar.leftContent: Button
     {
 //        visible: isMobile
         //                Layout.fillHeight: visible
