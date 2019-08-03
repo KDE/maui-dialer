@@ -41,11 +41,27 @@ SwipeDelegate
         z: background.z -1
     }
 
+
+    DropShadow
+    {
+        visible: _bg.visible
+          anchors.fill: background
+          horizontalOffset: 5
+          verticalOffset: 0
+          radius: 8.0
+          samples: 17
+          color: Qt.darker(_bg.color, 5)
+          source: background
+      }
+
     background: Rectangle
     {
+
         color:  hovered ? Kirigami.Theme.hoverColor : Kirigami.Theme.backgroundColor
-        //        border.color: borderColor
+//                border.color: Qt.rgba(_bg.color.r, _bg.color.g, _bg.color.b, swipe.position < 0)
         radius: control.radius
+
+
 
         //        anchors.fill: control
 
@@ -59,7 +75,7 @@ SwipeDelegate
             Item
             {
                 id: _contactPic
-                visible: control.width >  Kirigami.Units.gridUnit * 15
+                visible: control.width > Kirigami.Units.gridUnit * 15
 
                 Layout.fillHeight: true
                 Layout.preferredWidth: iconSizes.huge
@@ -281,6 +297,7 @@ SwipeDelegate
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         spacing: space.big
+        padding: space.medium
 
         ToolButton
         {
