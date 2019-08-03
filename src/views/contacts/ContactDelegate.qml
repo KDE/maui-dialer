@@ -305,7 +305,7 @@ SwipeDelegate
 
         ToolButton
         {
-            icon.name: "draw-text"
+            icon.name: "message-new"
             anchors.verticalCenter: parent.verticalCenter
             icon.color: _bg.Kirigami.Theme.textColor
             onClicked:
@@ -318,14 +318,16 @@ SwipeDelegate
 
         ToolButton
         {
-            icon.name: "phone"
+            icon.name: "call-start"
             anchors.verticalCenter: parent.verticalCenter
             icon.color: _bg.Kirigami.Theme.textColor
 
             onClicked:
             {
                 if(isAndroid)
-                    Maui.Android.call(model.tel)
+                    Maui.Android.call(contact.tel)
+                else
+                    Qt.openUrlExternally("call://" + contact.tel)
 
                 swipe.close()
             }

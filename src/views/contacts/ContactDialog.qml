@@ -25,6 +25,9 @@ Maui.Dialog
     {
         if(isAndroid)
             Maui.Android.call(contact.tel)
+        else
+            Qt.openUrlExternally("call://" + contact.tel)
+
     }
 
     headBar.middleContent: Kirigami.ActionToolBar
