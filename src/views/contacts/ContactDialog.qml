@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 import org.kde.mauikit 1.0 as Maui
-import org.kde.kirigami 2.6 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 
 Maui.Dialog
 {
@@ -14,11 +14,12 @@ Maui.Dialog
     maxHeight: unit * 800
 
     property var contact : ({})
-    rejectButton.visible: false
+    rejectButton.visible: true
+    rejectButton.text: qsTr("Close")
+    onRejected: control.close()
     acceptButton.visible: false
 
-
-//    footBar.implicitHeight: toolBarHeight * 1.3
+    //    footBar.implicitHeight: toolBarHeight * 1.3
     footBar.rightContent: Button
     {
         visible: isMobile
@@ -36,95 +37,108 @@ Maui.Dialog
         }
     }
 
-    footBar.leftContent: Button
+    headBar.drawBorder: false
+    headBar.middleContent: Kirigami.ActionToolBar
     {
-//        visible: isMobile
-        //                Layout.fillHeight: visible
-        //                    Layout.fillWidth: visible
-        text: qsTr("Close")
-        //        display: ToolButton.TextUnderIcon
-        Kirigami.Theme.backgroundColor: warningColor
-        Kirigami.Theme.textColor: "#fff"
-        onClicked: control.close()
+        Layout.fillWidth: true
+
+        actions: [
+
+            Kirigami.Action
+            {
+                icon.name: "mail-message"
+                visible: contact.email
+                            text: qsTr("Email")
+                //            display: ToolButton.TextUnderIcon
+                onTriggered:
+                {
+                    _messageComposer.contact = control.contact
+                    _messageComposer.open()
+                }
+
+            },
+
+            Kirigami.Action
+            {
+                icon.name: "dialog-messages"
+                visible: contact.tel
+
+                            text: qsTr("SMS")
+                //            display: ToolButton.TextUnderIcon
+                onTriggered:
+                {
+                    _messageComposer.contact = control.contact
+                    _messageComposer.open()
+                }
+            },
+
+            Kirigami.Action
+            {
+                //                        Layout.fillWidth: true
+                //            Layout.fillHeight: true
+
+                icon.name: "draw-star"
+                text: qsTr("Fav")
+                icon.color: contact.fav == "1" ? "#FFD700" : Kirigami.Theme.textColor
+                onTriggered:
+                {
+                    contact["fav"] = contact.fav == "1" ? "0" : "1"
+                    list.update(contact,  view.currentIndex)
+                    control.contact = contact;
+                    _favsView.list.refresh()
+                }
+            },
+
+            Kirigami.Action
+            {
+                //                        Layout.fillWidth: true
+                //            Layout.fillHeight: true
+                icon.name: "document-share"
+                text: qsTr("Share")
+            },
+
+            Kirigami.Action
+            {
+                //            Layout.fillWidth: true
+                //            Layout.fillHeight: true
+
+                icon.name: "document-edit"
+                text: qsTr("Edit")
+                onTriggered: _editContactDialog.open()
+                icon.color: suggestedColor
+            }
+        ]
+
+        hiddenActions:[
+            Kirigami.Action
+            {
+                text: qsTr("Delete...")
+                icon.name: "user-trash"
+                Kirigami.Theme.textColor: warningColor
+                onTriggered: _removeDialog.open()
+            }
+        ]
     }
 
+    Maui.Dialog
+    {
+        id: _removeDialog
 
-    footBar.middleContent: [
+        title: qsTr("Remove contact...")
+        message: qsTr("Are you sure you want to remove this contact? This action can not be undone.")
 
-        ToolButton
+        acceptButton.text: qsTr("Cancel")
+        rejectButton.text: qsTr("Remove")
+        onAccepted: close()
+        onRejected:
         {
-            icon.name: "mail-message"
-            visible: contact.email
-            //            text: qsTr("Message")
-//            display: ToolButton.TextUnderIcon
-            onClicked:
-            {
-                _messageComposer.contact = control.contact
-                _messageComposer.open()
-            }
+            close()
+            _contactDialog.close()
 
-        },
-
-        ToolButton
-        {
-            icon.name: "dialog-messages"
-            visible: contact.tel
-
-            //            text: qsTr("Message")
-//            display: ToolButton.TextUnderIcon
-            onClicked:
-            {
-                _messageComposer.contact = control.contact
-                _messageComposer.open()
-            }
-        }
-    ]
-
-
-
-    headBar.drawBorder: false
-    headBar.middleContent:[
-        ToolButton
-        {
-//                        Layout.fillWidth: true
-//            Layout.fillHeight: true
-
-            icon.name: "draw-star"
-                        text: qsTr("Fav")
-            display: ToolButton.TextBesideIcon
-            icon.color: contact.fav == "1" ? "#FFD700" : Kirigami.Theme.textColor
-            onClicked:
-            {
-                contact["fav"] = contact.fav == "1" ? "0" : "1"
-                list.update(contact,  view.currentIndex)
-                control.contact = contact;
-                _favsView.list.refresh()
-            }
-        },
-
-        ToolButton
-        {
-//                        Layout.fillWidth: true
-//            Layout.fillHeight: true
-            icon.name: "document-share"
-                        text: qsTr("Share")
-            display: ToolButton.TextBesideIcon
-
-        },
-
-        ToolButton
-        {
-//            Layout.fillWidth: true
-//            Layout.fillHeight: true
-
-            icon.name: "document-edit"
-            text: qsTr("Edit")
-            onClicked: _editContactDialog.open()
-            icon.color: suggestedColor
-            display: ToolButton.TextBesideIcon
+            list.remove(view.currentIndex)
 
         }
-    ]
+    }
 
     EditContactDialog
     {
@@ -151,23 +165,6 @@ Maui.Dialog
             onClicked:  _removeDialog.open()
             Kirigami.Theme.backgroundColor: dangerColor
             Kirigami.Theme.textColor: "#fff"
-        }
-
-        Maui.Dialog
-        {
-            id: _removeDialog
-
-            title: qsTr("Remove contact...")
-            message: qsTr("Are you sure you want to remove this contact? This action can not be undone.")
-
-            onRejected: close()
-            onAccepted:
-            {
-                close()
-                _contactDialog.close()
-                _contacsView.list.remove(_contacsView.listView.currentIndex)
-
-            }
         }
     }
 
@@ -267,7 +264,7 @@ Maui.Dialog
                         font.pointSize: fontSizes.huge * 1.5
                         font.bold: true
                         font.weight: Font.Bold
-                        text: contact.n[0]
+                        text: contact.n ? contact.n[0] : "?"
                     }
                 }
 
@@ -453,14 +450,14 @@ Maui.Dialog
 
                     ColumnLayout
                     {
-                        Layout.fillWidth: true
+                        visible: contact.title && contact.title.length
+                        Layout.fillWidth: visible
                         spacing: space.small
-                        visible: contact.title
 
                         Label
                         {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
+                            Layout.fillHeight: parent.visible
+                            Layout.fillWidth: parent.visible
                             text: qsTr("Title")
                             font.pointSize: fontSizes.default
                             font.weight: Font.Light
@@ -472,7 +469,7 @@ Maui.Dialog
                             Layout.fillHeight: true
                             Layout.fillWidth: true
                             width: parent.width
-                            text: contact.title
+                            text: parent.visible ? contact.title : undefined
                             font.pointSize: fontSizes.big
                             font.weight: Font.Bold
                             color: Kirigami.Theme.textColor

@@ -1,4 +1,4 @@
-#include "androidintents.h"
+#include "androidinterface.h"
 #include "./mauikit/src/android/mauiandroid.h"
 #include <QDomDocument>
 
@@ -8,32 +8,31 @@
 #include <QFutureWatcher>
 #include "fm.h"
 
-AndroidIntents::AndroidIntents(QObject *parent) : QObject(parent) {}
 
-AndroidIntents *AndroidIntents::instance = nullptr;
+AndroidInterface *AndroidInterface::instance = nullptr;
 
-AndroidIntents *AndroidIntents::getInstance()
+AndroidInterface *AndroidInterface::getInstance()
 {
     if(!instance)
     {
-        instance = new AndroidIntents();
-        qDebug() << "getInstance(AndroidIntents): First AndroidIntents instance\n";
+        instance = new AndroidInterface();
+        qDebug() << "getInstance(AndroidInterface): First AndroidInterface instance\n";
         return instance;
     } else
     {
-        qDebug()<< "getInstance(AndroidIntents): previous AndroidIntents instance\n";
+        qDebug()<< "getInstance(AndroidInterface): previous AndroidInterface instance\n";
         return instance;
     }
 }
 
-void AndroidIntents::call(const QString &tel) const
+void AndroidInterface::call(const QString &tel) const
 {
     MAUIAndroid::call(tel);
 }
 
-void AndroidIntents::addContact(const FMH::MODEL &contact, const FMH::MODEL &account) const
+bool AndroidInterface::insertContact(const FMH::MODEL &contact) const
 {
-    qDebug() << "ADDING CONTACT TO ACCOUNT" << contact << account;
+    qDebug() << "ADDING CONTACT TO ACCOUNT" << contact;
     MAUIAndroid::addContact(contact[FMH::MODEL_KEY::N],
             contact[FMH::MODEL_KEY::TEL],
             contact[FMH::MODEL_KEY::TEL_2],
@@ -42,11 +41,11 @@ void AndroidIntents::addContact(const FMH::MODEL &contact, const FMH::MODEL &acc
             contact[FMH::MODEL_KEY::TITLE],
             contact[FMH::MODEL_KEY::ORG],
             contact[FMH::MODEL_KEY::PHOTO],
-            account[FMH::MODEL_KEY::ACCOUNT],
-            account[FMH::MODEL_KEY::TYPE]);
+            contact[FMH::MODEL_KEY::ACCOUNT],
+            contact[FMH::MODEL_KEY::ACCOUNTTYPE]);
 }
 
-FMH::MODEL_LIST AndroidIntents::getAccounts(const GET_TYPE &type)
+FMH::MODEL_LIST AndroidInterface::getAccounts(const GET_TYPE &type)
 {    
     if(type == GET_TYPE::CACHED)
     {
@@ -59,7 +58,7 @@ FMH::MODEL_LIST AndroidIntents::getAccounts(const GET_TYPE &type)
         return this->fetchAccounts();
 }
 
-void AndroidIntents::getContacts(const GET_TYPE &type)
+void AndroidInterface::getContacts(const GET_TYPE &type)
 {
     if(type == GET_TYPE::CACHED)
     {
@@ -72,22 +71,25 @@ void AndroidIntents::getContacts(const GET_TYPE &type)
         this->fetchContacts();
 }
 
-void AndroidIntents::getCallLogs()
+void AndroidInterface::getCallLogs()
 {
     const auto logs = MAUIAndroid::getCallLogs();
 }
 
-QVariantMap AndroidIntents::getContact(const QString &id) const
+FMH::MODEL AndroidInterface::getContact(const QString &id) const
 {
-    return MAUIAndroid::getContact(id);
+    return FM::toModel(MAUIAndroid::getContact(id));
 }
 
-void AndroidIntents::updateContact(const QString &id, const QString &field, const QString &value) const
+bool AndroidInterface::updateContact(const QString &id, const FMH::MODEL &contact) const
 {
-    MAUIAndroid::updateContact(id, field, value);
+    for(const auto &key : contact.keys())
+        MAUIAndroid::updateContact(id, FMH::MODEL_NAME[key], contact[key]);
+
+    return true;
 }
 
-void AndroidIntents::fetchContacts()
+void AndroidInterface::fetchContacts()
 {
     QFutureWatcher<FMH::MODEL_LIST> *watcher = new QFutureWatcher<FMH::MODEL_LIST>;
     connect(watcher, &QFutureWatcher<FMH::MODEL_LIST>::finished, [=]()
@@ -114,7 +116,7 @@ void AndroidIntents::fetchContacts()
     watcher->setFuture(t1);
 }
 
-FMH::MODEL_LIST AndroidIntents::fetchAccounts()
+FMH::MODEL_LIST AndroidInterface::fetchAccounts()
 {
     FMH::MODEL_LIST data;
 
@@ -147,7 +149,7 @@ FMH::MODEL_LIST AndroidIntents::fetchAccounts()
                 }else if(m.nodeName() == "type")
                 {
                     const auto type = m.toElement().text();
-                    model.insert(FMH::MODEL_KEY::TYPE, type);
+                    model.insert(FMH::MODEL_KEY::ACCOUNTTYPE, type);
 
                 }
             }

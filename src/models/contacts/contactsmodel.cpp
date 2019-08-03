@@ -1,19 +1,24 @@
 #include "contactsmodel.h"
-#include "./src/interfaces/synchroniser.h"
+#include "abstractinterface.h"
 
 #ifdef Q_OS_ANDROID
-#include "./src/interfaces/androidintents.h"
+#include "androidinterface.h"
+#else
+#include "linuxinterface.h"
 #endif
-
 #ifdef STATIC_MAUIKIT
 #include "fm.h"
 #else
 #include <MauiKit/fm.h>
 #endif
 
-ContactsModel::ContactsModel(QObject *parent) : BaseList(parent), syncer(new Synchroniser(this))
+#ifdef Q_OS_ANDROID
+ContactsModel::ContactsModel(QObject *parent) : BaseList(parent), syncer(new AndroidInterface(this))
+#else
+ContactsModel::ContactsModel(QObject *parent) : BaseList(parent), syncer(new LinuxInterface(this))
+#endif
 {
-    connect(syncer, &Synchroniser::contactsReady, [this](FMH::MODEL_LIST contacts)
+    connect(syncer, &AbstractInterface::contactsReady, [this](FMH::MODEL_LIST contacts)
     {
         qDebug() << "CONATCTS READY AT MODEL 1" << contacts;
         emit this->preListChanged();
@@ -129,7 +134,7 @@ void ContactsModel::sortList()
 void ContactsModel::getList(const bool &cached)
 {
     qDebug()<< "TRYING TO SET FULL LIST";
-    this->syncer->getContacts(cached);
+    this->syncer->getContacts();
 }
 
 QVariantMap ContactsModel::get(const int &index) const
@@ -150,7 +155,7 @@ QVariantMap ContactsModel::get(const int &index) const
     return res;
 }
 
-bool ContactsModel::insert(const QVariantMap &map, const QVariantMap &account)
+bool ContactsModel::insert(const QVariantMap &map)
 {
     qDebug() << "INSERTING NEW CONTACT" << map;
 
@@ -158,9 +163,7 @@ bool ContactsModel::insert(const QVariantMap &map, const QVariantMap &account)
         return false;
 
     auto model = FM::toModel(map);
-    model[FMH::MODEL_KEY::ACCOUNT] = account[FMH::MODEL_NAME[FMH::MODEL_KEY::ACCOUNT]].toString();
-
-    if(!this->syncer->insertContact(model,  FM::toModel(account)))
+    if(!this->syncer->insertContact(model))
         return false;
 
     qDebug()<< "inserting new contact count" << this->list.count();
@@ -181,12 +184,12 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
 
     const auto newItem = FM::toModel(map);
     const auto oldItem = this->list[index];
+
     auto updatedItem = FMH::MODEL();
     updatedItem[FMH::MODEL_KEY::ID] = oldItem[FMH::MODEL_KEY::ID];
 
     QVector<int> roles;
-
-    for(auto key : newItem.keys())
+    for(const auto &key : newItem.keys())
     {
         if(newItem[key] != oldItem[key])
         {
@@ -195,20 +198,19 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
         }
     }
 
-    this->syncer->updateContact(updatedItem);
+    this->syncer->updateContact(updatedItem[FMH::MODEL_KEY::ID], updatedItem);
     this->list[index] = newItem;
     emit this->updateModel(index, roles);
 
-
-    return false;
+    return true;
 }
 
 bool ContactsModel::remove(const int &index)
 {
     if(index >= this->list.size() || index < 0)
         return false;
-
-    if(this->syncer->removeContact(this->list[index]))
+    qDebug()<< "trying to remove :" << this->list[index][FMH::MODEL_KEY::ID];
+    if(this->syncer->removeContact(this->list[index][FMH::MODEL_KEY::ID]))
     {
         emit this->preItemRemoved(index);
         this->list.removeAt(index);
@@ -242,15 +244,14 @@ void ContactsModel::filter()
             }
         }else
         {
-            for(auto item : this->listbk)
+            for(const auto &item : this->listbk)
             {
                 for(auto data : item)
                 {
-                    if(data.replace(" ", "").contains(this->query, Qt::CaseInsensitive) && !res.contains(item))
+                    if((data.replace(" ", "").contains(this->query, Qt::CaseInsensitive)) && !res.contains(item))
                         res << item;
                 }
             }
-
         }
     }
 

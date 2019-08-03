@@ -30,39 +30,39 @@ Maui.ApplicationWindow
     /** UI PROPS**/
     property color cardColor: darkTheme ? "#4f5160" : Qt.darker(Maui.Style.buttonBackgroundColor, 1.05)
 
-//    bgColor: darkTheme ? "#1f2532" : Maui.Style.backgroundColor
-//    highlightColor: darkTheme ? "#ff6a83" : Maui.Style.highlightColor
-//    backgroundColor: darkTheme ? bgColor : Maui.Style.backgroundColor
-//    textColor: darkTheme ? "#fafafa" : Maui.Style.textColor
-//    viewBackgroundColor: darkTheme ? "#1e2431" : Maui.Style.viewBackgroundColor
-//    accentColor: darkTheme ? "#3c4862" : Maui.Style.highlightColor
+    //    bgColor: darkTheme ? "#1f2532" : Maui.Style.backgroundColor
+    //    highlightColor: darkTheme ? "#ff6a83" : Maui.Style.highlightColor
+    //    backgroundColor: darkTheme ? bgColor : Maui.Style.backgroundColor
+    //    textColor: darkTheme ? "#fafafa" : Maui.Style.textColor
+    //    viewBackgroundColor: darkTheme ? "#1e2431" : Maui.Style.viewBackgroundColor
+    //    accentColor: darkTheme ? "#3c4862" : Maui.Style.highlightColor
 
     leftIcon.checked: footBar.visible
     //    onSearchButtonClicked: footBar.visible = !footBar.visible
     leftIcon.visible: true
     rightIcon.visible: false
-//    headBar.implicitHeight: toolBarHeight * 1.2
+    //    headBar.implicitHeight: toolBarHeight * 1.2
     headBar.drawBorder: false
-//    headBarBGColor: backgroundColor
-//    headBarFGColor: textColor
+    //    headBarBGColor: backgroundColor
+    //    headBarFGColor: textColor
 
     property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
 
-//    Maui.Dialog
-//    {
-//        id: _accountsForm
-//        defaultButtons: false
+    //    Maui.Dialog
+    //    {
+    //        id: _accountsForm
+    //        defaultButtons: false
 
-//        maxHeight: 300* unit
-//        maxWidth: maxHeight
-//        Accounts.AddAccountForm {
-//            anchors.fill: parent
-//            appId: "org.maui.dialer"
-//            onAccountAdded: {
-//                console.log("Account Secret :", secret);
-//            }
-//        }
-//    }
+    //        maxHeight: 300* unit
+    //        maxWidth: maxHeight
+    //        Accounts.AddAccountForm {
+    //            anchors.fill: parent
+    //            appId: "org.maui.dialer"
+    //            onAccountAdded: {
+    //                console.log("Account Secret :", secret);
+    //            }
+    //        }
+    //    }
 
 
     mainMenu: [
@@ -93,8 +93,8 @@ Maui.ApplicationWindow
     {
         id: _dialerButton
         icon.name: "show-grid"
-//        icon.name: "dialer-pad"
-//        icon.color: currentView === views.dialer ?  Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
+        //        icon.name: "dialer-pad"
+        //        icon.color: currentView === views.dialer ?  Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
         //                        text: qsTr("Dialer")
         //            visible: isAndroid
         checked: currentView === views.dialer
@@ -113,7 +113,7 @@ Maui.ApplicationWindow
             {
                 id: _favsButton
                 icon.name: "draw-star"
-//                icon.color: currentView === views.favs ? highlightColor : textColor
+                //                icon.color: currentView === views.favs ? highlightColor : textColor
                 text: qsTr("Favorites")
                 checked: currentView === views.favs
                 onTriggered: currentView = views.favs
@@ -125,7 +125,7 @@ Maui.ApplicationWindow
             {
                 id: _logButton
                 icon.name: "view-media-recent"
-//                icon.color: currentView === views.log ? highlightColor : textColor
+                //                icon.color: currentView === views.log ? highlightColor : textColor
                 text: qsTr("Recent")
                 checked: currentView === views.log
                 onTriggered: currentView = views.log
@@ -136,13 +136,13 @@ Maui.ApplicationWindow
             Kirigami.Action
             {
                 icon.name: "view-pim-contacts"
-//                icon.color: currentView === views.contacts ? highlightColor : textColor
+                //                icon.color: currentView === views.contacts ? highlightColor : textColor
                 text: qsTr("Contacts")
                 //            height: parent.height
                 checked: currentView === views.contacts
                 onTriggered: currentView = views.contacts
                 checkable: false
-           }
+            }
         ]
     }
 
@@ -177,7 +177,7 @@ Maui.ApplicationWindow
             id: _contacsView
             list.query: ""
 
-//            altToolBars: isMobile
+            //            altToolBars: isMobile
             showAccountFilter: isAndroid
 
             Rectangle
@@ -201,25 +201,25 @@ Maui.ApplicationWindow
                 }
             }
 
-//            headBarExit: false
+            //            headBarExit: false
             headBar.drawBorder: false
-//            headBar.implicitHeight: toolBarHeight * 1.4
+            //            headBar.implicitHeight: toolBarHeight * 1.4
             headBar.plegable: false
 
             headBar.middleContent: Maui.TextField
             {
                 id: _searchField
-//                height: toolBarHeightAlt
-//                anchors.centerIn: parent
+                //                height: toolBarHeightAlt
+                //                anchors.centerIn: parent
                 Layout.preferredWidth: isWide ? _contacsView.width * 0.8 : _contacsView.width * 0.95
                 focusReason : Qt.PopupFocusReason
                 //        height: rowHeight
                 placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.view.count))
                 onAccepted: _contacsView.list.query = text
                 onCleared: _contacsView.list.reset()
-//                colorScheme.backgroundColor: cardColor
-//                colorScheme.borderColor: "transparent"
-//                colorScheme.textColor: textColor
+                //                colorScheme.backgroundColor: cardColor
+                //                colorScheme.borderColor: "transparent"
+                //                colorScheme.textColor: textColor
                 onTextEdited: _contacsView.list.query = text
                 onTextChanged: _contacsView.list.query = text
             }
@@ -240,15 +240,8 @@ Maui.ApplicationWindow
         id: _newContactDialog
         onNewContact:
         {
-            var con = contact;
-            con["id"] = Math.random();
-            if(contact.account)
-                _contacsView.list.insert(con, contact.account)
-            else
-                _contacsView.list.insert(con, ({}))
-
+            _contacsView.list.insert(con)
             notify("list-add-user", qsTr("New contact added"), con.n)
-
         }
     }
 

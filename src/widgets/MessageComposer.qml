@@ -43,7 +43,7 @@ Maui.Dialog
     }
 
     acceptButton.text: qsTr("Send...")
-    acceptButton.icon.name: ""
+    acceptButton.icon.name: "mail-send"
     rejectButton.visible: false
 
     ColumnLayout

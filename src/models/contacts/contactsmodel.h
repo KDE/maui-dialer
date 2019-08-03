@@ -2,10 +2,9 @@
 #define CONTACTSMODEL_H
 
 #include <QObject>
-#include "../baselist.h"
+#include "baselist.h"
 
-class Synchroniser;
-
+class AbstractInterface;
 class ContactsModel : public BaseList
 {
     Q_OBJECT
@@ -43,40 +42,52 @@ public:
     ContactsModel::SORTBY getSortBy() const;
 
 private:
-    Synchroniser *syncer;
+    /*
+     * *syncer (abstract interface) shouyld work with whatever interface derived from
+     * AbstractInterface, for now we have Android and Linux interfaces
+     */
+
+    AbstractInterface *syncer;
+
+    /**
+     * There is the list that holds the conatcts data,
+     * and the list-bk which holds a cached version of the list,
+     * this helps to not have to fecth contents all over again
+     * when filtering the list
+     */
     FMH::MODEL_LIST list;
     FMH::MODEL_LIST listbk;
+
+
     void sortList();
     void getList(const bool &cached = false);
     void filter();
 
+    /**
+     * query is a property to start filtering the list, the filtering is
+     * done over the list-bk cached list instead of the main list
+     */
     QString query = "undefined";
     ContactsModel::SORTBY sort = ContactsModel::SORTBY::N;
 
-
 signals:
     void queryChanged();
-    void SQLQueryChanged();
     void sortByChanged();
-    void contactCreated();
 
 public slots:
-    QVariantMap get(const int &index) const override;
-//    bool insert(const QVariantMap &map) override;
-    bool insert(const QVariantMap &map, const QVariantMap &account = {{}});
-
-    bool update(const QVariantMap &map, const int &index) override;
-    bool remove(const int &index);
+    QVariantMap get(const int &index) const override final;
+    bool insert(const QVariantMap &map) override final;
+    bool update(const QVariantMap &map, const int &index) override final;
+    bool remove(const int &index) override final;
 
     void append(const QVariantMap &item, const int &at);
     void append(const QVariantMap &item);
+
     void appendQuery(const QString &query);
     void clear();
     void reset();
     void refresh();
-
     QVariantList getAccounts();
-
 };
 
 #endif // CONTACTSMODEL_H

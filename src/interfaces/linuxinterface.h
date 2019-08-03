@@ -18,31 +18,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KCONTACTSINTERFACE_H
-#define KCONTACTSINTERFACE_H
+#ifndef LINUXINTERFACE_H
+#define LINUXINTERFACE_H
 
 #include <QObject>
-#ifdef STATIC_MAUIKIT
-#include "fmh.h"
-#else
-#include <MauiKit/fmh.h>
-#endif
+#include "abstractinterface.h"
 
-class kcontactsinterface : public QObject
+class LinuxInterface : public AbstractInterface
 {
     Q_OBJECT
+
+private:
+    FMH::MODEL_LIST m_contacts;
+
 public:
-    explicit kcontactsinterface(QObject *parent = nullptr);
-    FMH::MODEL_LIST getContacts();
+    explicit LinuxInterface(QObject *parent = nullptr);
+
+    void getContacts() override final;
+
+    FMH::MODEL getContact(const QString &id) override final;
+
+    bool insertContact(const FMH::MODEL &contact) override final;
+
+    bool updateContact(const QString &id, const FMH::MODEL &contact) override final;
+
+    bool removeContact(const QString &id) override final;
+
 private:
     const QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
             + ("/kpeoplevcard");
-signals:
-
-public slots:
-    void addContact(const FMH::MODEL &contact);
 };
 
-#endif // KCONTACTSINTERFACE_H
+#endif // LINUXINTERFACE_H
 
 

@@ -12,6 +12,9 @@ SwipeDelegate
     id: control
     hoverEnabled: true
     clip: true
+    Kirigami.Theme.colorSet: Kirigami.Theme.Button
+    Kirigami.Theme.inherit: false
+
     property alias quickButtons : _buttonsRow.data
     property bool showMenuIcon: false
 
@@ -25,9 +28,22 @@ SwipeDelegate
     property int radius : radiusV * 2
 
     swipe.enabled: showMenuIcon
+
+    Rectangle
+    {
+        id: _bg
+        visible: swipe.position < 0
+        Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+        Kirigami.Theme.inherit: false
+        anchors.fill: parent
+        color: Kirigami.Theme.backgroundColor
+        radius: control.radius
+        z: background.z -1
+    }
+
     background: Rectangle
     {
-        color:  hovered ? Qt.lighter(cardColor) : cardColor
+        color:  hovered ? Kirigami.Theme.hoverColor : Kirigami.Theme.backgroundColor
         //        border.color: borderColor
         radius: control.radius
 
@@ -259,76 +275,60 @@ SwipeDelegate
         }
     }
 
-    swipe.right: Rectangle
+    swipe.right: Row
     {
-        height: control.height
-        width: _rowActions.implicitWidth
+        id: _rowActions
         anchors.right: parent.right
-        radius: control.radius
-        color: Qt.darker(cardColor, 1.5)
-        anchors.rightMargin: radius
+        anchors.verticalCenter: parent.verticalCenter
+        spacing: space.big
 
-//        Rectangle
-//        {
-//            anchors.left: parent.left
-//            color: parent.color
-//            height: parent.height
-//            width: parent.radius
-//        }
-
-        Row
+        ToolButton
         {
-            id: _rowActions
-            padding: space.medium
-            anchors.fill: parent
-            spacing: space.big
-
-            ToolButton
+            icon.name: "draw-star"
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked:
             {
-                icon.name: "draw-star"
-                anchors.verticalCenter: parent.verticalCenter
-                onClicked:
-                {
-                    control.favClicked(index)
-                    swipe.close()
-                }
-
-                icon.color: model.fav == "1" ? "yellow" : Kirigami.Theme.textColor
+                control.favClicked(index)
+                swipe.close()
             }
 
-            ToolButton
+            icon.color: model.fav == "1" ? "yellow" : _bg.Kirigami.Theme.textColor
+        }
+
+        ToolButton
+        {
+            icon.name: "document-share"
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: if(isAndroid) Maui.Android.shareContact(model.id)
+            icon.color: _bg.Kirigami.Theme.textColor
+        }
+
+        ToolButton
+        {
+            icon.name: "draw-text"
+            anchors.verticalCenter: parent.verticalCenter
+            icon.color: _bg.Kirigami.Theme.textColor
+            onClicked:
             {
-                icon.name: "document-share"
-                anchors.verticalCenter: parent.verticalCenter
-                onClicked: if(isAndroid) Maui.Android.shareContact(model.id)
-            }
-
-            ToolButton
-            {
-                icon.name: "draw-text"
-                anchors.verticalCenter: parent.verticalCenter
-                onClicked:
-                {
-                    _messageComposer.contact = list.get(index)
-                    _messageComposer.open()
-                    swipe.close()
-                }
-            }
-
-            ToolButton
-            {
-                icon.name: "phone"
-                anchors.verticalCenter: parent.verticalCenter
-
-                onClicked:
-                {
-                    if(isAndroid)
-                        Maui.Android.call(model.tel)
-
-                    swipe.close()
-                }
+                _messageComposer.contact = list.get(index)
+                _messageComposer.open()
+                swipe.close()
             }
         }
 
+        ToolButton
+        {
+            icon.name: "phone"
+            anchors.verticalCenter: parent.verticalCenter
+            icon.color: _bg.Kirigami.Theme.textColor
+
+            onClicked:
+            {
+                if(isAndroid)
+                    Maui.Android.call(model.tel)
+
+                swipe.close()
+            }
+        }
     }
 }

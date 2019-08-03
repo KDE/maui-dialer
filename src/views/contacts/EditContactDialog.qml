@@ -14,8 +14,7 @@ Maui.Dialog
     maxHeight: unit * 800
     //    heightHint: 1
     //    widthHint: 1
-    rejectButton.visible: false
-    acceptButton.visible: false
+
     //    rejectButton.text: qsTr("Cancel")
     //    closeButton.visible: true
 
@@ -24,37 +23,26 @@ Maui.Dialog
 
     onRejected: control.close()
 
-    footBar.leftContent: Button
+    acceptButton.text: qsTr("Save")
+    rejectButton.text: qsTr("Cancel")
+
+    onAccepted:
     {
-        text: qsTr("Cancel")
-        Kirigami.Theme.backgroundColor: warningColor
-        Kirigami.Theme.textColor: "#fff"
-        onClicked: control.close()
+        var contact =({
+                          n: _nameField.text,
+                          tel: _telField.text,
+                          email: _emailField.text,
+                          org: _orgField.text,
+                          //                          adr: _adrField.text,
+                          photo: _img.source,
+                          account: isAndroid ? _accountsCombobox.model[_accountsCombobox.currentIndex] :({})
+                      })
+
+        if(contact.n.length && contact.tel.length)
+            newContact(contact)
+        control.clear()
     }
 
-    footBar.rightContent: Button
-    {
-        text: qsTr("Save")
-        Kirigami.Theme.backgroundColor: infoColor
-        Kirigami.Theme.textColor: "#fff"
-
-        onClicked:
-        {
-            var contact =({
-                              n: _nameField.text,
-                              tel: _telField.text,
-                              email: _emailField.text,
-                              org: _orgField.text,
-                              //                          adr: _adrField.text,
-                              photo: _img.source,
-                              account: isAndroid ? _accountsCombobox.model[_accountsCombobox.currentIndex] :({})
-                          })
-
-            if(contact.n.length && contact.tel.length)
-                newContact(contact)
-            control.clear()
-        }
-    }
 
     ColumnLayout
     {
