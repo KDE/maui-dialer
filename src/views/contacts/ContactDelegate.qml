@@ -325,9 +325,9 @@ SwipeDelegate
             onClicked:
             {
                 if(isAndroid)
-                    Maui.Android.call(contact.tel)
+                    Maui.Android.call(model.tel)
                 else
-                    Qt.openUrlExternally("call://" + contact.tel)
+                    Qt.openUrlExternally("call://" + model.tel)
 
                 swipe.close()
             }
