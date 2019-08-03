@@ -44,6 +44,8 @@ public:
 
     bool removeContact(const QString &id) override final;
 
+    static QImage contactPhoto(const QString &id);
+
 private:
     const QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
             + ("/kpeoplevcard");

@@ -1,6 +1,8 @@
 #include "contactimage.h"
-#ifdef STATIC_MAUIKIT
+#ifdef Q_OS_ANDROID
 #include "mauiandroid.h"
+#else
+#include "linuxinterface.h"
 #endif
 #include <QDebug>
 
@@ -14,8 +16,10 @@ QImage ContactImage::requestImage(const QString &id, QSize *size, const QSize &r
 {
     qDebug()<< "requesting contact image with id "<< id;
     QImage result;
-#ifdef STATIC_MAUIKIT
+#ifdef Q_OS_ANDROID
     result = MAUIAndroid::contactPhoto(id);
+#else
+    result = LinuxInterface::contactPhoto(id);
 #endif
 
     if(result.isNull()) {

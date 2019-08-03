@@ -79,15 +79,14 @@ void ContactsModel::sortList()
         return;
 
     const auto key = static_cast<FMH::MODEL_KEY>(this->sort);
-    std::sort(this->list.begin(), this->list.end(), [key](const FMH::MODEL &e1, const FMH::MODEL &e2) -> bool
+    std::sort(this->list.begin(), this->list.end(), [&key](const FMH::MODEL &e1, const FMH::MODEL &e2) -> bool
     {
-        auto role = key;
 
-        switch(role)
+        switch(key)
         {
             case FMH::MODEL_KEY::FAV:
             {
-                if(e1[role].toInt() > e2[role].toInt())
+                if(e1[key].toInt() > e2[key].toInt())
                     return true;
                 break;
             }
@@ -97,8 +96,8 @@ void ContactsModel::sortList()
             {
                 auto currentTime = QDateTime::currentDateTime();
 
-                auto date1 = QDateTime::fromString(e1[role], Qt::TextDate);
-                auto date2 = QDateTime::fromString(e2[role], Qt::TextDate);
+                auto date1 = QDateTime::fromString(e1[key], Qt::TextDate);
+                auto date2 = QDateTime::fromString(e2[key], Qt::TextDate);
 
                 if(date1.secsTo(currentTime) <  date2.secsTo(currentTime))
                     return true;
@@ -114,8 +113,8 @@ void ContactsModel::sortList()
             case FMH::MODEL_KEY::GENDER:
             case FMH::MODEL_KEY::ADR:
             {
-                const auto str1 = QString(e1[role]).toLower();
-                const auto str2 = QString(e2[role]).toLower();
+                const auto str1 = QString(e1[key]).toLower();
+                const auto str2 = QString(e2[key]).toLower();
 
                 if(str1 < str2)
                     return true;
@@ -123,7 +122,7 @@ void ContactsModel::sortList()
             }
 
             default:
-                if(e1[role] < e2[role])
+                if(e1[key] < e2[key])
                     return true;
         }
 
@@ -162,16 +161,16 @@ bool ContactsModel::insert(const QVariantMap &map)
     if(map.isEmpty())
         return false;
 
-    auto model = FM::toModel(map);
+    const auto model = FM::toModel(map);
     if(!this->syncer->insertContact(model))
         return false;
 
     qDebug()<< "inserting new contact count" << this->list.count();
     emit this->preItemAppended();
-    this->list.append(model);
+    this->list << model;
+    emit this->postItemAppended();
     this->sortList();
 
-    emit this->postItemAppended();
     qDebug()<< "inserting new contact count" << this->list.count();
 
     return true;
@@ -184,8 +183,6 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
 
     const auto newItem = FM::toModel(map);
     const auto oldItem = this->list[index];
-
-
 
     auto updatedItem = FMH::MODEL();
     updatedItem[FMH::MODEL_KEY::ID] = oldItem[FMH::MODEL_KEY::ID];

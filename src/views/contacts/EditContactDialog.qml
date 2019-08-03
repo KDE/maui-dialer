@@ -34,7 +34,7 @@ Maui.Dialog
                           email: _emailField.text,
                           org: _orgField.text,
                           //                          adr: _adrField.text,
-                          photo: _img.source,
+                          photo: control.contact.photo,
                           account: isAndroid ? _accountsCombobox.model[_accountsCombobox.currentIndex] :({})
                       })
 
@@ -63,7 +63,7 @@ Maui.Dialog
                 height: Math.min(parent.height, control.width)
                 width: height
                 anchors.centerIn: parent
-                radius: Math.min(width, height)
+                radius: radiusV* 2
                 color: Qt.rgba(Math.random(),Math.random(),Math.random(),1);
                 border.color: Qt.darker(color, 1.5)
 
@@ -77,57 +77,90 @@ Maui.Dialog
                         _fileDialog.show(function(paths)
                         {
                             console.log("selected image", paths)
-                            _img.source = "file://"+paths[0]
+                            contact.photo = "file://"+paths[0]
+                            _contactPicLoader.sourceComponent = _imgComponent
+                            _contactPicLoader.item.source = contact.photo
                         })
                     }
                 }
 
 
-                Image
+                Loader
                 {
-                    id: _img
-                    width: parent.width
-                    height: width
+                    id: _contactPicLoader
+                    anchors.fill: parent
+                    sourceComponent: contact.photo ? _imgComponent : _iconComponent
+                }
 
-                    anchors.centerIn: parent
+                Component
+                {
+                    id: _imgComponent
 
-                    sourceSize.width: parent.width
-                    sourceSize.height: parent.height
-
-                    fillMode: Image.PreserveAspectCrop
-                    cache: true
-                    antialiasing: true
-                    smooth: true
-                    asynchronous: true
-
-                    layer.enabled: true
-                    layer.effect: OpacityMask
+                    Image
                     {
-                        maskSource: Item
-                        {
-                            width: _img.width
-                            height: _img.height
+                        id: _img
+                        width: parent.width
+                        height: width
 
-                            Rectangle
+                        anchors.centerIn: parent
+
+                        sourceSize.width: parent.width
+                        sourceSize.height: parent.height
+
+                        fillMode: Image.PreserveAspectCrop
+                        cache: true
+                        antialiasing: true
+                        smooth: true
+                        asynchronous: true
+
+                        source: "image://contact/"+ contact.id
+
+                        layer.enabled: true
+                        layer.effect: OpacityMask
+                        {
+                            maskSource: Item
                             {
-                                anchors.centerIn: parent
                                 width: _img.width
                                 height: _img.height
-                                radius: Math.min(width, height)
-//                                border.color: borderColor
+
+                                Rectangle
+                                {
+                                    anchors.centerIn: parent
+                                    width: _img.width
+                                    height: _img.height
+                                    radius: radiusV* 2
+                                }
                             }
                         }
                     }
                 }
 
-                ToolButton
+                Component
                 {
-                    icon.name: "list-add"
-                    icon.color: "white"
-                    enabled: false
-                    icon.width: iconSizes.big
-                    anchors.centerIn: parent
+                    id: _iconComponent
+
+                    //                    Maui.ToolButton
+                    //                    {
+                    //                        iconName: "view-media-artist"
+                    //                        size: iconSizes.big
+                    //                        iconColor: "white"
+                    //                    }
+
+                    Label
+                    {
+                        anchors.fill: parent
+                        horizontalAlignment: Qt.AlignHCenter
+                        verticalAlignment: Qt.AlignVCenter
+
+                        color: "white"
+                        font.pointSize: fontSizes.huge * 1.5
+                        font.bold: true
+                        font.weight: Font.Bold
+                        text: "+"
+                    }
                 }
+
+
             }
         }
 
@@ -316,7 +349,8 @@ Maui.Dialog
         _emailField.clear()
         _orgField.clear()
         //        _adrField.clear()
-        _img.source = ""
+//        _img.source = ""
+        _contactPicLoader.sourceComponent = _iconComponent
         control.close()
 
     }    

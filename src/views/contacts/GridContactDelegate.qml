@@ -81,7 +81,6 @@ ItemDelegate
                                 width: _img.width
                                 height: _img.height
                                 radius: radiusV
-                                border.color: borderColor
                             }
                         }
                     }

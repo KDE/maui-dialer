@@ -79,7 +79,10 @@ Maui.Dialog
 
                 icon.name: "draw-star"
                 text: qsTr("Fav")
-                icon.color: contact.fav == "1" ? "#FFD700" : Kirigami.Theme.textColor
+                checked: contact.fav == "1"
+                checkable: false
+                Kirigami.Theme.textColor: checked ? "#FFD700" : Kirigami.Theme.textColor
+                Kirigami.Theme.backgroundColor: checked ? "#FFD700" : Kirigami.Theme.textColor
                 onTriggered:
                 {
                     contact["fav"] = contact.fav == "1" ? "0" : "1"
@@ -234,7 +237,6 @@ Maui.Dialog
                                     width: _img.width
                                     height: _img.height
                                     radius: radiusV* 2
-                                    border.color: borderColor
                                 }
                             }
                         }
