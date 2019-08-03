@@ -44,6 +44,12 @@ public:
 
     bool removeContact(const QString &id) override final;
 
+    /**
+     * @brief contactPhoto is a static function to be used with the contactImage provider,
+     * it takes the id of the contact and then looks for the photo url in the vcard
+     * @param id of the vcard, it is the vcard filename for now
+     * @return returns a QImage to be used with the contactImage provider
+     */
     static QImage contactPhoto(const QString &id);
 
 private:
