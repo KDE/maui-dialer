@@ -159,7 +159,9 @@ bool LinuxInterface::insertContact(const FMH::MODEL &contact)
     QCryptographicHash hash(QCryptographicHash::Sha1);
     hash.addData(adr.name().toUtf8());
     QFile file(this->path + "/" + hash.result().toHex() + ".vcf");
-    if (!file.open(QFile::WriteOnly)) {
+
+    if (!file.open(QFile::WriteOnly))
+    {
         qWarning() << "Couldn't save vCard: Couldn't open file for writing.";
         return false;
     }
@@ -290,6 +292,7 @@ bool LinuxInterface::removeContact(const QString &id)
 
     return QFile::remove(QString(id).remove("vcard:/"));
 }
+
 
 QImage LinuxInterface::contactPhoto(const QString &id)
 {

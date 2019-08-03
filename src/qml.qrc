@@ -10,5 +10,6 @@
         <file>widgets/MessageComposer.qml</file>
         <file>views/contacts/GridContactDelegate.qml</file>
         <file>views/logs/LogsView.qml</file>
+        <file>views/dialer/DialerButton.qml</file>
     </qresource>
 </RCC>

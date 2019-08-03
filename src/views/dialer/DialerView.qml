@@ -1,9 +1,8 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
-import org.kde.kirigami 2.6 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 import QtQuick.Layouts 1.3
-import UnionModels 1.0
 import "../contacts"
 
 Maui.Page
@@ -17,8 +16,7 @@ Maui.Page
         //        Qt.inputMethod.hide();
         _contacsView.list.query = "tel=" + dialString
     }
-//    colorScheme.backgroundColor: backgroundColor
-    headBar.visible: false
+    //    colorScheme.backgroundColor: backgroundColor
 
     //    footBar.middleContent: Maui.ToolButton
     //    {
@@ -33,7 +31,31 @@ Maui.Page
     //    footBarOverlap: true
     //    footBarAligment: Qt.AlignRight
 
-    footBar.drawBorder:false
+    headBar.middleContent:  Maui.TextField
+    {
+        id: _textField
+        Layout.fillWidth: true
+        inputMethodHints: Qt.ImhDialableCharactersOnly
+        placeholderText: qsTr("Number...")
+        readOnly: true
+        font.bold: true
+        font.weight: Font.Bold
+        font.pointSize: fontSizes.huge
+        font.letterSpacing: space.tiny
+        horizontalAlignment: TextInput.AlignHCenter
+        background: Rectangle
+        {
+            color: "transparent"
+        }
+
+        //            enabled: false
+    }
+
+    footBar.background: Rectangle
+    {
+        color: "transparent"
+    }
+
     footBar.implicitHeight:  iconSizes.big * 3
     footBar.middleContent: [
 
@@ -44,12 +66,12 @@ Maui.Page
 
             Button
             {
-                icon.name: "send-sms"
+                icon.name: "message-new"
                 icon.color: Kirigami.Theme.textColor
                 height: buttonSize
                 width: height
                 anchors.centerIn: parent
-//                bg.radius: Math.max(width, height)
+                //                bg.radius: Math.max(width, height)
                 //                colorScheme.backgroundColor: infoColor
                 onClicked:
                 {
@@ -67,12 +89,14 @@ Maui.Page
 
             Button
             {
-                icon.name: "dialer-call"
+                icon.name: "call-start"
                 icon.color: "white"
+                icon.width: iconSizes.big
+                icon.height: iconSizes.big
                 height: buttonSize
                 width: height
                 anchors.centerIn: parent
-//                bg.radius: Math.max(width, height)
+                //                bg.radius: Math.max(width, height)
                 Kirigami.Theme.backgroundColor: suggestedColor
 
                 onClicked:
@@ -97,7 +121,7 @@ Maui.Page
                 height: iconSizes.big * 2
                 width: height
                 anchors.centerIn: parent
-//                bg.radius: Math.max(width, height)
+                //                bg.radius: Math.max(width, height)
                 //                colorScheme.backgroundColor: warningColor
 
                 onClicked:
@@ -112,47 +136,19 @@ Maui.Page
     {
         id: _layout
         width: Math.min(isWide ? control.width * 0.8 : control.width * 0.95, unit * 500)
-        height: parent.height
+//        height: parent.height
         anchors.centerIn: parent
         spacing: space.big
-
-
-        Rectangle
-        {
-            Layout.preferredHeight: toolBarHeight * 1.3
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            color: cardColor
-            //        border.color: borderColor
-            radius: radiusV * 2
-
-            Maui.TextField
-            {
-                id: _textField
-                anchors.fill: parent
-                inputMethodHints: Qt.ImhDialableCharactersOnly
-                placeholderText: qsTr("Number...")
-                readOnly: true
-                font.bold: true
-                font.weight: Font.Bold
-                font.pointSize: fontSizes.huge
-                font.letterSpacing: space.tiny
-
-
-                //            enabled: false
-            }
-        }
 
         ListView
         {
             id: _suggestionListView
             spacing: space.big
             clip: true
-            visible: dialString.length
-            Layout.fillWidth: true
-            Layout.minimumHeight: (unit * 80) * 1.5
-            Layout.fillHeight: true
-            Layout.preferredHeight: control.height * 0.3
+            visible: count
+            Layout.fillWidth: visible
+            Layout.minimumHeight: visible ? _60 : 0
+            Layout.preferredHeight: visible ? 60 * 2 : 0
 
             model: _contacsView.listModel
 

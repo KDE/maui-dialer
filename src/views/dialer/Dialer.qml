@@ -2,7 +2,6 @@ import QtQuick 2.9
 import QtQuick.Controls 2.3
 import org.kde.mauikit 1.0 as Maui
 import QtQuick.Layouts 1.3
-import UnionModels 1.0
 
 GridLayout
 {
@@ -27,20 +26,12 @@ GridLayout
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            Button
+            DialerButton
             {
                 height: buttonSize
                 width: height
                 anchors.centerIn: parent
-//                bg.radius: Math.max(width, height)
                 text: modelData
-                font.bold: true
-                font.weight: Font.Bold
-                font.pointSize: buttonFontSize
-                onClicked:
-                {
-                    dialString += text;
-                }
             }
         }
     }

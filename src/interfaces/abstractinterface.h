@@ -8,7 +8,6 @@
 #include <MauiKit/fmh.h>
 #endif
 
-
 /**
  * This is an abstract class for handling the contacts,
  * it describes tha basic methods needed for Maui Dialer

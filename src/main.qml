@@ -92,7 +92,7 @@ Maui.ApplicationWindow
     headBar.rightContent:  ToolButton
     {
         id: _dialerButton
-        icon.name: "show-grid"
+        icon.name: "call-start"
         //        icon.name: "dialer-pad"
         //        icon.color: currentView === views.dialer ?  Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
         //                        text: qsTr("Dialer")

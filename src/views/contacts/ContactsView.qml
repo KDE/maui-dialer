@@ -20,7 +20,7 @@ Maui.Page
     property bool showAccountFilter: false
     padding: space.big
 
-    BaseModel
+    Maui.BaseModel
     {
         id: _contactsModel
         list: _contactsList

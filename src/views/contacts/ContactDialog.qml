@@ -310,7 +310,7 @@ Maui.Dialog
                     {
                         Layout.fillWidth: true
                         spacing: space.small
-                        visible: contact.n
+                        visible: contact.account
                         Label
                         {
                             Layout.fillHeight: true

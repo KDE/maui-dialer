@@ -6,6 +6,7 @@
 #else
 #include "linuxinterface.h"
 #endif
+
 #ifdef STATIC_MAUIKIT
 #include "fm.h"
 #else
@@ -15,7 +16,7 @@
 #ifdef Q_OS_ANDROID
 ContactsModel::ContactsModel(QObject *parent) : BaseList(parent), syncer(new AndroidInterface(this))
 #else
-ContactsModel::ContactsModel(QObject *parent) : BaseList(parent), syncer(new LinuxInterface(this))
+ContactsModel::ContactsModel(QObject *parent) : MauiList(parent), syncer(new LinuxInterface(this))
 #endif
 {
     connect(syncer, &AbstractInterface::contactsReady, [this](FMH::MODEL_LIST contacts)
@@ -310,7 +311,6 @@ void ContactsModel::appendQuery(const QString &query)
     this->query = query;
 
     emit this->preListChanged();
-
     emit this->postListChanged();
 }
 
@@ -318,9 +318,7 @@ void ContactsModel::appendQuery(const QString &query)
 void ContactsModel::clear()
 {
     emit this->preListChanged();
-
     this->list.clear();
-
     emit this->postListChanged();
 }
 
@@ -338,7 +336,10 @@ void ContactsModel::refresh()
 QVariantList ContactsModel::getAccounts()
 {
     QVariantList res;
-    for(const auto &account : syncer->getAccounts())
-        res << FM::toMap(account);
+    auto accounts= syncer->getAccounts();
+//    for(const auto &account : syncer->getAccounts())
+//        res << FM::toMap(account);
+
+    std::transform(accounts.begin(), accounts.end(), res.begin(), FM::toMap);
     return res;
 }

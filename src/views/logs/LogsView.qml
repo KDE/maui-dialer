@@ -27,7 +27,7 @@ Maui.Page
         onActionTriggered: _newContactDialog.open()
     }
 
-    BaseModel
+    Maui.BaseModel
     {
         id: _contactsModel
         list: _callLogsModel

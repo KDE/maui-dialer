@@ -2,10 +2,15 @@
 #define CONTACTSMODEL_H
 
 #include <QObject>
-#include "baselist.h"
+
+#ifdef STATIC_MAUIKIT
+#include "mauilist.h"
+#else
+#include <MauiKit/mauilist.h>
+#endif
 
 class AbstractInterface;
-class ContactsModel : public BaseList
+class ContactsModel : public MauiList
 {
     Q_OBJECT
     Q_PROPERTY(QString query READ getQuery WRITE setQuery NOTIFY queryChanged)
@@ -33,7 +38,7 @@ public:
 
     explicit ContactsModel(QObject *parent = nullptr);
 
-    FMH::MODEL_LIST items() const override;
+    FMH::MODEL_LIST items() const override final;
 
     QString getQuery() const;
     void setQuery(const QString &query);
@@ -75,10 +80,10 @@ signals:
     void sortByChanged();
 
 public slots:
-    QVariantMap get(const int &index) const override final;
-    bool insert(const QVariantMap &map) override final;
-    bool update(const QVariantMap &map, const int &index) override final;
-    bool remove(const int &index) override final;
+    QVariantMap get(const int &index) const;
+    bool insert(const QVariantMap &map);
+    bool update(const QVariantMap &map, const int &index);
+    bool remove(const int &index);
 
     void append(const QVariantMap &item, const int &at);
     void append(const QVariantMap &item);

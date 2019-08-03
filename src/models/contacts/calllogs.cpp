@@ -9,9 +9,7 @@
 #include "mauiandroid.h"
 #endif
 
-#define ORDER(a) a == 0 ? > : <
-
-CallLogs::CallLogs(QObject *parent) : BaseList(parent)
+CallLogs::CallLogs(QObject *parent) : MauiList(parent)
 {
     this->getList();
 }
