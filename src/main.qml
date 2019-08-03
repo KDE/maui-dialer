@@ -182,7 +182,7 @@ Maui.ApplicationWindow
             {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-
+                anchors.margins: space.huge
                 height: toolBarHeight
                 width: height
 

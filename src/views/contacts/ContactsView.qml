@@ -162,19 +162,21 @@ Maui.Page
 
         Maui.GridView
         {
+            id: _gridView
             model: _contactsModel
             cellWidth: unit * 120
             cellHeight: unit * 120
-            itemSize: Math.min(unit * 120, control.width * 0.4)
+            itemSize: Math.min(unit * 120)
             spacing: space.medium
             centerContent: false
-                adaptContent: true
+            adaptContent: true
+
             delegate: GridContactDelegate
             {
                 id: _delegate
 
-                width: view.cellWidth * 0.95
-                height: view.cellHeight * 0.95
+                width: _gridView.cellWidth * 0.95
+                height: _gridView.cellHeight * 0.95
                 showMenuIcon: true
 
                 Connections
@@ -182,7 +184,7 @@ Maui.Page
                     target: _delegate
                     onClicked:
                     {
-                        view.currentIndex = index
+                        _gridView.currentIndex = index
                         _contactDialog.show(list.get(index))
                     }
                     onFavClicked:
