@@ -209,7 +209,7 @@ Maui.ApplicationWindow
                 id: _searchField
                 //                height: toolBarHeightAlt
                 //                anchors.centerIn: parent
-                Layout.preferredWidth: isWide ? _contacsView.width * 0.8 : _contacsView.width * 0.95
+                Layout.preferredWidth: isWide ? _contacsView.width * 0.8 : _contacsView.view.width
                 focusReason : Qt.PopupFocusReason
                 //        height: rowHeight
                 placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.view.count))
