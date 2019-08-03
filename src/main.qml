@@ -102,8 +102,6 @@ Maui.ApplicationWindow
 
     }
 
-
-
     headBar.middleContent: Kirigami.ActionToolBar
     {
         display: isWide ? ToolButton.TextBesideIcon : ToolButton.IconOnly

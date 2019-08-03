@@ -17,27 +17,16 @@ Maui.Dialog
     rejectButton.visible: true
     rejectButton.text: qsTr("Close")
     onRejected: control.close()
-    acceptButton.visible: false
 
-    //    footBar.implicitHeight: toolBarHeight * 1.3
-    footBar.rightContent: Button
+    acceptButton.visible: isMobile
+    acceptButton.text: qsTr("Call")
+    acceptButton.icon.name: "call-start"
+    onAccepted:
     {
-        visible: isMobile
-        //                Layout.fillHeight: visible
-        //                    Layout.fillWidth: visible
-        icon.name: "call-start"
-        text: qsTr("Call")
-        //        display: ToolButton.TextUnderIcon
-        Kirigami.Theme.backgroundColor: infoColor
-        Kirigami.Theme.textColor: "#fff"
-        onClicked:
-        {
-            if(isAndroid)
-                Maui.Android.call(contact.tel)
-        }
+        if(isAndroid)
+            Maui.Android.call(contact.tel)
     }
 
-    headBar.drawBorder: false
     headBar.middleContent: Kirigami.ActionToolBar
     {
         Layout.fillWidth: true
@@ -48,7 +37,7 @@ Maui.Dialog
             {
                 icon.name: "mail-message"
                 visible: contact.email
-                            text: qsTr("Email")
+                text: qsTr("Email")
                 //            display: ToolButton.TextUnderIcon
                 onTriggered:
                 {
@@ -63,7 +52,7 @@ Maui.Dialog
                 icon.name: "dialog-messages"
                 visible: contact.tel
 
-                            text: qsTr("SMS")
+                text: qsTr("SMS")
                 //            display: ToolButton.TextUnderIcon
                 onTriggered:
                 {
