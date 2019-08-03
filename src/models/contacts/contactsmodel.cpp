@@ -185,6 +185,8 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
     const auto newItem = FM::toModel(map);
     const auto oldItem = this->list[index];
 
+
+
     auto updatedItem = FMH::MODEL();
     updatedItem[FMH::MODEL_KEY::ID] = oldItem[FMH::MODEL_KEY::ID];
 
@@ -198,7 +200,9 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
         }
     }
 
-    this->syncer->updateContact(updatedItem[FMH::MODEL_KEY::ID], updatedItem);
+    qDebug()<< "trying to update contact:" << oldItem << "\n\n" << newItem << "\n\n" << updatedItem;
+
+    this->syncer->updateContact(oldItem[FMH::MODEL_KEY::ID], newItem);
     this->list[index] = newItem;
     emit this->updateModel(index, roles);
 

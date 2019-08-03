@@ -240,8 +240,8 @@ Maui.ApplicationWindow
         id: _newContactDialog
         onNewContact:
         {
-            _contacsView.list.insert(con)
-            notify("list-add-user", qsTr("New contact added"), con.n)
+            _contacsView.list.insert(contact)
+            notify("list-add-user", qsTr("New contact added"), contact.n)
         }
     }
 

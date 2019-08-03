@@ -33,8 +33,8 @@ linux:unix:!android {
 
     DEFINES += STATIC_KIRIGAMI
 
-    SOURCES +=  src/interfaces/androidintents.cpp
-    HEADERS += src/interfaces/androidintents.h
+    SOURCES += 
+    HEADERS +=
 
 } else {
     message("Unknown configuration")
@@ -42,14 +42,13 @@ linux:unix:!android {
 
 SOURCES += \
     $$PWD/src/main.cpp \
+    src/interfaces/androidinterface.cpp \
     src/interfaces/contactimage.cpp \
     src/models/baselist.cpp \
     src/models/basemodel.cpp \
     src/models/contacts/calllogs.cpp \
     src/models/contacts/contactsmodel.cpp \
     src/interfaces/synchroniser.cpp \
-    src/db/db.cpp \
-    src/db/dbactions.cpp \
 
 RESOURCES += \
     $$PWD/src/qml.qrc \
@@ -60,11 +59,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    src/interfaces/abstractinterface.h \
+    src/interfaces/androidinterface.h \
     src/interfaces/contactimage.h \
     src/models/contacts/calllogs.h \
     src/union.h \
-    src/db/db.h \
-    src/db/dbactions.h \
     src/models/baselist.h \
     src/models/basemodel.h \
     src/models/contacts/contactsmodel.h \

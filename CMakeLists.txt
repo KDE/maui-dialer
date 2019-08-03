@@ -20,29 +20,32 @@ include(ECMInstallIcons)
 include(FeatureSummary)
 include(ECMAddAppIcon)
 
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces
+    ${CMAKE_CURRENT_BINARY_DIR}/src/interfaces
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/models
+    ${CMAKE_CURRENT_BINARY_DIR}/src/models
+    )
+
 set(dialer_SRCS
     src/main.cpp
-    src/interfaces/synchroniser.cpp
-    src/db/db.cpp
-    src/db/dbactions.cpp
     src/models/baselist.cpp
     src/models/basemodel.cpp
     src/models/contacts/contactsmodel.cpp
     src/models/contacts/calllogs.cpp
-    src/interfaces/kcontactsinterface.cpp
+    src/interfaces/linuxinterface.cpp
     src/interfaces/contactimage.cpp
     )
 
 set(dialer_HDRS
     src/union.h
-    src/db/db.h
-    src/db/dbactions.h
-    src/interfaces/synchroniser.h
     src/models/baselist.h
     src/models/basemodel.h
     src/models/contacts/contactsmodel.h
     src/models/contacts/calllogs.h
-    src/interfaces/kcontactsinterface.h
+    src/interfaces/abstractinterface.h
+    src/interfaces/linuxinterface.h
     src/interfaces/contactimage.h
     )
 

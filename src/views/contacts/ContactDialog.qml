@@ -150,11 +150,9 @@ Maui.Dialog
             var id = control.contact.id
             con["id"] = id
             console.log("trying to edit contact", id)
-            _contacsView.list.update(con, _contacsView.listView.currentIndex)
-            control.contact =  _contacsView.list.get(_contacsView.listView.currentIndex)
-
+            list.update(con, view.currentIndex)
+            control.contact =  list.get(view.currentIndex)
             _editContactDialog.close()
-
         }
 
         headBar.drawBorder: false
