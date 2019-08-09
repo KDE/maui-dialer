@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Communicator
+Name=Dialer
 Comment=Contacts manager
-TryExec=union
-Exec=union %U
+TryExec=dialer
+Exec=dialer %U
 Terminal=false
 Type=Application
 Categories=Qt;KDE;System;
