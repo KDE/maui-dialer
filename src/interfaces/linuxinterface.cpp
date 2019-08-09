@@ -53,26 +53,28 @@ static FMH::MODEL vCardData(const QString &url)
     }
 
     VCardConverter converter;
+
     Addressee adr = converter.parseVCard(file.readAll());
 
     qDebug()<< adr.url().toString() <<adr.customs() << adr.formattedName() << adr.fullEmail();
-    res = { {FMH::MODEL_KEY::ID, QStringLiteral("vcard:/")+url},
-            {FMH::MODEL_KEY::N, adr.name()},
+    res = {
+//        {FMH::MODEL_KEY::ID, QStringLiteral("vcard:/")+url},
+//            {FMH::MODEL_KEY::N, adr.name()},
             {FMH::MODEL_KEY::ORG, adr.organization()},
             {FMH::MODEL_KEY::GENDER, adr.gender().gender()},
             {FMH::MODEL_KEY::TITLE, adr.title()},
             {FMH::MODEL_KEY::NOTE, adr.note()},
             {FMH::MODEL_KEY::URL, adr.url().toString()},
             {FMH::MODEL_KEY::FAV, adr.custom("fav", "fav")},
-            {FMH::MODEL_KEY::EMAIL, adr.emails().join(",")},
-            {FMH::MODEL_KEY::TEL, [phones = adr.phoneNumbers(PhoneNumber::Cell)]()
-             {
-                 return std::accumulate(phones.begin(), phones.end(), QStringList(), [](QStringList &value, const PhoneNumber &number) -> QStringList
-                 {
-                     return value << number.number();
-                 });
-             }().join(",")
-            },
+//            {FMH::MODEL_KEY::EMAIL, adr.emails().join(",")},
+//            {FMH::MODEL_KEY::TEL, [phones = adr.phoneNumbers(PhoneNumber::Cell)]()
+//             {
+//                 return std::accumulate(phones.begin(), phones.end(), QStringList(), [](QStringList &value, const PhoneNumber &number) -> QStringList
+//                 {
+//                     return value << number.number();
+//                 });
+//             }().join(",")
+//            },
             {FMH::MODEL_KEY::PHOTO, adr.photo().url()}
           };
 
@@ -83,29 +85,27 @@ static FMH::MODEL vCardData(const QString &url)
 
 void LinuxInterface::getContacts()
 {    
-    QDirIterator it(this->path, {"*.vcf"}, QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+//    QDirIterator it(this->path, {"*.vcf"}, QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 
-    while(it.hasNext())
-        this->m_contacts << vCardData(it.next());
+//    while(it.hasNext())
+    //        this->m_contacts <<
 
-    //    KPeople::PersonsModel model;
-    //    for(auto i = 0 ; i< model.rowCount(); i++)
-    //    {
-    //        const auto uri = model.get(i, KPeople::PersonsModel::PersonUriRole).toString();
+    KPeople::PersonsModel model;
+    for(auto i = 0 ; i< model.rowCount(); i++)
+    {
+        const auto uri = model.get(i, KPeople::PersonsModel::PersonUriRole).toString();
 
-    //        KPeople::PersonData person(uri);
-    //        this->m_contacts << FMH::MODEL  {
-    //        {FMH::MODEL_KEY::ID, person.personUri()},
-    //        {FMH::MODEL_KEY::N, person.name()},
-    //        {FMH::MODEL_KEY::FAV, person.contactCustomProperty(FMH::MODEL_NAME[FMH::MODEL_KEY::FAV]).toString()},
-    //    {FMH::MODEL_KEY::EMAIL, person.email()},
-    //    {FMH::MODEL_KEY::TEL, person.contactCustomProperty("phoneNumber").toString()},
-    //    {FMH::MODEL_KEY::PHOTO, person.pictureUrl().toString()}};
+        KPeople::PersonData person(uri);
+        auto contact = FMH::MODEL  {
+        {FMH::MODEL_KEY::ID, person.personUri()},
+        {FMH::MODEL_KEY::N, person.name()},
+        {FMH::MODEL_KEY::EMAIL, person.email()},
+        {FMH::MODEL_KEY::TEL, person.contactCustomProperty("phoneNumber").toString()},
+//        {FMH::MODEL_KEY::PHOTO, person.pictureUrl().toString()}
+    };
 
-    //qDebug() << "CUSTOM RPOP" << person.contactCustomProperty(FMH::MODEL_NAME[FMH::MODEL_KEY::FAV]).toString();
-    //qDebug() << "CUSTOM RPOP" << person.contactCustomProperty("fav");
-    //qDebug()<< person.contactCustomProperty("phoneNumber").toString();
-    //}
+        this->m_contacts << contact.unite(vCardData(QString(uri).replace("vcard:/", "")));
+    }
 
     emit this->contactsReady(this->m_contacts);
 }
