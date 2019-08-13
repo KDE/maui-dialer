@@ -77,7 +77,7 @@ Maui.Dialog
                         _fileDialog.show(function(paths)
                         {
                             console.log("selected image", paths)
-                            contact.photo = "file://"+paths[0]
+                            contact.photo = paths[0]
                             _contactPicLoader.sourceComponent = _imgComponent
                             _contactPicLoader.item.source = contact.photo
                         })
