@@ -1,5 +1,5 @@
 #include "androidinterface.h"
-#include "./mauikit/src/android/mauiandroid.h"
+#include "mauiandroid.h"
 #include <QDomDocument>
 
 #include <QtConcurrent>
@@ -71,6 +71,11 @@ void AndroidInterface::getContacts(const GET_TYPE &type)
         this->fetchContacts();
 }
 
+void AndroidInterface::getContacts()
+{
+    this->getContacts(GET_TYPE::FETCH);
+}
+
 void AndroidInterface::getCallLogs()
 {
     const auto logs = MAUIAndroid::getCallLogs();
@@ -87,6 +92,11 @@ bool AndroidInterface::updateContact(const QString &id, const FMH::MODEL &contac
         MAUIAndroid::updateContact(id, FMH::MODEL_NAME[key], contact[key]);
 
     return true;
+}
+
+bool AndroidInterface::removeContact(const QString &id)
+{
+    return false;
 }
 
 void AndroidInterface::fetchContacts()

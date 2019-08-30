@@ -14,7 +14,7 @@
 #endif
 
 #ifdef Q_OS_ANDROID
-ContactsModel::ContactsModel(QObject *parent) : BaseList(parent), syncer(new AndroidInterface(this))
+ContactsModel::ContactsModel(QObject *parent) : MauiList(parent), syncer(AndroidInterface::getInstance())
 #else
 ContactsModel::ContactsModel(QObject *parent) : MauiList(parent), syncer(new LinuxInterface(this))
 #endif
@@ -149,7 +149,7 @@ QVariantMap ContactsModel::get(const int &index) const
 
 #ifdef Q_OS_ANDROID
     const auto id = this->list.at(index)[FMH::MODEL_KEY::ID];
-    res.unite(this->syncer->getContact(id));
+    res.unite(FMH::toMap(this->syncer->getContact(id)));
 #endif
 
     return res;

@@ -21,10 +21,13 @@ public:
 
     FMH::MODEL_LIST getAccounts(const GET_TYPE &type = GET_TYPE::CACHED);
     void getContacts(const GET_TYPE &type = GET_TYPE::CACHED);
+    void getContacts() override final;
+
     void getCallLogs();
 
     FMH::MODEL getContact(const QString &id) const override final;
     bool updateContact(const QString &id, const FMH::MODEL &contact) const override final;
+    bool removeContact(const QString &id) override final;
 
 private:
     static AndroidInterface *instance;
@@ -33,9 +36,6 @@ private:
 
     void fetchContacts();
     FMH::MODEL_LIST fetchAccounts();
-
-signals:
-    void contactsReady(FMH::MODEL_LIST contacts) const;
 
 public slots:
 };

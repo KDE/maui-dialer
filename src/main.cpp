@@ -14,16 +14,16 @@
 #endif
 
 #include "src/union.h"
-#include "models/contacts/contactsmodel.h"
-#include "models/contacts/calllogs.h"
-#include "interfaces/contactimage.h"
+#include "contactsmodel.h"
+#include "calllogs.h"
+#include "contactimage.h"
 
 #ifdef STATIC_KIRIGAMI
 #include "./3rdparty/kirigami/src/kirigamiplugin.h"
 #endif
 
 #ifdef STATIC_MAUIKIT
-#include "./mauikit/src/mauikit.h"
+#include "./3rdparty/mauikit/src/mauikit.h"
 #include <QStyleHints>
 #endif
 
@@ -73,7 +73,6 @@ int main(int argc, char *argv[])
 
 #ifdef STATIC_MAUIKIT
         MauiKit::getInstance().registerTypes();
-
 #endif
 
         engine.addImageProvider("contact", new ContactImage(QQuickImageProvider::ImageType::Image));
