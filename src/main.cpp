@@ -14,8 +14,8 @@
 #endif
 
 #include "src/union.h"
-#include "contactsmodel.h"
-#include "calllogs.h"
+#include "src/models/contacts/contactsmodel.h"
+#include "src/models/contacts/calllogs.h"
 #include "contactimage.h"
 
 #ifdef STATIC_KIRIGAMI

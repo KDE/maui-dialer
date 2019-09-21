@@ -26,6 +26,9 @@ include_directories(
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/models
     ${CMAKE_CURRENT_BINARY_DIR}/src/models
+
+    ${CMAKE_CURRENT_BINARY_DIR}/src/models/contacts
+    ${CMAKE_CURRENT_BINARY_DIR}/src/models/contacts
     )
 
 set(dialer_SRCS
@@ -64,10 +67,10 @@ if (ANDROID)
 elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm")
 add_subdirectory(src/dialer/linux)
 else()
-    find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Notifications Config KIO Attica Contacts People )
+    find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Notifications Config KIO Attica Contacts People SyntaxHighlighting)
     find_package(Qt5 REQUIRED COMPONENTS WebEngine)
 
-    target_link_libraries(${PROJECT_NAME} KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica KF5::Contacts KF5::People  )
+    target_link_libraries(${PROJECT_NAME} KF5::ConfigCore KF5::Notifications KF5::KIOCore KF5::I18n KF5::Attica KF5::Contacts KF5::People KF5::SyntaxHighlighting)
 endif()
 
 if (TARGET create-apk-dialer)
