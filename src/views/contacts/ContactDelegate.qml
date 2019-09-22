@@ -25,7 +25,7 @@ SwipeDelegate
     property alias label3 : _label3
     property alias label4 : _label4
 
-    property int radius : radiusV * 2
+    property int radius : Maui.Style.radiusV * 2
 
     swipe.enabled: showMenuIcon
 
@@ -61,10 +61,6 @@ SwipeDelegate
 //                border.color: Qt.rgba(_bg.color.r, _bg.color.g, _bg.color.b, swipe.position < 0)
         radius: control.radius
 
-
-
-        //        anchors.fill: control
-
         RowLayout
         {
             id: _layout
@@ -78,7 +74,7 @@ SwipeDelegate
                 visible: control.width > Kirigami.Units.gridUnit * 15
 
                 Layout.fillHeight: true
-                Layout.preferredWidth: iconSizes.huge
+                Layout.preferredWidth: Maui.Style.iconSizes.huge
                 clip: true
 
                 Rectangle
@@ -144,7 +140,6 @@ SwipeDelegate
                                         width: _img.width
                                         height: _img.height
                                         radius: control.radius
-                                        //                                        border.color: borderColor
                                     }
                                 }
                             }
@@ -155,21 +150,13 @@ SwipeDelegate
                     {
                         id: _iconComponent
 
-                        //                    ToolButton
-                        //                    {
-                        //                        icon.name: "view-media-artist"
-                        //                        size: iconSizes.big
-                        //                        icon.color: "white"
-                        //                    }
-
                         Label
                         {
                             anchors.fill: parent
                             horizontalAlignment: Qt.AlignHCenter
                             verticalAlignment: Qt.AlignVCenter
-
                             color: "white"
-                            font.pointSize: fontSizes.huge
+                            font.pointSize: Maui.Style.fontSizes.huge
                             font.bold: true
                             font.weight: Font.Bold
                             text: model.n[0].toUpperCase()
@@ -198,7 +185,7 @@ SwipeDelegate
                         Layout.fillHeight: visible
                         Layout.fillWidth: visible
                         text: model.n
-                        font.pointSize: fontSizes.big
+                        font.pointSize: Maui.Style.fontSizes.big
                         font.bold: true
                         font.weight: Font.Bold
                         elide: Text.ElideMiddle
@@ -212,7 +199,7 @@ SwipeDelegate
                         Layout.fillHeight: visible
                         Layout.fillWidth: visible
                         text: model.tel
-                        font.pointSize: fontSizes.small
+                        font.pointSize: Maui.Style.fontSizes.small
                         font.weight: Font.Light
                         wrapMode: Text.WrapAnywhere
                         elide: Text.ElideMiddle
@@ -226,7 +213,6 @@ SwipeDelegate
                 visible: control.width >  Kirigami.Units.gridUnit * 30
                 Layout.fillHeight: visible
                 Layout.fillWidth: visible
-                clip: true
 
                 ColumnLayout
                 {
@@ -242,7 +228,7 @@ SwipeDelegate
                         horizontalAlignment: Qt.AlignRight
 
                         text: model.email
-                        font.pointSize: fontSizes.small
+                        font.pointSize: Maui.Style.fontSizes.small
                         font.weight: Font.Light
                         wrapMode: Text.WrapAnywhere
                         elide: Text.ElideMiddle
@@ -258,7 +244,7 @@ SwipeDelegate
                         Layout.alignment: Qt.AlignRight
                         horizontalAlignment: Qt.AlignRight
                         text: model.title
-                        font.pointSize: fontSizes.small
+                        font.pointSize: Maui.Style.fontSizes.small
                         font.weight: Font.Light
                         wrapMode: Text.WrapAnywhere
                         elide: Text.ElideMiddle
@@ -271,7 +257,7 @@ SwipeDelegate
             Item
             {
                 Layout.fillHeight: true
-                Layout.preferredWidth: iconSizes.big
+                Layout.preferredWidth: Maui.Style.iconSizes.big
                 Layout.alignment: Qt.AlignRight
                 Layout.margins: space.big
 
@@ -296,8 +282,8 @@ SwipeDelegate
         id: _rowActions
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        spacing: space.big
-        padding: space.medium
+        spacing: Maui.Style.space.big
+        padding: Maui.Style.space.medium
 
         ToolButton
         {

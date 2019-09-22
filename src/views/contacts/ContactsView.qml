@@ -18,7 +18,7 @@ Maui.Page
     property bool gridView : false
 
     property bool showAccountFilter: false
-    padding: space.big
+    padding: Maui.Style.space.big
 
     Maui.BaseModel
     {
@@ -38,7 +38,7 @@ Maui.Page
         isMask: false
         title: qsTr("There's no contacts")
         body: qsTr("Add new contacts")
-        emojiSize: iconSizes.huge
+        emojiSize: Maui.Style.iconSizes.huge
         visible: !view.count
         onActionTriggered: _newContactDialog.open()
     }
@@ -57,7 +57,7 @@ Maui.Page
         ListView
         {
             id: _listView
-            spacing: space.big
+            spacing: Maui.Style.space.big
             clip: true
             header: Item
             {
@@ -130,7 +130,7 @@ Maui.Page
             {
                 id: _delegate
 
-                height: unit * 60
+                height: Maui.Style.unit * 60
                 width: isWide ? control.width * 0.8 : _listView.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 showMenuIcon: true
@@ -164,10 +164,10 @@ Maui.Page
         {
             id: _gridView
             model: _contactsModel
-            cellWidth: unit * 120
-            cellHeight: unit * 120
-            itemSize: Math.min(unit * 120)
-            spacing: space.medium
+            cellWidth: Maui.Style.unit * 120
+            cellHeight: Maui.Style.unit * 120
+            itemSize: Math.min(Maui.Style.unit * 120)
+            spacing: Maui.Style.space.medium
             centerContent: false
             adaptContent: true
 

@@ -15,8 +15,8 @@ Maui.ApplicationWindow
 {
     id: root
     title: qsTr("Contacts")
-    about.appDescription: qsTr("Union lists your contacts and keeps them synced across devices.")
-    about.appIcon: "qrc:/smartphone.svg"
+    Maui.App.description: qsTr("Union lists your contacts and keeps them synced across devices.")
+    Maui.App.iconName: "qrc:/smartphone.svg"
 
     property int currentView : views.favs
     readonly property var views : ({
@@ -42,30 +42,12 @@ Maui.ApplicationWindow
     leftIcon.visible: true
     rightIcon.visible: false
     //    headBar.implicitHeight: toolBarHeight * 1.2
-    headBar.drawBorder: false
     //    headBarBGColor: backgroundColor
     //    headBarFGColor: textColor
 
     property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
 
-    //    Maui.Dialog
-    //    {
-    //        id: _accountsForm
-    //        defaultButtons: false
-
-    //        maxHeight: 300* unit
-    //        maxWidth: maxHeight
-    //        Accounts.AddAccountForm {
-    //            anchors.fill: parent
-    //            appId: "org.maui.dialer"
-    //            onAccountAdded: {
-    //                console.log("Account Secret :", secret);
-    //            }
-    //        }
-    //    }
-
-
-    mainMenu: [
+     mainMenu: [
         MenuItem
         {
             checkable: true
@@ -79,13 +61,6 @@ Maui.ApplicationWindow
                 if(isAndroid)
                     Maui.Android.statusbarColor(backgroundColor, !darkTheme)
             }
-        },
-
-        MenuItem
-        {
-            checkable: true
-            text: qsTr("Accounts");
-            onTriggered: _accountsForm.open()
         }
     ]
 
@@ -93,20 +68,14 @@ Maui.ApplicationWindow
     {
         id: _dialerButton
         icon.name: "call-start"
-        //        icon.name: "dialer-pad"
-        //        icon.color: currentView === views.dialer ?  Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
-        //                        text: qsTr("Dialer")
-        //            visible: isAndroid
         checked: currentView === views.dialer
         onClicked: currentView = views.dialer
-
     }
 
     headBar.middleContent: Kirigami.ActionToolBar
     {
         display: isWide ? ToolButton.TextBesideIcon : ToolButton.IconOnly
         actions: [
-
             Kirigami.Action
             {
                 id: _favsButton
@@ -174,16 +143,14 @@ Maui.ApplicationWindow
         {
             id: _contacsView
             list.query: ""
-
-            //            altToolBars: isMobile
             showAccountFilter: isAndroid
 
             Rectangle
             {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                anchors.margins: space.huge
-                height: toolBarHeight
+                anchors.margins: Maui.Style.space.huge
+                height: Maui.Style.toolBarHeight
                 width: height
 
                 color: Kirigami.Theme.highlightColor
@@ -199,25 +166,14 @@ Maui.ApplicationWindow
                 }
             }
 
-            //            headBarExit: false
-            headBar.drawBorder: false
-            //            headBar.implicitHeight: toolBarHeight * 1.4
-            headBar.plegable: false
-
             headBar.middleContent: Maui.TextField
             {
                 id: _searchField
-                //                height: toolBarHeightAlt
-                //                anchors.centerIn: parent
                 Layout.preferredWidth: isWide ? _contacsView.width * 0.8 : _contacsView.view.width
                 focusReason : Qt.PopupFocusReason
-                //        height: rowHeight
                 placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.view.count))
                 onAccepted: _contacsView.list.query = text
                 onCleared: _contacsView.list.reset()
-                //                colorScheme.backgroundColor: cardColor
-                //                colorScheme.borderColor: "transparent"
-                //                colorScheme.textColor: textColor
                 onTextEdited: _contacsView.list.query = text
                 onTextChanged: _contacsView.list.query = text
             }

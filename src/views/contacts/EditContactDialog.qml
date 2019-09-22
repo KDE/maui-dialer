@@ -63,7 +63,7 @@ Maui.Dialog
                 height: Math.min(parent.height, control.width)
                 width: height
                 anchors.centerIn: parent
-                radius: radiusV* 2
+                radius: Maui.Style.radiusV* 2
                 color: Qt.rgba(Math.random(),Math.random(),Math.random(),1);
                 border.color: Qt.darker(color, 1.5)
 
@@ -73,7 +73,7 @@ Maui.Dialog
                     onClicked:{
 
                         _fileDialog.mode = _fileDialog.modes.OPEN
-                        _fileDialog.filterType= Maui.FMList.IMAGE
+                        _fileDialog.settings.filterType= Maui.FMList.IMAGE
                         _fileDialog.singleSelection = true
                         _fileDialog.show(function(paths)
                         {
@@ -84,7 +84,6 @@ Maui.Dialog
                         })
                     }
                 }
-
 
                 Loader
                 {
@@ -129,7 +128,7 @@ Maui.Dialog
                                     anchors.centerIn: parent
                                     width: _img.width
                                     height: _img.height
-                                    radius: radiusV* 2
+                                    radius: Maui.Style.radiusV* 2
                                 }
                             }
                         }
@@ -154,193 +153,189 @@ Maui.Dialog
                         verticalAlignment: Qt.AlignVCenter
 
                         color: "white"
-                        font.pointSize: fontSizes.huge * 1.5
+                        font.pointSize: Maui.Style.fontSizes.huge * 1.5
                         font.bold: true
                         font.weight: Font.Bold
                         text: "+"
                     }
                 }
-
-
             }
         }
 
-        Item
+        Kirigami.ScrollablePage
         {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Kirigami.Theme.backgroundColor: "transparent"
+            padding: 0
+            leftPadding: padding
+            rightPadding: padding
+            topPadding: padding
+            bottomPadding: padding
+            //                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
-            ScrollView
+            ColumnLayout
             {
-                anchors.fill: parent
-                contentHeight: _formLayout.implicitHeight
-                clip: true
-                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                id: _formLayout
+                width: _layout.width * 0.95
+                //                    implicitHeight: control.height
+                spacing: Maui.Style.space.large
 
-                //                boundsBehavior: Flickable.StopAtBounds
-                //interactive: false
-                ColumnLayout
+                Column
                 {
-                    id: _formLayout
-                    width: _layout.width * 0.95
-                    //                    implicitHeight: control.height
-                    spacing: space.large
-
-                    Column
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    visible: isAndroid
+                    Label
                     {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        visible: isAndroid
-                        Label
-                        {
-                            text: qsTr("Account")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                        }
-
-                        ComboBox
-                        {
-                            id: _accountsCombobox
-                            textRole: "account"
-                            popup.z: control.z +1
-                            width: parent.width
-                        }
+                        text: qsTr("Account")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.bold: true
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
                     }
 
-                    Column
+                    ComboBox
                     {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        Label
-                        {
-                            text: qsTr("Name")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                        }
-
-                        Maui.TextField
-                        {
-                            id: _nameField
-                            width: parent.width
-                            text: contact.n
-                        }
+                        id: _accountsCombobox
+                        textRole: "account"
+                        popup.z: control.z +1
+                        width: parent.width
                     }
-
-                    Column
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        Label
-                        {
-                            text: qsTr("Phone")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                        }
-
-                        Maui.TextField
-                        {
-                            id: _telField
-                            width: parent.width
-                            text: contact.tel
-                            inputMethodHints: Qt.ImhDigitsOnly
-                        }
-                    }
-
-                    Column
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        Label
-                        {
-                            text: qsTr("Email")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                        }
-
-                        Maui.TextField
-                        {
-                            id: _emailField
-                            width: parent.width
-                            text: contact.email
-                        }
-                    }
-
-                    Column
-                    {
-                        Layout.fillWidth: true
-                        spacing: space.small
-                        Label
-                        {
-                            text: qsTr("Organization")
-                            font.pointSize: fontSizes.default
-                            font.bold: true
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                        }
-
-                        Maui.TextField
-                        {
-                            id: _orgField
-                            width: parent.width
-                            text: contact.org
-                        }
-                    }
-
-
-                    //                    Column
-                    //                    {
-                    //                        Layout.fillWidth: true
-                    //                        spacing: space.small
-                    //                        Label
-                    //                        {
-                    //                            text: qsTr("Phone")
-                    //                            font.pointSize: fontSizes.default
-                    //                            font.bold: true
-                    //                            font.weight: Font.Bold
-                    //                        }
-
-                    //                        Maui.TextField
-                    //                        {
-                    //                            width: parent.width
-                    //                            text: contact.tel
-                    //                            inputMethodHints: Qt.ImhDigitsOnly
-                    //                        }
-                    //                    }
-
-
-
-                    //                    Column
-                    //                    {
-                    //                        Layout.fillWidth: true
-                    //                        spacing: space.small
-                    //                        Label
-                    //                        {
-                    //                            text: qsTr("Address")
-                    //                            font.pointSize: fontSizes.default
-                    //                            font.bold: true
-                    //                            font.weight: Font.Bold
-                    //                            color: textColor
-                    //                        }
-
-                    //                        Maui.TextField
-                    //                        {
-                    //                            id: _adrField
-                    //                            width: parent.width
-                    //                            text: contact.adr
-                    //                        }
-                    //                    }
                 }
 
+                Column
+                {
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    Label
+                    {
+                        text: qsTr("Name")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.bold: true
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                    }
+
+                    Maui.TextField
+                    {
+                        id: _nameField
+                        width: parent.width
+                        text: contact.n
+                    }
+                }
+
+                Column
+                {
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    Label
+                    {
+                        text: qsTr("Phone")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.bold: true
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                    }
+
+                    Maui.TextField
+                    {
+                        id: _telField
+                        width: parent.width
+                        text: contact.tel
+                        inputMethodHints: Qt.ImhDigitsOnly
+                    }
+                }
+
+                Column
+                {
+                    Layout.fillWidth: true
+                    spacing: space.small
+                    Label
+                    {
+                        text: qsTr("Email")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.bold: true
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                    }
+
+                    Maui.TextField
+                    {
+                        id: _emailField
+                        width: parent.width
+                        text: contact.email
+                    }
+                }
+
+                Column
+                {
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    Label
+                    {
+                        text: qsTr("Organization")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.bold: true
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                    }
+
+                    Maui.TextField
+                    {
+                        id: _orgField
+                        width: parent.width
+                        text: contact.org
+                    }
+                }
+
+
+                //                    Column
+                //                    {
+                //                        Layout.fillWidth: true
+                //                        spacing: space.small
+                //                        Label
+                //                        {
+                //                            text: qsTr("Phone")
+                //                            font.pointSize: fontSizes.default
+                //                            font.bold: true
+                //                            font.weight: Font.Bold
+                //                        }
+
+                //                        Maui.TextField
+                //                        {
+                //                            width: parent.width
+                //                            text: contact.tel
+                //                            inputMethodHints: Qt.ImhDigitsOnly
+                //                        }
+                //                    }
+
+
+
+                //                    Column
+                //                    {
+                //                        Layout.fillWidth: true
+                //                        spacing: space.small
+                //                        Label
+                //                        {
+                //                            text: qsTr("Address")
+                //                            font.pointSize: fontSizes.default
+                //                            font.bold: true
+                //                            font.weight: Font.Bold
+                //                            color: textColor
+                //                        }
+
+                //                        Maui.TextField
+                //                        {
+                //                            id: _adrField
+                //                            width: parent.width
+                //                            text: contact.adr
+                //                        }
+                //                    }
             }
+
         }
+
     }
 
     function clear()
@@ -350,11 +345,11 @@ Maui.Dialog
         _emailField.clear()
         _orgField.clear()
         //        _adrField.clear()
-//        _img.source = ""
+        //        _img.source = ""
         _contactPicLoader.sourceComponent = _iconComponent
         control.close()
 
-    }    
+    }
 
     Component.onCompleted:
     {

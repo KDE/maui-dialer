@@ -10,8 +10,8 @@ Maui.Dialog
 {
     id: control
 
-    maxWidth: unit * 500
-    maxHeight: unit * 800
+    maxWidth: Maui.Style.unit * 500
+    maxHeight: Maui.Style.unit * 800
 
     property var contact : ({})
     rejectButton.visible: true
@@ -173,7 +173,7 @@ Maui.Dialog
         {
             id: _contactPic
             Layout.fillWidth: true
-            Layout.preferredHeight: iconSizes.huge * (contact.photo ? 1.5 : 1)
+            Layout.preferredHeight: Maui.Style.iconSizes.huge * (contact.photo ? 1.5 : 1)
 
             Rectangle
             {
@@ -228,7 +228,7 @@ Maui.Dialog
                                     anchors.centerIn: parent
                                     width: _img.width
                                     height: _img.height
-                                    radius: radiusV* 2
+                                    radius: Maui.Style.radiusV* 2
                                 }
                             }
                         }
@@ -253,7 +253,7 @@ Maui.Dialog
                         verticalAlignment: Qt.AlignVCenter
 
                         color: "white"
-                        font.pointSize: fontSizes.huge * 1.5
+                        font.pointSize: Maui.Style.fontSizes.huge * 1.5
                         font.bold: true
                         font.weight: Font.Bold
                         text: contact.n ? contact.n[0] : "?"
@@ -280,35 +280,35 @@ Maui.Dialog
 
         //        }
 
-        Item
-        {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
 
-            ScrollView
+            Kirigami.ScrollablePage
             {
-                anchors.fill: parent
-                contentHeight: _formLayout.implicitHeight
-                contentWidth: _formLayout.width
-                clip: true
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Kirigami.Theme.backgroundColor: "transparent"
+                padding: 0
+                leftPadding: padding
+                rightPadding: padding
+                topPadding: padding
+                bottomPadding: padding
 
                 ColumnLayout
                 {
                     id: _formLayout
                     width: parent.width
-                    spacing: space.large
+                    spacing: Maui.Style.space.large
 
                     ColumnLayout
                     {
                         Layout.fillWidth: true
-                        spacing: space.small
+                        spacing: Maui.Style.space.small
                         visible: contact.account
                         Label
                         {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
                             text: qsTr("Account")
-                            font.pointSize: fontSizes.default
+                            font.pointSize: Maui.Style.fontSizes.default
                             font.weight: Font.Light
                             color: Kirigami.Theme.textColor
                         }
@@ -320,7 +320,7 @@ Maui.Dialog
 
                             width: parent.width
                             text: contact.account
-                            font.pointSize: fontSizes.big
+                            font.pointSize: Maui.Style.fontSizes.big
                             font.weight: Font.Bold
                             color: Kirigami.Theme.textColor
                             wrapMode: Text.WrapAnywhere
@@ -330,14 +330,14 @@ Maui.Dialog
                     ColumnLayout
                     {
                         Layout.fillWidth: true
-                        spacing: space.small
+                        spacing: Maui.Style.space.small
                         visible: contact.n
                         Label
                         {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
                             text: qsTr("Name")
-                            font.pointSize: fontSizes.default
+                            font.pointSize: Maui.Style.fontSizes.default
                             font.weight: Font.Light
                             color: Kirigami.Theme.textColor
                         }
@@ -349,7 +349,7 @@ Maui.Dialog
 
                             width: parent.width
                             text: contact.n
-                            font.pointSize: fontSizes.big
+                            font.pointSize: Maui.Style.fontSizes.big
                             font.weight: Font.Bold
                             color: Kirigami.Theme.textColor
                         }
@@ -358,7 +358,7 @@ Maui.Dialog
                     ColumnLayout
                     {
                         Layout.fillWidth: true
-                        spacing: space.small
+                        spacing: Maui.Style.space.small
                         visible: contact.tel
 
                         Label
@@ -366,7 +366,7 @@ Maui.Dialog
                             Layout.fillHeight: true
                             Layout.fillWidth: true
                             text: qsTr("Phone")
-                            font.pointSize: fontSizes.default
+                            font.pointSize: Maui.Style.fontSizes.default
                             font.weight: Font.Light
                             color: Kirigami.Theme.textColor
                         }
@@ -375,7 +375,7 @@ Maui.Dialog
                         {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
-                            font.pointSize: fontSizes.big
+                            font.pointSize: Maui.Style.fontSizes.big
                             font.weight: Font.Bold
                             color: Kirigami.Theme.textColor
                             text: contact.tel
@@ -386,7 +386,7 @@ Maui.Dialog
                     ColumnLayout
                     {
                         Layout.fillWidth: true
-                        spacing: space.small
+                        spacing: Maui.Style.space.small
                         visible: contact.email
 
                         Label
@@ -394,7 +394,7 @@ Maui.Dialog
                             Layout.fillHeight: true
                             Layout.fillWidth: true
                             text: qsTr("Email")
-                            font.pointSize: fontSizes.default
+                            font.pointSize: Maui.Style.fontSizes.default
                             font.weight: Font.Light
                             color: Kirigami.Theme.textColor
 
@@ -404,7 +404,7 @@ Maui.Dialog
                         {
                             Layout.fillHeight: true
                             Layout.fillWidth: true
-                            font.pointSize: fontSizes.big
+                            font.pointSize: Maui.Style.fontSizes.big
                             font.weight: Font.Bold
                             color: Kirigami.Theme.textColor
                             text: contact.email
@@ -415,7 +415,7 @@ Maui.Dialog
                     ColumnLayout
                     {
                         Layout.fillWidth: true
-                        spacing: space.small
+                        spacing: Maui.Style.space.small
                         visible: contact.org && contact.org.length
 
                         Label
@@ -423,7 +423,7 @@ Maui.Dialog
                             Layout.fillHeight: true
                             Layout.fillWidth: true
                             text: qsTr("Organization")
-                            font.pointSize: fontSizes.default
+                            font.pointSize: Maui.Style.fontSizes.default
                             font.weight: Font.Light
                             color: Kirigami.Theme.textColor
                         }
@@ -434,7 +434,7 @@ Maui.Dialog
                             Layout.fillWidth: true
                             width: parent.width
                             text: contact.org
-                            font.pointSize: fontSizes.big
+                            font.pointSize: Maui.Style.fontSizes.big
                             font.weight: Font.Bold
                             color: Kirigami.Theme.textColor
                         }
@@ -444,14 +444,14 @@ Maui.Dialog
                     {
                         visible: contact.title && contact.title.length
                         Layout.fillWidth: visible
-                        spacing: space.small
+                        spacing: Maui.Style.space.small
 
                         Label
                         {
                             Layout.fillHeight: parent.visible
                             Layout.fillWidth: parent.visible
                             text: qsTr("Title")
-                            font.pointSize: fontSizes.default
+                            font.pointSize: Maui.Style.fontSizes.default
                             font.weight: Font.Light
                             color: Kirigami.Theme.textColor
                         }
@@ -462,17 +462,14 @@ Maui.Dialog
                             Layout.fillWidth: true
                             width: parent.width
                             text: parent.visible ? contact.title : undefined
-                            font.pointSize: fontSizes.big
+                            font.pointSize: Maui.Style.fontSizes.big
                             font.weight: Font.Bold
                             color: Kirigami.Theme.textColor
                         }
                     }
-
-
                 }
-
             }
-        }
+
     }
 
 
