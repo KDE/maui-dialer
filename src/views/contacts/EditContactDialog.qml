@@ -56,7 +56,7 @@ Maui.Dialog
         {
             id: _contactPic
             Layout.fillWidth: true
-            Layout.preferredHeight: iconSizes.huge
+            Layout.preferredHeight: Maui.Style.iconSizes.huge
 
             Rectangle
             {
@@ -250,7 +250,7 @@ Maui.Dialog
                 Column
                 {
                     Layout.fillWidth: true
-                    spacing: space.small
+                    spacing: Maui.Style.space.small
                     Label
                     {
                         text: qsTr("Email")
