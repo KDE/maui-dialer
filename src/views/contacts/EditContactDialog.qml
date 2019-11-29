@@ -10,8 +10,8 @@ Maui.Dialog
 {
     id: control
 
-    maxWidth: unit * 700
-    maxHeight: unit * 800
+    maxWidth: Maui.Style.unit * 700
+    maxHeight: Maui.Style.unit * 800
     //    heightHint: 1
     //    widthHint: 1
 

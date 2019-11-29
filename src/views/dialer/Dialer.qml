@@ -13,7 +13,7 @@ GridLayout
     rowSpacing: buttonSize * 0.1
     columnSpacing: buttonSize * 0.1
     //                spacing: space.medium
-    readonly property int buttonFontSize: fontSizes.huge * 1.5
+    readonly property int buttonFontSize: Maui.Style.fontSizes.huge * 1.5
     property var model : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"]
 
     Repeater

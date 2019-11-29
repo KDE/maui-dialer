@@ -16,7 +16,7 @@ ItemDelegate
 
     background: Rectangle
     {
-        radius: radiusV
+        radius: Maui.Style.radiusV
         color:
         {
             var c = Qt.rgba(Math.random(),Math.random(),Math.random(),1)
@@ -80,7 +80,7 @@ ItemDelegate
                                 anchors.centerIn: parent
                                 width: _img.width
                                 height: _img.height
-                                radius: radiusV
+                                radius: Maui.Style.radiusV
                             }
                         }
                     }
@@ -106,7 +106,7 @@ ItemDelegate
                     verticalAlignment: Qt.AlignVCenter
 
                     color: "#fff"
-                    font.pointSize: fontSizes.enormous * 3
+                    font.pointSize: Maui.Style.fontSizes.enormous * 3
                     font.bold: true
                     font.weight: Font.Bold
                     text: model.n[0].toUpperCase()
@@ -123,7 +123,7 @@ ItemDelegate
         {
             top: parent.top
             right: parent.right
-            margins: space.medium
+            margins: Maui.Style.space.medium
         }
 
         icon.color: "#fff"
@@ -141,12 +141,12 @@ ItemDelegate
         anchors.bottom: parent.bottom
         clip: true
         color: Qt.rgba(0,0,0, 0.3)
-        radius: radiusV
+        radius: Maui.Style.radiusV
 
         ColumnLayout
         {
             anchors.fill: parent
-            anchors.margins: space.medium
+            anchors.margins: Maui.Style.space.medium
 
             Label
             {
@@ -156,7 +156,7 @@ ItemDelegate
                 Layout.alignment: Qt.AlignVCenter
 
                 text: model.n
-                font.pointSize: fontSizes.big
+                font.pointSize: Maui.Style.fontSizes.big
                 font.bold: true
                 font.weight: Font.Bold
                 elide: Text.ElideMiddle
@@ -170,7 +170,7 @@ ItemDelegate
                 Layout.fillWidth: visible
                 Layout.alignment: Qt.AlignVCenter
                 text: model.tel
-                font.pointSize: fontSizes.small
+                font.pointSize: Maui.Style.fontSizes.small
                 font.weight: Font.Light
                 wrapMode: Text.WrapAnywhere
                 elide: Text.ElideMiddle
@@ -185,7 +185,7 @@ ItemDelegate
                 Layout.alignment: Qt.AlignVCenter
 
                 text: model.email
-                font.pointSize: fontSizes.small
+                font.pointSize: Maui.Style.fontSizes.small
                 font.weight: Font.Light
                 wrapMode: Text.WrapAnywhere
                 elide: Text.ElideMiddle

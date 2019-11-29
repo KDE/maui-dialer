@@ -22,7 +22,7 @@ Maui.Page
         isMask: false
         title: qsTr("There's no recent contacts")
         body: qsTr("recently contacted contacts will appear here")
-        emojiSize: iconSizes.huge
+        emojiSize: Maui.Style.iconSizes.huge
         visible: !_listView.count
         onActionTriggered: _newContactDialog.open()
     }
@@ -69,7 +69,7 @@ Maui.Page
 
         id: _listView
         anchors.fill: parent
-        spacing: space.big
+        spacing: Maui.Style.space.big
         clip: true
 
         section.property: "modified"
@@ -79,7 +79,7 @@ Maui.Page
         {
             label: section
             isSection: true
-            boldLabel: true
+            width: parent.width
             //            colorScheme.backgroundColor: "#333"
             //            colorScheme.textColor: "#fafafa"
             //            width: iconSize
@@ -87,7 +87,7 @@ Maui.Page
             //            background: Rectangle
             //            {
             //                color:  colorScheme.backgroundColor
-            //                radius: radiusV
+            //                radius: Maui.Style.radiusV
 
             //            }
 
@@ -103,7 +103,7 @@ Maui.Page
             label2.text: Maui.FM.formatDate(model.date, "HH:mm", "dd-MM-yyyy HH:mm") + " / " + new Date(model.duration * 1000).toISOString().substr(11, 8);
             label3.text: model.type
 
-            height: unit * 60
+            height: Maui.Style.unit * 60
             width: isWide ? control.width * 0.8 : control.width * 0.95
             anchors.horizontalCenter: parent.horizontalCenter
             showMenuIcon: false

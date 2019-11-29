@@ -77,7 +77,7 @@ if (TARGET create-apk-dialer)
     set_target_properties(create-apk-dialer PROPERTIES ANDROID_APK_DIR "${MAUIKIT_ANDROID_DIR}")
 endif()
 
-target_link_libraries(${PROJECT_NAME} MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg Qt5::Concurrent)
+target_link_libraries(${PROJECT_NAME} MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg Qt5::Concurrent Qt5::Quick)
 
 install(TARGETS ${PROJECT_NAME} ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.dialer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})

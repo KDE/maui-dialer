@@ -145,7 +145,7 @@ QVariantMap ContactsModel::get(const int &index) const
 
     const auto item = this->list.at(index);
 
-    res = FM::toMap(item);
+    res = FMH::toMap(item);
 
 #ifdef Q_OS_ANDROID
     const auto id = this->list.at(index)[FMH::MODEL_KEY::ID];
@@ -162,7 +162,7 @@ bool ContactsModel::insert(const QVariantMap &map)
     if(map.isEmpty())
         return false;
 
-    const auto model = FM::toModel(map);
+    const auto model = FMH::toModel(map);
     if(!this->syncer->insertContact(model))
         return false;
 
@@ -182,7 +182,7 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
     if(index >= this->list.size() || index < 0)
         return false;
 
-    const auto newItem = FM::toModel(map);
+    const auto newItem = FMH::toModel(map);
     const auto oldItem = this->list[index];
 
     auto updatedItem = FMH::MODEL();
@@ -340,6 +340,6 @@ QVariantList ContactsModel::getAccounts()
 //    for(const auto &account : syncer->getAccounts())
 //        res << FM::toMap(account);
 
-    std::transform(accounts.begin(), accounts.end(), res.begin(), FM::toMap);
+    std::transform(accounts.begin(), accounts.end(), res.begin(), FMH::toMap);
     return res;
 }

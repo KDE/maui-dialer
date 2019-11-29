@@ -103,7 +103,6 @@ void LinuxInterface::getContacts()
         {FMH::MODEL_KEY::TEL, person.contactCustomProperty("phoneNumber").toString()},
 //        {FMH::MODEL_KEY::PHOTO, person.pictureUrl().toString()}
     };
-
         this->m_contacts << contact.unite(vCardData(QString(uri).replace("vcard:/", "")));
     }
 

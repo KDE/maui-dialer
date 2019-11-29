@@ -110,7 +110,7 @@ Maui.Page
             {
                 label: section.toUpperCase()
                 isSection: true
-                boldLabel: true
+                width: parent.width
                 //            colorScheme.backgroundColor: "#333"
                 //            colorScheme.textColor: "#fafafa"
                 //            width: iconSize

@@ -154,7 +154,7 @@ QVariantMap CallLogs::get(const int &index) const
 
     const auto item = this->list.at(index);
 
-    res = FM::toMap(item);
+    res = FMH::toMap(item);
     return res;
 }
 

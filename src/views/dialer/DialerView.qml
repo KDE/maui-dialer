@@ -10,7 +10,7 @@ Maui.Page
     id: control
     property alias dialString : _textField.text
 
-    property int buttonSize : Math.min(iconSizes.big * 1.5 , Math.min(_dialerPad.width, _dialerPad.height) * 0.2)
+    property int buttonSize : Math.min(Maui.Style.iconSizes.big * 1.5 , Math.min(_dialerPad.width, _dialerPad.height) * 0.2)
     onDialStringChanged:
     {
         //        Qt.inputMethod.hide();
@@ -40,8 +40,8 @@ Maui.Page
         readOnly: true
         font.bold: true
         font.weight: Font.Bold
-        font.pointSize: fontSizes.huge
-        font.letterSpacing: space.tiny
+        font.pointSize: Maui.Style.fontSizes.huge
+        font.letterSpacing: Maui.Style.space.tiny
         horizontalAlignment: TextInput.AlignHCenter
         background: Rectangle
         {
@@ -56,8 +56,8 @@ Maui.Page
         color: "transparent"
     }
 
-    footBar.implicitHeight:  iconSizes.big * 3
-    footBar.spacing: space.huge
+    footBar.implicitHeight:  Maui.Style.iconSizes.big * 3
+    footBar.spacing: Maui.Style.space.huge
     footBar.clip: true
     footBar.flickable: false
     footBar.middleContent: [
@@ -77,9 +77,9 @@ Maui.Page
             {
                 id: _callButton
                 icon.name: "call-start"
-                icon.width: iconSizes.big
-                icon.height: iconSizes.big
-                height: iconSizes.big * 1.5
+                icon.width: Maui.Style.iconSizes.big
+                icon.height: Maui.Style.iconSizes.big
+                height: Maui.Style.iconSizes.big * 1.5
                 width: height
                 //                bg.radius: Math.max(width, height)
                 Kirigami.Theme.textColor: Kirigami.Theme.highlightColor
@@ -108,15 +108,15 @@ Maui.Page
     ColumnLayout
     {
         id: _layout
-        width: Math.min(isWide ? control.width * 0.8 : control.width * 0.95, unit * 500)
+        width: Math.min(isWide ? control.width * 0.8 : control.width * 0.95, Maui.Style.unit * 500)
         height: parent.height
         anchors.centerIn: parent
-        spacing: space.big
+        spacing: Maui.Style.space.big
 
         ListView
         {
             id: _suggestionListView
-            spacing: space.big
+            spacing: Maui.Style.space.big
             clip: true
             visible: dialString.length && count
             Layout.fillWidth: visible
@@ -130,7 +130,7 @@ Maui.Page
             {
                 id: _delegate
 
-                height: unit * 60
+                height: Maui.Style.unit * 60
                 width: _layout.width
                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -162,8 +162,8 @@ Maui.Page
             id: _dialerPad
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.minimumHeight: unit*100
-            Layout.maximumHeight: unit*300
+            Layout.minimumHeight: Maui.Style.unit*100
+            Layout.maximumHeight: Maui.Style.unit*300
 
 //            Layout.alignment: Qt.AlignBottom
             //            visible: true

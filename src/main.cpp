@@ -2,7 +2,6 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QQuickStyle>
 #include <QIcon>
 #include <QCommandLineParser>
 #include <QFileInfo>
@@ -65,7 +64,6 @@ int main(int argc, char *argv[])
 
     {
         QQmlApplicationEngine engine;
-        //    QQuickStyle::setStyle("Material");
 
 #ifdef STATIC_KIRIGAMI
         KirigamiPlugin::getInstance().registerTypes();

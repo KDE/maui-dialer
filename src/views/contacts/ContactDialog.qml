@@ -100,7 +100,7 @@ Maui.Dialog
                 icon.name: "document-edit"
                 text: qsTr("Edit")
                 onTriggered: _editContactDialog.open()
-                icon.color: suggestedColor
+                icon.color: Kirigami.Theme.positiveTextColor
             }
         ]
 
@@ -109,7 +109,7 @@ Maui.Dialog
             {
                 text: qsTr("Delete...")
                 icon.name: "user-trash"
-                Kirigami.Theme.textColor: warningColor
+                Kirigami.Theme.textColor: Kirigami.Theme.negativeTextColor
                 onTriggered: _removeDialog.open()
             }
         ]
@@ -150,13 +150,12 @@ Maui.Dialog
             _editContactDialog.close()
         }
 
-        headBar.drawBorder: false
         headBar.rightContent:  Button
         {
             icon.name: "user-trash"
             //            text: qsTr("Remove")
             onClicked:  _removeDialog.open()
-            Kirigami.Theme.backgroundColor: dangerColor
+            Kirigami.Theme.backgroundColor: Kirigami.Theme.negativeTextColor
             Kirigami.Theme.textColor: "#fff"
         }
     }
@@ -180,7 +179,7 @@ Maui.Dialog
                 height: Math.min(parent.height, control.width)
                 width: height
                 anchors.centerIn: parent
-                radius: radiusV* 2
+                radius: Maui.Style.radiusV* 2
                 color: Qt.rgba(Math.random(),Math.random(),Math.random(),1);
                 border.color: Qt.darker(color, 1.5)
 

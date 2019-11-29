@@ -66,7 +66,7 @@ SwipeDelegate
             id: _layout
 
             anchors.fill: parent
-            anchors.margins: space.small
+            anchors.margins: Maui.Style.space.small
 
             Item
             {
@@ -259,7 +259,7 @@ SwipeDelegate
                 Layout.fillHeight: true
                 Layout.preferredWidth: Maui.Style.iconSizes.big
                 Layout.alignment: Qt.AlignRight
-                Layout.margins: space.big
+                Layout.margins: Maui.Style.space.big
 
                 Row
                 {
