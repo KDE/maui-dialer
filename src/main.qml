@@ -47,7 +47,7 @@ Maui.ApplicationWindow
 
     property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
 
-     mainMenu: [
+    mainMenu: [
         MenuItem
         {
             checkable: true
@@ -72,57 +72,48 @@ Maui.ApplicationWindow
         onClicked: currentView = views.dialer
     }
 
-    headBar.middleContent: Kirigami.ActionToolBar
+    headBar.middleContent: Maui.ActionGroup
     {
-        display: isWide ? ToolButton.TextBesideIcon : ToolButton.IconOnly
-        actions: [
-            Kirigami.Action
-            {
-                id: _favsButton
-                icon.name: "draw-star"
-                //                icon.color: currentView === views.favs ? highlightColor : textColor
-                text: qsTr("Favorites")
-                checked: currentView === views.favs
-                onTriggered: currentView = views.favs
-                checkable: false
+        id: _actionGroup
+        Layout.fillHeight: true
+        //        Layout.fillWidth: true
+        Layout.minimumWidth: implicitWidth
+        currentIndex : swipeView.currentIndex
+        onCurrentIndexChanged: swipeView.currentIndex = currentIndex
 
-            },
+        Action
+        {
+            id: _favsButton
+            icon.name: "draw-star"
+            text: qsTr("Favorites")
+        }
 
-            Kirigami.Action
-            {
-                id: _logButton
-                icon.name: "view-media-recent"
-                //                icon.color: currentView === views.log ? highlightColor : textColor
-                text: qsTr("Recent")
-                checked: currentView === views.log
-                onTriggered: currentView = views.log
-                checkable: false
-            },
+        Action
+        {
+            id: _logButton
+            icon.name: "view-media-recent"
+            text: qsTr("Recent")
+        }
 
-
-            Kirigami.Action
-            {
-                icon.name: "view-pim-contacts"
-                //                icon.color: currentView === views.contacts ? highlightColor : textColor
-                text: qsTr("Contacts")
-                //            height: parent.height
-                checked: currentView === views.contacts
-                onTriggered: currentView = views.contacts
-                checkable: false
-            }
-        ]
+        Action
+        {
+            icon.name: "view-pim-contacts"
+            text: qsTr("Contacts")
+        }
+        
     }
 
     SwipeView
     {
+        id: swipeView
         anchors.fill : parent
-        currentIndex: currentView
+        currentIndex: _actionGroup.currentIndex
         onCurrentIndexChanged:
         {
-            currentView = currentIndex
-            if(currentView === views.contacts)
+            _actionGroup.currentIndex = currentIndex
+            if(currentIndex === views.contacts)
                 _contacsView.list.query = ""
-            else if(currentView === views.dialer)
+            else if(currentIndex === views.dialer)
                 _contacsView.list.query = _dialerView.dialString
         }
 
