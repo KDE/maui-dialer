@@ -12,6 +12,14 @@ QMAKE_LINK += -nostdlib++
 TARGET = dialer
 TEMPLATE = app
 
+VERSION_MAJOR = 1
+VERSION_MINOR = 0
+VERSION_BUILD = 0
+
+VERSION = $${VERSION_MAJOR}.$${VERSION_MINOR}.$${VERSION_BUILD}
+
+DEFINES += DIALER_VERSION_STRING=\\\"$$VERSION\\\"
+
 linux:unix:!android {
 
     message(Building for Linux KDE)
