@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
-
-project(dialer LANGUAGES CXX)
+set(DIALER_VERSION 1.0.0)
+project(dialer LANGUAGES CXX VERSION ${DIALER_VERSION})
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -17,8 +17,9 @@ include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 include(ECMInstallIcons)
-include(FeatureSummary)
 include(ECMAddAppIcon)
+include(ECMSetupVersion)
+include(FeatureSummary)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/interfaces
@@ -57,6 +58,11 @@ add_executable(${PROJECT_NAME}
     ${dialer_SRCS}
     ${dialer_HDRS}
     ${dialer_ASSETS}
+    )
+
+ecm_setup_version(${DIALER_VERSION}
+    VARIABLE_PREFIX DIALER
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/dialer_version.h"
     )
 
 if (ANDROID)

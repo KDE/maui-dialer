@@ -3,8 +3,10 @@
 
 #include <QString>
 
+#include "dialer_version.h"
+
 #define APPNAME "Communicator"
-#define APPVERSION "1.0.0"
+#define APPVERSION DIALER_VERSION_STRING
 
 namespace UNI
 {
