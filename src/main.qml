@@ -18,7 +18,6 @@ Maui.ApplicationWindow
     Maui.App.description: qsTr("Union lists your contacts and keeps them synced across devices.")
     Maui.App.iconName: "qrc:/smartphone.svg"
 
-    property int currentView : views.favs
     readonly property var views : ({
                                        favs: 0,
                                        log:  1,
@@ -68,8 +67,8 @@ Maui.ApplicationWindow
     {
         id: _dialerButton
         icon.name: "call-start"
-        checked: currentView === views.dialer
-        onClicked: currentView = views.dialer
+        checked: _actionGroup.currentIndex === views.dialer
+        onClicked: _actionGroup.currentIndex = views.dialer
     }
 
     headBar.middleContent: Maui.ActionGroup
@@ -136,25 +135,16 @@ Maui.ApplicationWindow
             list.query: ""
             showAccountFilter: isAndroid
 
-            Rectangle
+            Maui.FloatingButton
             {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                anchors.margins: Maui.Style.space.huge
+                anchors.margins: height
                 height: Maui.Style.toolBarHeight
                 width: height
-
-                color: Kirigami.Theme.highlightColor
-                radius: Math.max(width, height)
-
-                ToolButton
-                {
-                    anchors.centerIn: parent
-                    icon.name: "list-add-user"
-                    icon.color: "white"
-                    flat: true
-                    onClicked: _newContactDialog.open()
-                }
+                icon.name: "list-add-user"
+                icon.color: "white"
+                onClicked: _newContactDialog.open()
             }
 
             headBar.middleContent: Maui.TextField
@@ -203,7 +193,7 @@ Maui.ApplicationWindow
     Component.onCompleted:
     {
         if(_favsView.view.count < 1)
-            currentView = views.contacts
+           _actionGroup.currentIndex = views.contacts
         if(isAndroid)
             Maui.Android.statusbarColor(backgroundColor, !darkTheme)
     }

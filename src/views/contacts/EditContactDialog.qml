@@ -74,7 +74,7 @@ Maui.Dialog
 
                         _fileDialog.mode = _fileDialog.modes.OPEN
                         _fileDialog.settings.filterType= Maui.FMList.IMAGE
-                        _fileDialog.singleSelection = true
+                        _fileDialog.settings.singleSelection = true
                         _fileDialog.show(function(paths)
                         {
                             console.log("selected image", paths)
