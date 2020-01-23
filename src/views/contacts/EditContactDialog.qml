@@ -12,11 +12,7 @@ Maui.Dialog
 
     maxWidth: Maui.Style.unit * 700
     maxHeight: Maui.Style.unit * 800
-    //    heightHint: 1
-    //    widthHint: 1
-
-    //    rejectButton.text: qsTr("Cancel")
-    //    closeButton.visible: true
+    page.padding: Maui.Style.space.large
 
     property var contact : ({})
     signal newContact(var contact)
@@ -48,9 +44,7 @@ Maui.Dialog
     {
         id: _layout
         height: parent.height
-        width: parent.width * 0.8
-
-        anchors.centerIn: parent
+        width: parent.width
 
         Item
         {

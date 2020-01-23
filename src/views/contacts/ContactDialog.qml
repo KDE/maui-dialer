@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.3
+import QtQuick 2.10
+import QtQuick.Controls 2.10
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
@@ -14,106 +14,97 @@ Maui.Dialog
     maxHeight: Maui.Style.unit * 800
 
     property var contact : ({})
-    rejectButton.visible: true
-    rejectButton.text: qsTr("Close")
-    onRejected: control.close()
+    rejectButton.visible: false
+    acceptButton.visible: false
 
-    acceptButton.visible: isMobile
-    acceptButton.text: qsTr("Call")
-    acceptButton.icon.name: "call-start"
-    onAccepted:
+    page.padding: Maui.Style.space.large
+
+    headBar.middleContent: [
+        ToolButton
+        {
+            icon.name: "draw-star"
+            text: qsTr("Fav")
+            checked: contact.fav == "1"
+            checkable: false
+            //                Kirigami.Theme.textColor: checked ? "#FFD700" : Kirigami.Theme.textColor
+            //                Kirigami.Theme.backgroundColor: checked ? "#FFD700" : Kirigami.Theme.textColor
+            onClicked:
+            {
+                contact["fav"] = contact.fav == "1" ? "0" : "1"
+                list.update(contact,  view.currentIndex)
+                control.contact = contact;
+                _favsView.list.refresh()
+            }
+        },
+
+        ToolButton
+        {
+            icon.name: "document-share"
+            text: qsTr("Share")
+        }
+    ]
+
+    footBar.middleContent: [
+
+        ToolButton
+        {
+            icon.name: "dialer-call"
+            visible: contact.tel
+            text: qsTr("Call")
+            onClicked:
+            {
+                if(isAndroid)
+                    Maui.Android.call(contact.tel)
+                else
+                    Qt.openUrlExternally("call://" + contact.tel)
+            }
+        },
+
+        ToolButton
+        {
+            icon.name: "send-email"
+            visible: contact.email
+            text: qsTr("Email")
+            onClicked:
+            {
+                _messageComposer.contact = control.contact
+                _messageComposer.open()
+            }
+        },
+
+        ToolButton
+        {
+            icon.name: "send-sms"
+            visible: contact.tel
+            text: qsTr("SMS")
+            onClicked:
+            {
+                _messageComposer.contact = control.contact
+                _messageComposer.open()
+            }
+        }
+    ]
+
+    footBar.rightContent: Maui.ToolButtonMenu
     {
-        if(isAndroid)
-            Maui.Android.call(contact.tel)
-        else
-            Qt.openUrlExternally("call://" + contact.tel)
+        icon.name: "overflow-menu"
+        MenuItem
+        {
+            icon.name: "document-edit"
+            text: qsTr("Edit")
+            onTriggered: _editContactDialog.open()
+            icon.color: Kirigami.Theme.positiveTextColor
+        }
 
+        MenuItem
+        {
+            text: qsTr("Delete")
+            icon.name: "user-trash"
+            icon.color: Kirigami.Theme.negativeTextColor
+            onTriggered: _removeDialog.open()
+        }
     }
 
-    headBar.middleContent: Kirigami.ActionToolBar
-    {
-        Layout.fillWidth: true
-
-        actions: [
-
-            Kirigami.Action
-            {
-                icon.name: "mail-message"
-                visible: contact.email
-                text: qsTr("Email")
-                //            display: ToolButton.TextUnderIcon
-                onTriggered:
-                {
-                    _messageComposer.contact = control.contact
-                    _messageComposer.open()
-                }
-
-            },
-
-            Kirigami.Action
-            {
-                icon.name: "dialog-messages"
-                visible: contact.tel
-
-                text: qsTr("SMS")
-                //            display: ToolButton.TextUnderIcon
-                onTriggered:
-                {
-                    _messageComposer.contact = control.contact
-                    _messageComposer.open()
-                }
-            },
-
-            Kirigami.Action
-            {
-                //                        Layout.fillWidth: true
-                //            Layout.fillHeight: true
-
-                icon.name: "draw-star"
-                text: qsTr("Fav")
-                checked: contact.fav == "1"
-                checkable: false
-                Kirigami.Theme.textColor: checked ? "#FFD700" : Kirigami.Theme.textColor
-                Kirigami.Theme.backgroundColor: checked ? "#FFD700" : Kirigami.Theme.textColor
-                onTriggered:
-                {
-                    contact["fav"] = contact.fav == "1" ? "0" : "1"
-                    list.update(contact,  view.currentIndex)
-                    control.contact = contact;
-                    _favsView.list.refresh()
-                }
-            },
-
-            Kirigami.Action
-            {
-                //                        Layout.fillWidth: true
-                //            Layout.fillHeight: true
-                icon.name: "document-share"
-                text: qsTr("Share")
-            },
-
-            Kirigami.Action
-            {
-                //            Layout.fillWidth: true
-                //            Layout.fillHeight: true
-
-                icon.name: "document-edit"
-                text: qsTr("Edit")
-                onTriggered: _editContactDialog.open()
-                icon.color: Kirigami.Theme.positiveTextColor
-            }
-        ]
-
-        hiddenActions:[
-            Kirigami.Action
-            {
-                text: qsTr("Delete...")
-                icon.name: "user-trash"
-                Kirigami.Theme.textColor: Kirigami.Theme.negativeTextColor
-                onTriggered: _removeDialog.open()
-            }
-        ]
-    }
 
     Maui.Dialog
     {
@@ -129,9 +120,7 @@ Maui.Dialog
         {
             close()
             _contactDialog.close()
-
             list.remove(view.currentIndex)
-
         }
     }
 
@@ -164,9 +153,7 @@ Maui.Dialog
     {
         id: _layout
         height: parent.height
-        width: parent.width * 0.8
-
-        anchors.centerIn: parent
+        width: parent.width
 
         Item
         {
@@ -182,7 +169,6 @@ Maui.Dialog
                 radius: Maui.Style.radiusV* 2
                 color: Qt.rgba(Math.random(),Math.random(),Math.random(),1);
                 border.color: Qt.darker(color, 1.5)
-
 
                 Loader
                 {
@@ -280,194 +266,194 @@ Maui.Dialog
         //        }
 
 
-            Kirigami.ScrollablePage
+        Kirigami.ScrollablePage
+        {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Kirigami.Theme.backgroundColor: "transparent"
+            padding: 0
+            leftPadding: padding
+            rightPadding: padding
+            topPadding: padding
+            bottomPadding: padding
+
+            ColumnLayout
             {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Kirigami.Theme.backgroundColor: "transparent"
-                padding: 0
-                leftPadding: padding
-                rightPadding: padding
-                topPadding: padding
-                bottomPadding: padding
+                id: _formLayout
+                width: parent.width
+                spacing: Maui.Style.space.large
 
                 ColumnLayout
                 {
-                    id: _formLayout
-                    width: parent.width
-                    spacing: Maui.Style.space.large
-
-                    ColumnLayout
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    visible: contact.account
+                    Label
                     {
+                        Layout.fillHeight: true
                         Layout.fillWidth: true
-                        spacing: Maui.Style.space.small
-                        visible: contact.account
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            text: qsTr("Account")
-                            font.pointSize: Maui.Style.fontSizes.default
-                            font.weight: Font.Light
-                            color: Kirigami.Theme.textColor
-                        }
-
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-
-                            width: parent.width
-                            text: contact.account
-                            font.pointSize: Maui.Style.fontSizes.big
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                            wrapMode: Text.WrapAnywhere
-                        }
+                        text: qsTr("Account")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.weight: Font.Light
+                        color: Kirigami.Theme.textColor
                     }
 
-                    ColumnLayout
+                    Label
                     {
+                        Layout.fillHeight: true
                         Layout.fillWidth: true
-                        spacing: Maui.Style.space.small
-                        visible: contact.n
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            text: qsTr("Name")
-                            font.pointSize: Maui.Style.fontSizes.default
-                            font.weight: Font.Light
-                            color: Kirigami.Theme.textColor
-                        }
 
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
+                        width: parent.width
+                        text: contact.account
+                        font.pointSize: Maui.Style.fontSizes.big
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                        wrapMode: Text.WrapAnywhere
+                    }
+                }
 
-                            width: parent.width
-                            text: contact.n
-                            font.pointSize: Maui.Style.fontSizes.big
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                        }
+                ColumnLayout
+                {
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    visible: contact.n
+                    Label
+                    {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        text: qsTr("Name")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.weight: Font.Light
+                        color: Kirigami.Theme.textColor
                     }
 
-                    ColumnLayout
+                    Label
                     {
+                        Layout.fillHeight: true
                         Layout.fillWidth: true
-                        spacing: Maui.Style.space.small
-                        visible: contact.tel
 
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            text: qsTr("Phone")
-                            font.pointSize: Maui.Style.fontSizes.default
-                            font.weight: Font.Light
-                            color: Kirigami.Theme.textColor
-                        }
+                        width: parent.width
+                        text: contact.n
+                        font.pointSize: Maui.Style.fontSizes.big
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                    }
+                }
 
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            font.pointSize: Maui.Style.fontSizes.big
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                            text: contact.tel
+                ColumnLayout
+                {
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    visible: contact.tel
 
-                        }
+                    Label
+                    {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        text: qsTr("Phone")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.weight: Font.Light
+                        color: Kirigami.Theme.textColor
                     }
 
-                    ColumnLayout
+                    Label
                     {
+                        Layout.fillHeight: true
                         Layout.fillWidth: true
-                        spacing: Maui.Style.space.small
-                        visible: contact.email
+                        font.pointSize: Maui.Style.fontSizes.big
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                        text: contact.tel
 
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            text: qsTr("Email")
-                            font.pointSize: Maui.Style.fontSizes.default
-                            font.weight: Font.Light
-                            color: Kirigami.Theme.textColor
+                    }
+                }
 
-                        }
+                ColumnLayout
+                {
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    visible: contact.email
 
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            font.pointSize: Maui.Style.fontSizes.big
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                            text: contact.email
-                        }
+                    Label
+                    {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        text: qsTr("Email")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.weight: Font.Light
+                        color: Kirigami.Theme.textColor
+
                     }
 
-
-                    ColumnLayout
+                    Label
                     {
+                        Layout.fillHeight: true
                         Layout.fillWidth: true
-                        spacing: Maui.Style.space.small
-                        visible: contact.org && contact.org.length
+                        font.pointSize: Maui.Style.fontSizes.big
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                        text: contact.email
+                    }
+                }
 
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            text: qsTr("Organization")
-                            font.pointSize: Maui.Style.fontSizes.default
-                            font.weight: Font.Light
-                            color: Kirigami.Theme.textColor
-                        }
 
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            width: parent.width
-                            text: contact.org
-                            font.pointSize: Maui.Style.fontSizes.big
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                        }
+                ColumnLayout
+                {
+                    Layout.fillWidth: true
+                    spacing: Maui.Style.space.small
+                    visible: contact.org && contact.org.length
+
+                    Label
+                    {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        text: qsTr("Organization")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.weight: Font.Light
+                        color: Kirigami.Theme.textColor
                     }
 
-                    ColumnLayout
+                    Label
                     {
-                        visible: contact.title && contact.title.length
-                        Layout.fillWidth: visible
-                        spacing: Maui.Style.space.small
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        width: parent.width
+                        text: contact.org
+                        font.pointSize: Maui.Style.fontSizes.big
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
+                    }
+                }
 
-                        Label
-                        {
-                            Layout.fillHeight: parent.visible
-                            Layout.fillWidth: parent.visible
-                            text: qsTr("Title")
-                            font.pointSize: Maui.Style.fontSizes.default
-                            font.weight: Font.Light
-                            color: Kirigami.Theme.textColor
-                        }
+                ColumnLayout
+                {
+                    visible: contact.title && contact.title.length
+                    Layout.fillWidth: visible
+                    spacing: Maui.Style.space.small
 
-                        Label
-                        {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            width: parent.width
-                            text: parent.visible ? contact.title : undefined
-                            font.pointSize: Maui.Style.fontSizes.big
-                            font.weight: Font.Bold
-                            color: Kirigami.Theme.textColor
-                        }
+                    Label
+                    {
+                        Layout.fillHeight: parent.visible
+                        Layout.fillWidth: parent.visible
+                        text: qsTr("Title")
+                        font.pointSize: Maui.Style.fontSizes.default
+                        font.weight: Font.Light
+                        color: Kirigami.Theme.textColor
+                    }
+
+                    Label
+                    {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        width: parent.width
+                        text: parent.visible ? contact.title : undefined
+                        font.pointSize: Maui.Style.fontSizes.big
+                        font.weight: Font.Bold
+                        color: Kirigami.Theme.textColor
                     }
                 }
             }
+        }
 
     }
 

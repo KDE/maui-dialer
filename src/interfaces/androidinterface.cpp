@@ -6,7 +6,7 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QFuture>
 #include <QFutureWatcher>
-#include "fm.h"
+#include "fmh.h"
 
 
 AndroidInterface *AndroidInterface::instance = nullptr;
@@ -83,7 +83,7 @@ void AndroidInterface::getCallLogs()
 
 FMH::MODEL AndroidInterface::getContact(const QString &id) const
 {
-    return FM::toModel(MAUIAndroid::getContact(id));
+    return FMH::toModel(MAUIAndroid::getContact(id));
 }
 
 bool AndroidInterface::updateContact(const QString &id, const FMH::MODEL &contact) const
@@ -117,7 +117,7 @@ void AndroidInterface::fetchContacts()
             auto list = MAUIAndroid::getContacts();
 
             for(auto item : list)
-            data << FM::toModel(item.toMap());
+            data << FMH::toModel(item.toMap());
 
             return data;
 };

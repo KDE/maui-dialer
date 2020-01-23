@@ -129,7 +129,7 @@ ItemDelegate
         icon.color: "#fff"
         visible: showMenuIcon
         icon.name: "overflow-menu"
-        onClicked: swipe.position < 0 ? swipe.close() : swipe.open(SwipeDelegate.Right)
+//        onClicked: swipe.position < 0 ? swipe.close() : swipe.open(SwipeDelegate.Right)
 
     }
 

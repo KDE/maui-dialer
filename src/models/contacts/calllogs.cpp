@@ -76,7 +76,7 @@ void CallLogs::getList(const bool &cached)
             auto map = item.toMap();
             map.insert(FMH::MODEL_NAME[FMH::MODEL_KEY::MODIFIED],
             QDate(QDateTime::fromString(map.value(FMH::MODEL_NAME[FMH::MODEL_KEY::DATE]).toString(), "dd-MM-yyyy HH:mm").date()).toString(Qt::TextDate));
-    list << FM::toModel(map);
+    list << FMH::toModel(map);
 }
 #endif
 

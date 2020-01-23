@@ -7,13 +7,10 @@ Maui.Page
 {
     id: control
 
-//    colorScheme.accentColor: "#615f7d"
-//    colorScheme.backgroundColor: backgroundColor
-//    colorScheme.textColor: textColor
-
     property alias list : _contactsList
     property alias listModel : _contactsModel
     property alias view : _viewLoader.item
+    property alias holder : _holder
 
     property bool gridView : false
 
@@ -34,12 +31,9 @@ Maui.Page
     Maui.Holder
     {
         id: _holder
-        emoji: "qrc:/Circuit.svg"
-        isMask: false
-        title: qsTr("There's no contacts")
-        body: qsTr("Add new contacts")
-        emojiSize: Maui.Style.iconSizes.huge
+        isMask: true
         visible: !view.count
+        emojiSize: Maui.Style.iconSizes.huge
         onActionTriggered: _newContactDialog.open()
     }
 
@@ -71,9 +65,6 @@ Maui.Page
                     textRole: "account"
                     anchors.centerIn: parent
 
-//                    colorScheme.borderColor: "transparent"
-//                    colorScheme.viewBackgroundColor: cardColor
-
                     onActivated:
                     {
 
@@ -94,7 +85,6 @@ Maui.Page
 
                         for(var i in accounts)
                             androidAccounts.push(accounts[i])
-                        //                   var androidAccounts = list.getAccounts()
                         _accountsCombobox.model = androidAccounts;
                     }
 
@@ -111,18 +101,6 @@ Maui.Page
                 label: section.toUpperCase()
                 isSection: true
                 width: parent.width
-                //            colorScheme.backgroundColor: "#333"
-                //            colorScheme.textColor: "#fafafa"
-                //            width: iconSize
-
-                //            background: Rectangle
-                //            {
-                //                color:  colorScheme.backgroundColor
-                //                radius: radiusV
-
-                //            }
-
-
             }
 
             model: _contactsModel
@@ -170,6 +148,7 @@ Maui.Page
             spacing: Maui.Style.space.medium
             centerContent: false
             adaptContent: true
+            visible: count > 0
 
             delegate: GridContactDelegate
             {

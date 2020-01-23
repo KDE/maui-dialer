@@ -8,20 +8,15 @@ import "../contacts"
 Maui.Page
 {
     id: control
-//    headBarExit: false
     headBar.visible: false
-
-//    colorScheme.accentColor: "#615f7d"
-//    colorScheme.backgroundColor: backgroundColor
-//    colorScheme.textColor: textColor
 
     Maui.Holder
     {
         id: _holder
-        emoji: "qrc:/Bench.svg"
-        isMask: false
+        emoji: "qrc:/amarok_artist.svg"
+        isMask: true
         title: qsTr("There's no recent contacts")
-        body: qsTr("recently contacted contacts will appear here")
+        body: qsTr("Recently used contacts will appear here")
         emojiSize: Maui.Style.iconSizes.huge
         visible: !_listView.count
         onActionTriggered: _newContactDialog.open()

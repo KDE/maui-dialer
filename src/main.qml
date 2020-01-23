@@ -14,9 +14,9 @@ import "widgets"
 Maui.ApplicationWindow
 {
     id: root
-    title: qsTr("Contacts")
-    Maui.App.description: qsTr("Union lists your contacts and keeps them synced across devices.")
-    Maui.App.iconName: "qrc:/smartphone.svg"
+    title: Maui.App.displayName
+    Maui.App.description: qsTr("Contacts keeps your contacts synced across devices and allows you to make calls, send messages and organize")
+    Maui.App.iconName: "qrc:/contacts.svg"
 
     readonly property var views : ({
                                        favs: 0,
@@ -24,49 +24,16 @@ Maui.ApplicationWindow
                                        contacts : 2,
                                        dialer: 3,
                                    })
-
-
     /** UI PROPS**/
-    property color cardColor: darkTheme ? "#4f5160" : Qt.darker(Maui.Style.buttonBackgroundColor, 1.05)
-
-    //    bgColor: darkTheme ? "#1f2532" : Maui.Style.backgroundColor
-    //    highlightColor: darkTheme ? "#ff6a83" : Maui.Style.highlightColor
-    //    backgroundColor: darkTheme ? bgColor : Maui.Style.backgroundColor
-    //    textColor: darkTheme ? "#fafafa" : Maui.Style.textColor
-    //    viewBackgroundColor: darkTheme ? "#1e2431" : Maui.Style.viewBackgroundColor
-    //    accentColor: darkTheme ? "#3c4862" : Maui.Style.highlightColor
-
+    property color cardColor: Qt.darker(Maui.Style.buttonBackgroundColor, 1.05)
     leftIcon.checked: footBar.visible
-    //    onSearchButtonClicked: footBar.visible = !footBar.visible
     leftIcon.visible: true
     rightIcon.visible: false
-    //    headBar.implicitHeight: toolBarHeight * 1.2
-    //    headBarBGColor: backgroundColor
-    //    headBarFGColor: textColor
-
-    property bool darkTheme : Maui.FM.loadSettings("dark", "theme", false) == "true"
-
-    mainMenu: [
-        MenuItem
-        {
-            checkable: true
-            text: qsTr("Dark theme");
-            checked: darkTheme
-            onTriggered:
-            {
-                darkTheme = !darkTheme
-                Maui.FM.saveSettings("dark", darkTheme, "theme")
-
-                if(isAndroid)
-                    Maui.Android.statusbarColor(backgroundColor, !darkTheme)
-            }
-        }
-    ]
 
     headBar.rightContent:  ToolButton
     {
         id: _dialerButton
-        icon.name: "call-start"
+        icon.name: "dialer-call"
         checked: _actionGroup.currentIndex === views.dialer
         onClicked: _actionGroup.currentIndex = views.dialer
     }
@@ -107,6 +74,8 @@ Maui.ApplicationWindow
         id: swipeView
         anchors.fill : parent
         currentIndex: _actionGroup.currentIndex
+        interactive: Maui.Handy.isTouch
+
         onCurrentIndexChanged:
         {
             _actionGroup.currentIndex = currentIndex
@@ -122,11 +91,15 @@ Maui.ApplicationWindow
             list.query : "fav=1"
             headBar.visible: false
             gridView: true
+            holder.emoji: "qrc:/star.svg"
+            holder.title: qsTr("There's no favorite contacts")
+            holder.body: qsTr("You can mark as favorite your contacts to quickly access them")
         }
 
         LogsView
         {
             id: _logView
+
         }
 
         ContactsView
@@ -134,6 +107,9 @@ Maui.ApplicationWindow
             id: _contacsView
             list.query: ""
             showAccountFilter: isAndroid
+            holder.emoji: "qrc:/list-add-user.svg"
+            holder.title: qsTr("There's no contacts")
+            holder.body: qsTr("You can add new contacts")
 
             Maui.FloatingButton
             {
@@ -193,8 +169,8 @@ Maui.ApplicationWindow
     Component.onCompleted:
     {
         if(_favsView.view.count < 1)
-           _actionGroup.currentIndex = views.contacts
+            _actionGroup.currentIndex = views.contacts
         if(isAndroid)
-            Maui.Android.statusbarColor(backgroundColor, !darkTheme)
+            Maui.Android.statusbarColor(backgroundColor, true)
     }
 }

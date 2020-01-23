@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>smartphone.svg</file>
-        <file>Circuit.svg</file>
-        <file>portrait.jpg</file>
-        <file>Bench.svg</file>
-        <file>dialer.svg</file>
-    </qresource>
-</RCC>

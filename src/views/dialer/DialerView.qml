@@ -64,7 +64,7 @@ Maui.Page
 
             ToolButton
             {
-                icon.name: "message-new"
+                icon.name: "send-sms"
                 icon.color: Kirigami.Theme.textColor
                 onClicked:
                 {
@@ -76,7 +76,7 @@ Maui.Page
             Button
             {
                 id: _callButton
-                icon.name: "call-start"
+                icon.name: "dialer-call"
                 icon.width: Maui.Style.iconSizes.big
                 icon.height: Maui.Style.iconSizes.big
                 height: Maui.Style.iconSizes.big * 1.5

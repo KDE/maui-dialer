@@ -1,10 +1,7 @@
 #include <QQmlApplicationEngine>
-
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
 #include <QIcon>
 #include <QCommandLineParser>
-#include <QFileInfo>
+
 #ifdef Q_OS_ANDROID
 #include <QGuiApplication>
 #include <QIcon>
@@ -32,15 +29,24 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_ANDROID
     QGuiApplication app(argc, argv);
-    //    QGuiApplication::styleHints()->setMousePressAndHoldInterval(2000); // in [ms]
+    if (!MAUIAndroid::checkRunTimePermissions({"android.permission.WRITE_EXTERNAL_STORAGE",
+                                              "android.permission.READ_CALL_LOG",
+                                              "android.permission.SEND_SMS",
+                                              "android.permission.CALL_PHONE",
+                                              "android.permission.MANAGE_ACCOUNTS",
+                                              "android.permission.GET_ACCOUNTS",
+                                              "android.permission.READ_CONTACTS"}))
+        return -1;
 #else
     QApplication app(argc, argv);
 #endif
 
-    app.setApplicationName(APPNAME);
-    app.setApplicationVersion(APPVERSION);
-    app.setApplicationDisplayName(APPNAME);
-    app.setWindowIcon(QIcon(":/smartphone.svg"));
+    app.setApplicationName(UNI::appName);
+    app.setApplicationVersion(UNI::version);
+    app.setApplicationDisplayName(UNI::displayName);
+    app.setOrganizationName(UNI::orgName);
+    app.setOrganizationDomain(UNI::orgDomain);
+    app.setWindowIcon(QIcon(":/contacts.svg"));
 
     QCommandLineParser parser;
     parser.addOptions({
@@ -56,31 +62,24 @@ int main(int argc, char *argv[])
                            QCoreApplication::translate("main", "directory")},
                       });
     parser.process(app);
-    if(parser.isSet("sync"))
-    {
-        qDebug()<< "TESTING P";
-        return 0;
-    }
 
-    {
-        QQmlApplicationEngine engine;
+    QQmlApplicationEngine engine;
 
 #ifdef STATIC_KIRIGAMI
-        KirigamiPlugin::getInstance().registerTypes();
+    KirigamiPlugin::getInstance().registerTypes();
 #endif
 
 #ifdef STATIC_MAUIKIT
-        MauiKit::getInstance().registerTypes();
+    MauiKit::getInstance().registerTypes();
 #endif
 
-        engine.addImageProvider("contact", new ContactImage(QQuickImageProvider::ImageType::Image));
-        qmlRegisterType<ContactsModel>("UnionModels", 1, 0, "ContactsList");
-        qmlRegisterType<CallLogs>("UnionModels", 1, 0, "CallLogs");
+    engine.addImageProvider("contact", new ContactImage(QQuickImageProvider::ImageType::Image));
+    qmlRegisterType<ContactsModel>("UnionModels", 1, 0, "ContactsList");
+    qmlRegisterType<CallLogs>("UnionModels", 1, 0, "CallLogs");
 
-        engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-        if (engine.rootObjects().isEmpty())
-            return -1;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    if (engine.rootObjects().isEmpty())
+        return -1;
 
-        return app.exec();
-    }
+    return app.exec();
 }
