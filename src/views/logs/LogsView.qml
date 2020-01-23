@@ -115,9 +115,9 @@ Maui.Page
 
                 icon.color: switch (model.type)
                            {
-                           case "INCOMING" : return suggestedColor;
-                           case "OUTGOING" : return warningColor;
-                           case "MISSED" : return dangerColor;
+                           case "INCOMING" : return Kirigami.Theme.positiveTextColor;
+                           case "OUTGOING" : return Kirigami.Theme.neutralTextColor;
+                           case "MISSED" : return Kirigami.Theme.negativeTextColor;
 
                            }
             }

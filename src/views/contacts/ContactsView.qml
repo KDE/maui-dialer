@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.3
+import QtQuick 2.10
+import QtQuick.Controls 2.10
 import org.kde.mauikit 1.0 as Maui
 import UnionModels 1.0
 
@@ -56,7 +56,7 @@ Maui.Page
             header: Item
             {
                 visible: showAccountFilter
-                height: visible ? toolBarHeight * 1.5 : 0
+                height: visible ? Maui.Style.toolBarHeight * 1.5 : 0
                 width: visible ? parent.width : 0
                 ComboBox
                 {
