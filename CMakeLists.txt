@@ -86,7 +86,7 @@ endif()
 target_link_libraries(${PROJECT_NAME} MauiKit Qt5::Sql Qt5::Qml Qt5::Widgets Qt5::Svg Qt5::Concurrent Qt5::Quick)
 
 install(TARGETS ${PROJECT_NAME} ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES org.kde.contatcs.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES org.kde.contacts.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 
 #TODO: port to ecm_install_icons()
 install(FILES assets/contacts.svg DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
