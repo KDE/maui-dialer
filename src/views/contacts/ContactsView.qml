@@ -21,6 +21,9 @@ Maui.Page
     {
         id: _contactsModel
         list: _contactsList
+        recursiveFilteringEnabled: true
+        sortCaseSensitivity: Qt.CaseInsensitive
+        filterCaseSensitivity: Qt.CaseInsensitive
     }
 
     ContactsList

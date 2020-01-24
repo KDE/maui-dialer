@@ -143,12 +143,12 @@ QVariantMap ContactsModel::get(const int &index) const
         return QVariantMap();
     QVariantMap res;
 
-    const auto item = this->list.at(index);
-
+    const auto index_ = this->mappedIndex(index);
+    const auto item = this->list.at(index_);
     res = FMH::toMap(item);
 
 #ifdef Q_OS_ANDROID
-    const auto id = this->list.at(index)[FMH::MODEL_KEY::ID];
+    const auto id = this->list.at(index_)[FMH::MODEL_KEY::ID];
     res.unite(FMH::toMap(this->syncer->getContact(id)));
 #endif
 
@@ -182,8 +182,10 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
     if(index >= this->list.size() || index < 0)
         return false;
 
+    const auto index_ = this->mappedIndex(index);
+
     const auto newItem = FMH::toModel(map);
-    const auto oldItem = this->list[index];
+    const auto oldItem = this->list[index_];
 
     auto updatedItem = FMH::MODEL();
     updatedItem[FMH::MODEL_KEY::ID] = oldItem[FMH::MODEL_KEY::ID];
@@ -201,8 +203,8 @@ bool ContactsModel::update(const QVariantMap &map, const int &index)
     qDebug()<< "trying to update contact:" << oldItem << "\n\n" << newItem << "\n\n" << updatedItem;
 
     this->syncer->updateContact(oldItem[FMH::MODEL_KEY::ID], newItem);
-    this->list[index] = newItem;
-    emit this->updateModel(index, roles);
+    this->list[index_] = newItem;
+    emit this->updateModel(index_, roles);
 
     return true;
 }
@@ -211,11 +213,14 @@ bool ContactsModel::remove(const int &index)
 {
     if(index >= this->list.size() || index < 0)
         return false;
-    qDebug()<< "trying to remove :" << this->list[index][FMH::MODEL_KEY::ID];
-    if(this->syncer->removeContact(this->list[index][FMH::MODEL_KEY::ID]))
+
+    const auto index_ = this->mappedIndex(index);
+
+    qDebug()<< "trying to remove :" << this->list[index_][FMH::MODEL_KEY::ID];
+    if(this->syncer->removeContact(this->list[index_][FMH::MODEL_KEY::ID]))
     {
-        emit this->preItemRemoved(index);
-        this->list.removeAt(index);
+        emit this->preItemRemoved(index_);
+        this->list.removeAt(index_);
         emit this->postItemRemoved();
         return true;
     }
@@ -290,16 +295,12 @@ void ContactsModel::append(const QVariantMap &item, const int &at)
     if(at > this->list.size() || at < 0)
         return;
 
-    qDebug()<< "trying to append at" << at << item["title"];
+    const auto index_ = this->mappedIndex(at);
 
-    emit this->preItemAppendedAt(at);
+    qDebug()<< "trying to append at" << index_ << item["title"];
 
-    FMH::MODEL model;
-    for(auto key : item.keys())
-        model.insert(FMH::MODEL_NAME_KEY[key], item[key].toString());
-
-    this->list.insert(at, model);
-
+    emit this->preItemAppendedAt(index_);
+    this->list.insert(index_, FMH::toModel(item));
     emit this->postItemAppended();
 }
 
@@ -334,12 +335,6 @@ void ContactsModel::refresh()
 }
 
 QVariantList ContactsModel::getAccounts()
-{
-    QVariantList res;
-    auto accounts= syncer->getAccounts();
-//    for(const auto &account : syncer->getAccounts())
-//        res << FM::toMap(account);
-
-    std::transform(accounts.begin(), accounts.end(), res.begin(), FMH::toMap);
-    return res;
+{ 
+    return FMH::toMapList(syncer->getAccounts());
 }

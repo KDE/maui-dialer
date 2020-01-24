@@ -127,10 +127,8 @@ Maui.ApplicationWindow
                 Layout.preferredWidth: isWide ? _contacsView.width * 0.8 : _contacsView.view.width
                 focusReason : Qt.PopupFocusReason
                 placeholderText: qsTr("Search %1 contacts... ".arg(_contacsView.view.count))
-                onAccepted: _contacsView.list.query = text
-                onCleared: _contacsView.list.reset()
-                onTextEdited: _contacsView.list.query = text
-                onTextChanged: _contacsView.list.query = text
+                onAccepted: _contacsView.listModel.filter = text
+                onCleared: _contacsView.listModel.filter = ""
             }
         }
 
