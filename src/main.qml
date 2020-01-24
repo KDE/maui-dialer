@@ -28,7 +28,6 @@ Maui.ApplicationWindow
     property color cardColor: Qt.darker(Maui.Style.buttonBackgroundColor, 1.05)
     leftIcon.checked: footBar.visible
     leftIcon.visible: true
-    rightIcon.visible: false
 
     headBar.rightContent:  ToolButton
     {
@@ -119,7 +118,6 @@ Maui.ApplicationWindow
                 height: Maui.Style.toolBarHeight
                 width: height
                 icon.name: "list-add-user"
-                icon.color: "white"
                 onClicked: _newContactDialog.open()
             }
 
