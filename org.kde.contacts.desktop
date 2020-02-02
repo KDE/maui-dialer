@@ -1,5 +1,13 @@
 [Desktop Entry]
 Name=Contacts
+Name[ca]=Contactes
+Name[et]=Kontaktid
+Name[lt]=Adresatai
+Name[nl]=Contactpersonen
+Name[pt]=Contactos
+Name[uk]=Контакти
+Name[x-test]=xxContactsxx
+Name[zh_TW]=聯絡人
 TryExec=contacts
 Exec=contacts %U
 Terminal=false
@@ -8,6 +16,7 @@ Categories=Qt;KDE;System;
 GenericName=Contacts
 GenericName[ca]=Contactes
 GenericName[es]=Contactos
+GenericName[et]=Kontaktid
 GenericName[lt]=Adresatai
 GenericName[nl]=Contactpersonen
 GenericName[pt]=Contactos
