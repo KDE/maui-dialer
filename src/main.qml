@@ -138,10 +138,7 @@ Maui.ApplicationWindow
         }
     }
 
-
     /** DIALOGS **/
-
-
     EditContactDialog
     {
         id: _newContactDialog
