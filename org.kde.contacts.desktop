@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Contacts
 Name[ca]=Contactes
+Name[ca@valencia]=Contactes
 Name[es]=Contactos
 Name[et]=Kontaktid
 Name[lt]=Adresatai
@@ -16,6 +17,7 @@ Type=Application
 Categories=Qt;KDE;System;
 GenericName=Contacts
 GenericName[ca]=Contactes
+GenericName[ca@valencia]=Contactes
 GenericName[es]=Contactos
 GenericName[et]=Kontaktid
 GenericName[lt]=Adresatai
