@@ -148,7 +148,6 @@ Maui.Page
             cellWidth: Maui.Style.unit * 120
             cellHeight: Maui.Style.unit * 120
             itemSize: Math.min(Maui.Style.unit * 120)
-            spacing: Maui.Style.space.medium
             adaptContent: true
             visible: count > 0
 
