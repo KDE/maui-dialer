@@ -2,6 +2,7 @@
 Name=Contacts
 Name[ca]=Contactes
 Name[ca@valencia]=Contactes
+Name[cs]=Kontakty
 Name[es]=Contactos
 Name[et]=Kontaktid
 Name[ko]=연락처
@@ -20,6 +21,7 @@ Categories=Qt;KDE;System;
 GenericName=Contacts
 GenericName[ca]=Contactes
 GenericName[ca@valencia]=Contactes
+GenericName[cs]=Kontakty
 GenericName[es]=Contactos
 GenericName[et]=Kontaktid
 GenericName[ko]=연락처
