@@ -17,7 +17,7 @@ Maui.Dialog
     rejectButton.visible: false
     acceptButton.visible: false
 
-    page.padding: Maui.Style.space.large
+    page.margins: Maui.Style.space.large
 
     headBar.middleContent: [
         ToolButton

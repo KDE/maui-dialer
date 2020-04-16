@@ -15,7 +15,7 @@ Maui.Page
     property bool gridView : false
 
     property bool showAccountFilter: false
-    padding: Maui.Style.space.big
+    margins: Maui.Style.space.big
 
     Maui.BaseModel
     {
